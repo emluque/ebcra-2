@@ -1,0 +1,12 @@
+.git/
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+bck/
+docs/
+CLAUDE.md
+.claude/
+.env
+.env.example
+.dockerignore

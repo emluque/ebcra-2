@@ -1,0 +1,261 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>{% block page_title %}Estadísticas BCRA{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Estadísticas BCRA compila los datos publicados por el Banco Central de la República Argentina.{% endblock %}">
+
+    <meta property="og:title" content="{% block og_title %}{% block _page_title_copy %}Estadísticas BCRA{% endblock %}{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="{% block og_description %}{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{{ SITE_URL }}{% static 'img/billete.jpg' %}">
+
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta property="twitter:title" content="{% block twitter_title %}Estadísticas BCRA{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}{% endblock %}">
+    <meta property="twitter:image" content="{{ SITE_URL }}{% static 'img/billete.jpg' %}">
+
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'apple-icon-152x152.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+
+    <meta property="fb:admins" content="1124782958">
+
+    <script src="{% static 'js/d3/d3.min.js' %}"></script>
+    <script src="{% static 'js/library.js' %}?version=2.0.6"></script>
+    <link rel="stylesheet" href="{% static 'css/fonts/stylesheet.css' %}" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/general.css' %}" type="text/css" charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/iconfont/flaticon.css' %}">
+</head>
+<body>
+<!--[if lt IE 10]>
+<h1>Este sitio requiere Internet Explorer 10 o superior, o usar una versión actualizada de Chrome o Firefox. Actualize su navegador!</h1>
+<![endif]-->
+<div id="header">
+    <div id="logo">
+        <a href="{% if lang == 'en' %}/en{% else %}/{% endif %}">Estadísticas BCRA</a>
+        <span id="menu-button">
+            <a href="javascript: void(0);" id="menu">Menu <i class="flaticon-menu62"></i></a>
+        </span>
+    </div>
+</div>
+
+<nav id="nav">
+    <div id="close-button">
+        <span id="menu-button">
+            <a href="javascript: void(0);" id="close">Cerrar <i class="flaticon-cancel30"></i></a>
+        </span>
+    </div>
+    <div id="nav-links">
+        {% if lang == 'es' %}
+        <h2>Reservas Internacionales</h2>
+        <ul>
+            <li><a href="/reservas_internacionales_argentina">Reservas Internacionales</a></li>
+            <li><a href="/composicion_reservas_internacionales_argentina">Composición de las Reservas Internacionales</a></li>
+            <li><a href="/factores_variacion_reservas_internacionales_argentina">Factores de Variación de las Reservas</a></li>
+            <li><a href="/base_monetaria_dividida_reservas_internacionales_argentina">Base Monetaria Dividida Reservas Internacionales y Cotización del Dólar</a></li>
+            <li><a href="/m1_dividido_reservas_internacionales_argentina">M1 Dividido Reservas Internacionales y Cotización del Dólar</a></li>
+            <li><a href="/m2_dividido_reservas_internacionales_argentina">M2 Dividido Reservas Internacionales y Cotización del Dólar</a></li>
+            <li><a href="/m3_dividido_reservas_internacionales_argentina">M3 Dividido Reservas Internacionales y Cotización del Dólar</a></li>
+        </ul>
+        <h2>Base Monetaria</h2>
+        <ul>
+            <li><a href="/base_monetaria_argentina">Base Monetaria</a></li>
+            <li><a href="/base_monetaria_argentina_en_usd">Base Monetaria en USD</a></li>
+            <li><a href="/componentes_base_monetaria_argentina">Componentes de la Base Monetaria</a></li>
+        </ul>
+        <h2>Agregados Monetarios</h2>
+        <ul>
+            <li><a href="/m1">M1</a></li>
+            <li><a href="/m1_en_usd">M1 en USD</a></li>
+            <li><a href="/m2">M2</a></li>
+            <li><a href="/m2_en_usd">M2 en USD</a></li>
+            <li><a href="/m3">M3</a></li>
+            <li><a href="/m3_en_usd">M3 en USD</a></li>
+        </ul>
+        <h2>Operaciones de Pase BCRA</h2>
+        <ul>
+            <li><a href="/pases_argentina">Operaciones de Pase BCRA</a></li>
+            <li><a href="/interfaz_fiscal_monetaria">Interfaz Fiscal-Monetaria</a></li>
+        </ul>
+        <h2>Depósitos y Préstamos</h2>
+        <ul>
+            <li><a href="/depositos_argentina">Depósitos</a></li>
+            <li><a href="/depositos_por_sector_argentina">Depósitos por Sector</a></li>
+            <li><a href="/depositos_en_dolares_argentina">Depósitos en Dólares</a></li>
+            <li><a href="/depositos_por_titular_argentina">Depósitos por Titular</a></li>
+            <li><a href="/liquidez_sistema_financiero_argentina">Liquidez del Sistema Financiero</a></li>
+            <li><a href="/prestamos_argentina">Préstamos</a></li>
+            <li><a href="/prestamos_por_tipo_argentina">Préstamos por Tipo</a></li>
+            <li><a href="/prestamos_hipotecarios_y_prendarios_argentina">Hipotecarios y Prendarios</a></li>
+            <li><a href="/prestamos_por_titular_argentina">Préstamos por Titular</a></li>
+            <li><a href="/porcentaje_prestamos_vs_depositos_argentina">Porcentaje de Préstamos en Relación a Depósitos</a></li>
+        </ul>
+        <h2>Tasas de Interés</h2>
+        <ul>
+            <li><a href="/tasas_de_interes_argentina">Tasas de Interés</a></li>
+            <li><a href="/tasas_de_interes_de_prestamos_argentina">Tasas de Préstamos</a></li>
+            <li><a href="/tasas_de_interes_de_depositos_argentina">Tasas de Depósitos</a></li>
+        </ul>
+        <h2>Inflación</h2>
+        <ul>
+            <li><a href="/inflacion_mensual_argentina">Inflación Mensual</a></li>
+            <li><a href="/inflacion_interanual_argentina">Inflación Interanual</a></li>
+            <li><a href="/inflacion_esperada_argentina">Inflación Esperada</a></li>
+        </ul>
+        <h2>Índices</h2>
+        <ul>
+            <li><a href="/cer">CER</a></li>
+            <li><a href="/unidad_de_valor_adquisitivo">UVA</a></li>
+            <li><a href="/unidad_de_vivienda">UVI</a></li>
+            <li><a href="/icl">ICL</a></li>
+        </ul>
+        <h2>Otros</h2>
+        <ul>
+            <li><a href="/indice_merval">Merval</a></li>
+            <li><a href="/merval_en_dolares">Merval en Dólares</a></li>
+            <li><a href="/rentabilidades">Rentabilidades</a></li>
+        </ul>
+        <h2>Lenguaje</h2>
+        <ul>
+            <li>Español</li>
+            <li><a href="{{ alternate_url }}">English</a></li>
+        </ul>
+        <h2>API (Deprecada)</h2>
+        <ul>
+            <li><a href="/api/documentacion">Notas sobre la vieja API</a></li>
+        </ul>
+        <h2>Acerca De</h2>
+        <ul>
+            <li><a href="/fuentes">Fuentes</a></li>
+            <li><a href="/creditos">Creditos</a></li>
+            <li><a href="/release_notes">Release Notes</a></li>
+        </ul>
+        {% else %}
+        <h2>International Reserves</h2>
+        <ul>
+            <li><a href="/en/argentina_international_reserves">International Reserves</a></li>
+            <li><a href="/en/argentina_international_reserves_composition">International Reserves Composition</a></li>
+            <li><a href="/en/argentina_international_reserves_variation_factors">International Reserves Variation Factors</a></li>
+            <li><a href="/en/argentina_monetary_base_divided_by_international_reserves">Monetary Base Divided by International Reserves and Dollar Rate</a></li>
+            <li><a href="/en/argentina_m1_divided_by_international_reserves">M1 Divided by International Reserves and Dollar Rate</a></li>
+            <li><a href="/en/argentina_m2_divided_by_international_reserves">M2 Divided by International Reserves and Dollar Rate</a></li>
+            <li><a href="/en/argentina_m3_divided_by_international_reserves">M3 Divided by International Reserves and Dollar Rate</a></li>
+        </ul>
+        <h2>Monetary Base</h2>
+        <ul>
+            <li><a href="/en/argentina_monetary_base">Monetary Base</a></li>
+            <li><a href="/en/argentina_monetary_base_in_usd">Monetary Base in USD</a></li>
+            <li><a href="/en/argentina_monetary_base_components">Monetary Base Components</a></li>
+        </ul>
+        <h2>Monetary Aggregates</h2>
+        <ul>
+            <li><a href="/en/argentina_m1">M1</a></li>
+            <li><a href="/en/argentina_m1_in_usd">M1 in USD</a></li>
+            <li><a href="/en/argentina_m2">M2</a></li>
+            <li><a href="/en/argentina_m2_in_usd">M2 in USD</a></li>
+            <li><a href="/en/argentina_m3">M3</a></li>
+            <li><a href="/en/argentina_m3_in_usd">M3 in USD</a></li>
+        </ul>
+        <h2>BCRA Repo Operations</h2>
+        <ul>
+            <li><a href="/en/argentina_repo_operations">BCRA Repo Operations</a></li>
+            <li><a href="/en/fiscal_monetary_interface">Fiscal-Monetary Interface</a></li>
+        </ul>
+        <h2>Deposits and Loans</h2>
+        <ul>
+            <li><a href="/en/argentina_deposits">Deposits</a></li>
+            <li><a href="/en/argentina_deposits_by_sector">Deposits by Sector</a></li>
+            <li><a href="/en/argentina_usd_deposits">USD Deposits</a></li>
+            <li><a href="/en/argentina_financial_system_liquidity">Financial System Liquidity</a></li>
+            <li><a href="/en/argentina_loans">Loans</a></li>
+            <li><a href="/en/argentina_loans_by_type">Loans by Type</a></li>
+            <li><a href="/en/argentina_mortgage_and_secured_loans">Mortgage and Secured Loans</a></li>
+            <li><a href="/en/argentina_percentage_loans_vs_deposits">Percentage Loans vs Deposits</a></li>
+        </ul>
+        <h2>Interest Rates</h2>
+        <ul>
+            <li><a href="/en/argentina_interest_rates">Interest Rates</a></li>
+            <li><a href="/en/argentina_lending_interest_rates">Lending Rates</a></li>
+        </ul>
+        <h2>Inflation</h2>
+        <ul>
+            <li><a href="/en/argentina_monthly_inflation">Monthly Inflation</a></li>
+            <li><a href="/en/argentina_annual_inflation">Annual Inflation</a></li>
+            <li><a href="/en/argentina_expected_inflation">Expected Inflation</a></li>
+        </ul>
+        <h2>Indexes</h2>
+        <ul>
+            <li><a href="/en/cer">CER</a></li>
+            <li><a href="/en/unit_of_purchasing_value">UVA</a></li>
+            <li><a href="/en/unit_of_dwelling">UVI</a></li>
+            <li><a href="/en/icl">ICL</a></li>
+        </ul>
+        <h2>Other</h2>
+        <ul>
+            <li><a href="/en/merval_index">Merval</a></li>
+            <li><a href="/en/merval_in_usd">Merval in USD</a></li>
+            <li><a href="/en/argentina_annual_profitability">Profitability</a></li>
+        </ul>
+        <h2>Language</h2>
+        <ul>
+            <li><a href="{{ alternate_url }}">Español</a></li>
+            <li>English</li>
+        </ul>
+        <h2>API (Deprecated)</h2>
+        <ul>
+            <li><a href="/api/documentation">Notes on the Old API</a></li>
+        </ul>
+        <h2>About</h2>
+        <ul>
+            <li><a href="/en/sources">Sources</a></li>
+            <li><a href="/en/credits">Credits</a></li>
+            <li><a href="/en/release_notes">Release Notes</a></li>
+        </ul>
+        {% endif %}
+    </div>
+</nav>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p>Un desarrollo de <a href="https://www.metonymie.com">Metonymie Studios</a> - 2015</p>
+</footer>
+
+<script type="text/javascript">
+    document.getElementById("menu").addEventListener('click', () => {
+        const nav = document.getElementById("nav");
+        nav.style.display = "block";
+        setTimeout(() => { nav.className = "displayed"; }, 60);
+    });
+    document.getElementById("close").addEventListener('click', () => {
+        const nav = document.getElementById("nav");
+        nav.className = "";
+        setTimeout(() => { nav.style.display = "none"; }, 400);
+    });
+</script>
+
+{% block page_scripts %}{% endblock %}
+
+{% if GOOGLE_ANALYTICS_ID %}
+<script>
+    window.addEventListener('load', () => {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', '{{ GOOGLE_ANALYTICS_ID }}', 'auto');
+        ga('send', 'pageview');
+    });
+</script>
+{% endif %}
+</body>
+</html>

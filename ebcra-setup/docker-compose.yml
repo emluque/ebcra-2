@@ -1,0 +1,145 @@
+services:
+  ebcra-scraping:
+    build:
+      context: /home/Projects/ebcra-2/ebcra-scrapping
+      dockerfile: /home/Projects/ebcra-2/ebcra-setup/ebcra/ebcra-scraping/docker/Dockerfile
+    container_name: "ebcra-scraping"
+    environment:
+      - BCRA_BASE_URL=http://api.bcra.gob.ar
+      - DB_HOST=172.28.2.1
+      - DB_PORT=5432
+      - DB_NAME=estadisticasbcra
+      - DB_USER=ebcra-scraping
+      - DB_PASSWORD=scraping-password
+      - EBCRA_SERVICE_URL=http://ebcra-service:9001
+
+    networks:
+      apps:
+        ipv4_address: 172.30.2.4
+      data-network:
+        ipv4_address: 172.28.2.3
+    restart: unless-stopped
+    extra_hosts:
+      - "estadisticasbcra.com:172.30.2.1"
+      - "api.estadisticasbcra.com:172.30.2.1"
+    depends_on:
+      - postgres
+      - ebcra-service
+
+  ebcra-service:
+    ports:
+      - "9001:9001"
+    build:
+      context: /home/Projects/ebcra-2/ebcra-service
+      dockerfile: /home/Projects/ebcra-2/ebcra-setup/ebcra/ebcra-service/docker/Dockerfile
+
+    container_name: "ebcra-service"
+    networks:
+      apps:
+        ipv4_address: 172.30.2.3
+      data-network:
+        ipv4_address: 172.28.2.2
+    environment:
+      # ENVIRONMENT=development makes CORS responses allow http:// origins
+      # (estadisticasbcra.com / www.estadisticasbcra.com). Any other value
+      # ("production", unset, etc.) switches CORS to https:// origins only —
+      # set that (and add TLS to nginx, and flip ebcra-web's SITE_URL /
+      # CHART_API_SCHEME to https) when this deployment moves to HTTPS.
+      - ENVIRONMENT=development
+      - PORT=9001
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=estadisticasbcra
+      - DB_PASSWORD=estadisticasbcra-password
+      - DB_NAME=estadisticasbcra
+      - JWT_SECRET=jwt-secret
+      - CLIENT_IP=172.30.2.2
+      - CLEAN_CACHE_IP=172.30.2.4
+      - PROMETHEUS_IP=127.0.0.1
+
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  nginx:
+    image: nginx:latest
+    container_name: "nginx"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /home/data/nginx-logs:/etc/nginx/logs
+      - /home/Projects/ebcra/ebcra-web-2.0/staticfiles:/staticfiles:ro
+    networks:
+      apps:
+        ipv4_address: 172.30.2.1
+    restart: unless-stopped
+    depends_on:
+      - ebcra-web
+      - ebcra-service
+
+  ebcra-web:
+    build:
+      context: /home/Projects/ebcra-2/ebcra-web/
+      dockerfile: /home/Projects/ebcra-2/ebcra-setup/ebcra/ebcra-web/docker/Dockerfile
+
+    container_name: "ebcra-web"
+    ports:
+      - "8000:8000"
+    networks:
+      apps:
+        ipv4_address: 172.30.2.2
+    
+    environment:
+      DJANGO_SECRET_KEY: django-secret-key
+      HASH_KEY: hash-key
+      DJANGO_SETTINGS_MODULE: ebcra.settings.local
+      JWT_SERVICE_HOST: http://172.30.2.3:9001
+      JWT_SERVICE_JS_PATH: /get-js-jwt
+      VARIATIONS_SERVICE_HOST: http://172.30.2.3:9001
+      GOOGLE_ANALYTICS_ID: UA-68418371-1
+      # NOTE: this stack currently runs over plain HTTP (nginx only listens on
+      # :80; no TLS is configured in nginx/nginx.conf). SITE_URL and
+      # CHART_API_SCHEME are set to http to match. To switch this deployment
+      # to HTTPS: set SITE_URL back to https://estadisticasbcra.com, set
+      # CHART_API_SCHEME to https, add a TLS-terminating server block for both
+      # hostnames to nginx/nginx.conf, and set ebcra-service's ENVIRONMENT
+      # (below) to "production" (anything other than "development") so its
+      # CORS responses allow the https origins instead of http ones.
+      SITE_URL: http://estadisticasbcra.com
+      CHART_API_SCHEME: http
+      CHART_API_HOST: api.estadisticasbcra.com
+    extra_hosts:
+        - "ebcra-service:172.30.2.3"
+    restart: unless-stopped
+    depends_on:
+      - ebcra-service
+
+  postgres:
+    image: postgres:18.3
+    container_name: "postgres"
+    networks:
+      data-network:
+        ipv4_address: 172.28.2.1
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres-password
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+    volumes:
+      - /home/data/postgres:/var/lib/postgresql
+      - ./postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: postgres -c hba_file=/etc/postgresql/pg_hba.conf
+
+networks:
+  data-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+  apps:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/16

@@ -1,0 +1,16 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Notes on the official inflation data for the period 2007-2016{% else %}Nota sobre los datos oficiales de inflación (2007–2016){% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Notes on the official inflation data for the period 2007-2016{% else %}Nota sobre los Datos Oficiales de Inflación (2007–2016){% endif %}</h1></div></div>
+<div class="explanation documentation">
+    <p>{% if lang == 'en' %}In 2007, Guillermo Moreno, minister of domestic commerce, politically intervened the National Institute of Statistics and Census (INDEC), replacing career statisticians (such as Graciela Bevacqua) with political appointees. The official inflation figures published from 2007 to 2016 are widely regarded as unreliable.{% else %}En 2007, el ministro de comercio Guillermo Moreno intervino el Instituto Nacional de Estadísticas y Censos (INDEC), removiendo a los funcionarios de carrera (como Graciela Bevacqua) y reemplazándolos con funcionarios de su partido. Los datos de inflación oficial publicados entre 2007 y 2016 son ampliamente considerados poco fiables.{% endif %}</p>
+</div>
+<div class="explanation documentation">
+    <h2>{% if lang == 'en' %}Please read the following links:{% else %}Por favor vea los siguientes links:{% endif %}</h2>
+    <p><a href="https://www.cronista.com/economiapolitica/Intervencion-del-Indec-y-manipulacion-del-IPC-los-mayores-fracasos-de-Moreno-20131120-0071.html">Intervención del Indec y manipulación del IPC, los mayores fracasos de Moreno (Cronista Comercial - 2013)</a></p>
+    <p><a href="https://www.lanacion.com.ar/economia/critican-la-intervencion-de-moreno-en-el-indec-nid1300874">Critican la intervención de Moreno en el Indec (La Nación - 2010)</a></p>
+    <p><a href="https://en.wikipedia.org/wiki/Guillermo_Moreno#Inflation_rate_and_INDEC">Guillermo Moreno, Inflation rate and INDEC - Wikipedia</a></p>
+    <p><a href="https://www.economist.com/the-americas/2011/04/20/lies-and-argentine-statistics">Lies and Argentine statistics (The Economist - 2011)</a></p>
+    <p><a href="https://www.economist.com/leaders/2014/06/20/dont-lie-to-me-argentina">Don't lie to me, Argentina (The Economist - 2014)</a></p>
+</div>
+{% endblock %}

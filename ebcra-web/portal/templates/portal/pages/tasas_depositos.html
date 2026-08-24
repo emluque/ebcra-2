@@ -1,0 +1,103 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Deposit Interest Rates{% else %}Tasas de Interés de Depósitos{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Deposit Interest Rates{% else %}Tasas de Interés de Depósitos{% endif %}</h1></div></div>
+
+<div class="subtitle">
+    <h3>{% if lang == 'en' %}Savings Accounts{% else %}Caja de Ahorro{% endif %}</h3>
+</div>
+<div class="explanation"><p>{% if lang == 'en' %}The <strong>savings account rate</strong> (<em>tasa de caja de ahorro</em>) is the average annual nominal rate banks pay on peso savings accounts. Savings accounts are demand deposits — funds can be withdrawn at any time — so their rates are structurally lower than time deposits. Source: BCRA Informe Monetario Diario (daily).{% else %}La <strong>tasa de caja de ahorro</strong> es la tasa nominal anual promedio que pagan los bancos por los depósitos en cajas de ahorro en pesos. Las cajas de ahorro son depósitos a la vista — los fondos pueden retirarse en cualquier momento — por lo que sus tasas son estructuralmente más bajas que los plazos fijos. Fuente: BCRA Informe Monetario Diario (frecuencia diaria).{% endif %}</p></div>
+
+<div class="chart-container sub-chart">
+    <div id="chart0" class="rwd-chart loading"></div>
+</div>
+
+<div class="subtitle">
+    <h3>{% if lang == 'en' %}Time Deposits by Tenor{% else %}Plazo Fijo por Plazo{% endif %}</h3>
+</div>
+<div class="explanation"><p>{% if lang == 'en' %}Average annual nominal rates on peso <strong>time deposits</strong> (<em>plazos fijos</em>) by maturity band: short-term (7–59 days), the standard 30-day benchmark, and longer-term deposits (60 days or more). The 30-day reference rate is the BCRA series tracked since 2002 and reflects the most common term chosen by retail savers. For rates charged by banks on loans, see <a href="/en/argentina_lending_interest_rates">Lending Rates</a>. Source: BCRA Informe Monetario Diario (daily).{% else %}Tasas nominales anuales promedio de <strong>depósitos a plazo fijo</strong> en pesos según banda de plazo: corto plazo (7 a 59 días), el plazo de referencia de 30 días y depósitos de mayor plazo (60 días o más). La tasa de referencia a 30 días es la serie del BCRA publicada desde 2002 y refleja el plazo más elegido por el ahorrista minorista. Para las tasas que cobran los bancos por préstamos, ver <a href="/tasas_de_interes_de_prestamos_argentina">Tasas de Préstamos</a>. Fuente: BCRA Informe Monetario Diario (frecuencia diaria).{% endif %}</p></div>
+
+<div class="chart-container sub-chart">
+    <div id="chart1" class="rwd-chart loading"></div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_lending_interest_rates{% else %}/tasas_de_interes_de_prestamos_argentina{% endif %}">{% if lang == 'en' %}Lending Rates{% else %}Tasas de Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_sector{% else %}/depositos_por_sector_argentina{% endif %}">{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_holder{% else %}/depositos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Deposits by Holder{% else %}Depósitos por Titular{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage of Loans vs Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/tasa_dep_caja_ahorro_a",
+    "{{ CHART_API_BASE_URL }}/tasa_depositos_30_dias",
+    "{{ CHART_API_BASE_URL }}/tasa_dep_pf_7_59d_a",
+    "{{ CHART_API_BASE_URL }}/tasa_dep_pf_60mas_a"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const bGraph0 = new responsiveChart({
+        id: "tasas_dep0",
+        containerId: "chart0",
+        numberLocale: numberLocale,
+        initialView: "oneYear",
+        data: [
+            { id: "ca_a", stroke: "#0C6680", name: "{% if lang == 'en' %}Savings Rate{% else %}Caja de Ahorro{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_dep_caja_ahorro_a"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 175, showResultsPane: false, leftMargin: 24, addPercent: true, numberOfDigits: 2 }
+    });
+
+    const bGraph1 = new responsiveChart({
+        id: "tasas_dep1",
+        containerId: "chart1",
+        numberLocale: numberLocale,
+        initialView: "fiveYears",
+        data: [
+            { id: "pf30_ref", stroke: "#003333", name: "{% if lang == 'en' %}30-Day Rate (ref.){% else %}Tasa 30 días (ref.){% endif %}",  data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_depositos_30_dias"] },
+            { id: "pf7_59",   stroke: "#0C6680", name: "{% if lang == 'en' %}7–59 Days{% else %}7 a 59 días{% endif %}",                   data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_dep_pf_7_59d_a"] },
+            { id: "pf60mas",  stroke: "#666600", name: "{% if lang == 'en' %}60+ Days{% else %}60 días o más{% endif %}",                  data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_dep_pf_60mas_a"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 175, showResultsPane: false, leftMargin: 24, addPercent: true, numberOfDigits: 2 }
+    });
+
+    removeLoading();
+    let t;
+    window.addEventListener('resize', () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+            bGraph0.resize();
+            bGraph1.resize();
+        }, 150);
+    });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

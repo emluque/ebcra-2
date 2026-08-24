@@ -1,0 +1,79 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Monthly Inflation (Official){% else %}Inflación Mensual (Oficial){% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Monthly Inflation (Official){% else %}Inflación Mensual (Oficial){% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}Monthly change in Argentina's Consumer Price Index (CPI), sourced from the BCRA, which aggregates data from INDEC. Between November 2015 and January 2016, the BCRA uses the Buenos Aires City CPI. Between February and April 2016, it uses the San Luis CPI.{% else %}Variación mensual del Índice de Precios al Consumidor (IPC) de Argentina, obtenida del BCRA, que agrega datos del INDEC. Entre noviembre de 2015 y enero de 2016, el BCRA utiliza el IPC de la Ciudad de Buenos Aires. Entre febrero y abril de 2016, utiliza el IPC de San Luis.{% endif %}</p></div>
+<div class="explanation warning"><p>{% if lang == 'en' %}<b>Note</b>: Official inflation data for 2007–2016 is not considered reliable. During that period INDEC was intervened and its reported figures are widely disputed. Read more: <a href="/en/note_on_inflation_data">Note on inflation data</a>.{% else %}<b>Nota</b>: Los datos oficiales de inflación del período 2007–2016 no son considerados confiables. El INDEC fue intervenido durante ese período y sus cifras son ampliamente cuestionadas. Lea más: <a href="/nota_sobre_los_datos_oficiales_de_inflacion">Nota sobre los datos de inflación</a>.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Monthly Inflation (Official){% else %}Inflación Mensual (Oficial){% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Other Reports{% else %}Otros Reportes{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_expected_inflation{% else %}/inflacion_esperada_argentina{% endif %}">{% if lang == 'en' %}Expected Inflation{% else %}Inflación Esperada{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/cer{% else %}/cer{% endif %}">CER</a></li>
+                <li><a href="{% if lang == 'en' %}/en/unit_of_purchasing_value{% else %}/unidad_de_valor_adquisitivo{% endif %}">{% if lang == 'en' %}UVA{% else %}UVA{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/unit_of_dwelling{% else %}/unidad_de_vivienda{% endif %}">{% if lang == 'en' %}UVI{% else %}UVI{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/icl{% else %}/icl{% endif %}">ICL</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_in_usd{% else %}/base_monetaria_argentina_en_usd{% endif %}">{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2_in_usd{% else %}/m2_en_usd{% endif %}">{% if lang == 'en' %}M2 in USD{% else %}M2 en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = ["{{ CHART_API_BASE_URL }}/inflacion_mensual_oficial"];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g = new responsiveChart({
+        id: "inf-mensual",
+        containerId: "chart",
+        numberLocale: numberLocale,
+        initialView: "fiveYears",
+        data: [{ id: "inf-mensual", stroke: "#003333", name: "{% if lang == 'en' %}Monthly Inflation (Official){% else %}Inf. Mensual (Of.){% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/inflacion_mensual_oficial"] }],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { 
+            views: chartViewsConf, 
+            lang: chartLang, 
+            toolTipContainerBGWidth: 182,
+            backgroundBands: [
+                {
+                    start: "2007-01-29",
+                    end: "2015-12-10",
+                    color: "rgba(220, 80, 80, 0.22)",
+                    label: "Intervención del INDEC",
+                    labelColor: "rgba(180, 0, 0, 0.6)"
+                }
+            ]}
+    });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load static %}
+<script>
+const milestonesTextFunc = (p) => {
+    const tr = [];
+    for (const item of p) {
+        let t = "";
+        switch (item.t) {
+            case "bcra": t += `BCRA: ${item.e}`; break;
+            case "econ": t += `{% if lang == 'en' %}Min. Econ{% else %}Min. Econ{% endif %}: ${item.e}`; break;
+            case "pres": t += `{% if lang == 'en' %}Presidency{% else %}Presidencia{% endif %}: ${item.e}`; break;
+            case "misc": t += item.e; break;
+            case "trea": t += `Min. Trea: ${item.e}`; break;
+            case "fina": t += `Min. Fin: ${item.e}`; break;
+        }
+        tr.push(t);
+    }
+    return tr;
+};
+
+const chartLang = {
+    allTimeText: "{% if lang == 'en' %}All records{% else %}Todos los registros{% endif %}",
+    showEvents: "{% if lang == 'en' %}Show Events{% else %}Mostrar Eventos{% endif %}"
+};
+
+let chartViewsConf = [
+    { view: [0, 3, 0], text: "{% if lang == 'en' %}3 months{% else %}3 meses{% endif %}", id: "threeMonths" },
+    { view: [0, 0, 1], text: "{% if lang == 'en' %}1 year{% else %}1 año{% endif %}", id: "oneYear" },
+    { view: [0, 0, 5], text: "{% if lang == 'en' %}5 years{% else %}5 años{% endif %}", id: "fiveYears" }
+];
+
+const variationsLang = {
+    daily: "{% if lang == 'en' %}Daily{% else %}Diario{% endif %}",
+    monthly: "{% if lang == 'en' %}Monthly{% else %}Mensual{% endif %}",
+    annual: "{% if lang == 'en' %}Annual{% else %}Anual{% endif %}",
+    dailyExp: "{% if lang == 'en' %}Since last record with prior change <= 30 days.{% else %}Desde el ultimo registro con cambio anterior o igual a 30 días desde el ultimo registro.{% endif %}",
+    monthlyExp: "{% if lang == 'en' %}Last 12 months.{% else %}Ultimos 12 meses.{% endif %}",
+    annualExp: "{% if lang == 'en' %}All years with available data.{% else %}Todos los años de los que se tienen datos.{% endif %}"
+};
+
+const numberLocale = "{{ lang }}";
+
+const removeLoading = () => {
+    const lds = Array.from(document.querySelectorAll('.loading'));
+    for (const el of lds) {
+        if (el.className) {
+            el.className = el.className.replace("loading", '').trim();
+        }
+    }
+};
+</script>

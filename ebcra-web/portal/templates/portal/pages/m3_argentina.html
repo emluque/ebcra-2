@@ -1,0 +1,118 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}M3 — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>M3</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}M3 monetary aggregate: M2 plus time deposits and other deposits of the private and public sectors in pesos.{% else %}Agregado monetario M3: M2 más depósitos a plazo y otros depósitos de los sectores privado y público en pesos.{% endif %}</p></div>
+
+<div class="subtitle"><h3>M3</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
+</div>
+
+{% if variations %}
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="variations-container">
+    <h2>M3</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.m3_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.m3_date_last|format_date }}</small> : <small>{{ variations.m3_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.m3_val_last|calculate_variation:variations.m3_val_daily }}</h3>
+            <div><small>{{ variations.m3_date_daily|format_date }}</small> : <small>{{ variations.m3_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.m3_val_last|calculate_variation:variations.m3_val_monthly }}</h3>
+            <div><small>{{ variations.m3_date_monthly|format_date }}</small> : <small>{{ variations.m3_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.m3_val_last|calculate_variation:variations.m3_val_yearly }}</h3>
+            <div><small>{{ variations.m3_date_yearly|format_date }}</small> : <small>{{ variations.m3_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.m3_val_last|calculate_variation:variations.m3_val_2years }}</h3>
+            <div><small>{{ variations.m3_date_2years|format_date }}</small> : <small>{{ variations.m3_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.m3_val_last|calculate_variation:variations.m3_val_3years }}</h3>
+            <div><small>{{ variations.m3_date_3years|format_date }}</small> : <small>{{ variations.m3_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            <h3>{{ variations.m3_val_last|calculate_variation:variations.m3_val_5years }}</h3>
+            <div><small>{{ variations.m3_date_5years|format_date }}</small> : <small>{{ variations.m3_val_5years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            <h3>{{ variations.m3_val_last|calculate_variation:variations.m3_val_10years }}</h3>
+            <div><small>{{ variations.m3_date_10years|format_date }}</small> : <small>{{ variations.m3_val_10years|format_number:lang }}</small></div>
+        </div>
+    </div>
+</div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="variations-chart-container">
+    <div id="variations-chart" class="loading"></div>
+</div>
+{% endif %}
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3_in_usd{% else %}/m3_en_usd{% endif %}">{% if lang == 'en' %}M3 in USD{% else %}M3 en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3_divided_by_international_reserves{% else %}/m3_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M3 Divided by International Reserves{% else %}M3 Dividido Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1{% else %}/m1{% endif %}">M1</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1_in_usd{% else %}/m1_en_usd{% endif %}">{% if lang == 'en' %}M1 in USD{% else %}M1 en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2_in_usd{% else %}/m2_en_usd{% endif %}">{% if lang == 'en' %}M2 in USD{% else %}M2 en USD{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1_divided_by_international_reserves{% else %}/m1_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M1 Divided by International Reserves{% else %}M1 Dividido Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2_divided_by_international_reserves{% else %}/m2_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M2 Divided by International Reserves{% else %}M2 Dividido Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/m3"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({ id: "m3", containerId: "chart", numberLocale: numberLocale, initialView: "fiveYears", data: [{ id: "m3", stroke: "#003333", name: "M3", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/m3"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 160 } });
+    {% if variations %}
+    const v1 = new responsiveVariations({ id: "m3-variation", containerId: "variations-chart", numberLocale: numberLocale, initialView: "monthly", data: [{ id: "m3", stroke: "#003333", name: "M3", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/m3"] }], conf: { lang: variationsLang, toolTipContainerBGWidth: 160 } });
+    {% endif %}
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); {% if variations %}v1.resize();{% endif %} }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

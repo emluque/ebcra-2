@@ -1,0 +1,63 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}International Reserves Variation Factors{% else %}Factores de Variación de las Reservas Internacionales{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}International Reserves Variation Factors{% else %}Factores de Variación de las Reservas Internacionales{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}The BCRA publishes a daily breakdown of which operations drove the change in gross international reserves. <strong>FX Purchases</strong> (Compra de Divisas) captures net spot dollar purchases from the private sector and government. <strong>Intl. Organizations</strong> (Organismos Internacionales) reflects disbursements and repayments to multilateral lenders such as the IMF. <strong>Public Sector</strong> (Sector Público) records national government foreign currency operations — e.g. debt service or dollar sales by Treasury. <strong>Minimum Reserve Req.</strong> (Efectivo Mínimo) tracks changes in the portion of bank dollar deposits that must be held at the BCRA. <strong>Other Operations</strong> (Otras Operaciones) is the residual: swap valuations, gold revaluations, and miscellaneous flows not captured in the other categories.{% else %}El BCRA publica diariamente qué operaciones impulsaron el cambio en las reservas internacionales brutas. <strong>Compra de Divisas</strong> registra las compras netas de dólares al sector privado y al gobierno. <strong>Organismos Internacionales</strong> refleja desembolsos y pagos a prestamistas multilaterales como el FMI. <strong>Sector Público</strong> registra operaciones en moneda extranjera del gobierno nacional — p.ej. servicio de deuda o venta de dólares por parte del Tesoro. <strong>Efectivo Mínimo</strong> registra cambios en la porción de los depósitos en dólares de los bancos que deben mantenerse en el BCRA. <strong>Otras Operaciones</strong> es el residual: valuaciones de swaps, revaluaciones del oro y flujos misceláneos no capturados en las otras categorías.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}International Reserves Variation Factors{% else %}Factores de Variación de las Reservas Internacionales{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of USD{% else %}Valores expresados en Millones de USD{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves_composition{% else %}/composicion_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_divided_by_international_reserves{% else %}/base_monetaria_dividida_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}Monetary Base Divided by International Reserves{% else %}Base Monetaria Dividida Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1_divided_by_international_reserves{% else %}/m1_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M1 Divided by International Reserves{% else %}M1 Dividido Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2_divided_by_international_reserves{% else %}/m2_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M2 Divided by International Reserves{% else %}M2 Dividido Reservas Internacionales{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3_divided_by_international_reserves{% else %}/m3_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M3 Divided by International Reserves{% else %}M3 Dividido Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_in_usd{% else %}/base_monetaria_argentina_en_usd{% endif %}">{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria en USD{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/reservas_compra_divisas",
+    "{{ CHART_API_BASE_URL }}/reservas_organismos_internacionales",
+    "{{ CHART_API_BASE_URL }}/reservas_sector_publico",
+    "{{ CHART_API_BASE_URL }}/reservas_efectivo_minimo",
+    "{{ CHART_API_BASE_URL }}/reservas_otras_operaciones"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({ id: "fact-var-reservas", containerId: "chart", numberLocale: numberLocale, initialView: "oneYear", data: [{ id: "compra-div", stroke: "#0C6680", name: "{% if lang == 'en' %}FX Purchases{% else %}Compra de Divisas{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas_compra_divisas"] }, { id: "org-int", stroke: "#003333", name: "{% if lang == 'en' %}Intl. Organizations{% else %}Organismos Internacionales{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas_organismos_internacionales"] }, { id: "sec-pub", stroke: "#666600", name: "{% if lang == 'en' %}Public Sector{% else %}Sector Público{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas_sector_publico"] }, { id: "ef-min", stroke: "#993333", name: "{% if lang == 'en' %}Minimum Reserve Req.{% else %}Efectivo Mínimo{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas_efectivo_minimo"] }, { id: "otras-op", stroke: "#333333", name: "{% if lang == 'en' %}Other Operations{% else %}Otras Operaciones{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas_otras_operaciones"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 280 } });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

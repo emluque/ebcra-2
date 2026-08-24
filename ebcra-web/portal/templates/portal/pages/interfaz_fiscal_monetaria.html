@@ -1,0 +1,138 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}Fiscal-Monetary Interface{% else %}Interfaz Fiscal-Monetaria{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Fiscal-Monetary Interface{% else %}Interfaz Fiscal-Monetaria{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}Financial flows between the National Treasury and the BCRA balance sheet. Temporary advances are direct peso loans from the BCRA to the Treasury. Leliq and Notaliq are short-term BCRA liabilities issued to absorb excess pesos from circulation (sterilization). Government deposits at the BCRA reflect the Treasury's cash position: deposits in pesos and in foreign currency are shown separately.{% else %}Flujos financieros entre el Tesoro Nacional y el balance del BCRA. Los adelantos transitorios son préstamos en pesos que el BCRA otorga directamente al Tesoro. Las Leliq y Notaliq son pasivos de corto plazo emitidos por el BCRA para absorber el exceso de pesos en circulación (esterilización). Los depósitos del gobierno en el BCRA reflejan la posición de caja del Tesoro: se muestran por separado los depósitos en pesos y en moneda extranjera.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Temporary Advances (BCRA to Treasury){% else %}Adelantos Transitorios (BCRA al Tesoro){% endif %}</h3></div>
+<div class="explanation"><p>{% if lang == 'en' %}Outstanding stock of direct peso loans from the BCRA to the National Treasury.{% else %}Saldo de préstamos en pesos otorgados directamente por el BCRA al Tesoro Nacional.{% endif %}</p></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Leliq and Notaliq{% else %}Leliq y Notaliq{% endif %}</h3></div>
+<div class="explanation"><p>{% if lang == 'en' %}Outstanding stock of BCRA short-term sterilization instruments (Letras de Liquidez and Notas de Liquidez), held by financial institutions.{% else %}Saldo de instrumentos de esterilización de corto plazo del BCRA (Letras de Liquidez y Notas de Liquidez) en poder de entidades financieras.{% endif %}</p></div>
+<div class="chart-container sub-chart">
+    <div id="chart2" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Government Deposits at the BCRA — Pesos{% else %}Depósitos del Gobierno en el BCRA — Pesos{% endif %}</h3></div>
+<div class="explanation"><p>{% if lang == 'en' %}Peso deposits held by the National Government at the BCRA. A rising balance indicates accumulation of fiscal surpluses.{% else %}Depósitos en pesos del Gobierno Nacional en el BCRA. Un saldo en aumento indica acumulación de superávit fiscal.{% endif %}</p></div>
+<div class="chart-container sub-chart">
+    <div id="chart3" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Government Deposits at the BCRA — Foreign Currency{% else %}Depósitos del Gobierno en el BCRA — Moneda Extranjera{% endif %}</h3></div>
+<div class="explanation"><p>{% if lang == 'en' %}Foreign currency deposits held by the National Government at the BCRA.{% else %}Depósitos en moneda extranjera del Gobierno Nacional en el BCRA.{% endif %}</p></div>
+<div class="chart-container sub-chart">
+    <div id="chart4" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of USD{% else %}Valores expresados en Millones de USD{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_in_usd{% else %}/base_monetaria_argentina_en_usd{% endif %}">{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_divided_by_international_reserves{% else %}/base_monetaria_dividida_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}Monetary Base / Int. Reserves{% else %}Base Monetaria / Reservas{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monthly_inflation{% else %}/inflacion_mensual_argentina{% endif %}">{% if lang == 'en' %}Monthly Inflation{% else %}Inflación Mensual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/adelantos_transitorios",
+    "{{ CHART_API_BASE_URL }}/leliq_notaliq",
+    "{{ CHART_API_BASE_URL }}/depositos_gobierno_pesos",
+    "{{ CHART_API_BASE_URL }}/depositos_gobierno_usd"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({
+        id: "adelantos-transitorios",
+        containerId: "chart",
+        numberLocale: numberLocale,
+        initialView: "fiveYears",
+        data: [
+            { id: "adelantos", stroke: "#0C6680", name: "{% if lang == 'en' %}Temporary Advances{% else %}Adelantos Transitorios{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/adelantos_transitorios"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 220 }
+    });
+
+    const g2 = new responsiveChart({
+        id: "leliq-notaliq",
+        containerId: "chart2",
+        numberLocale: numberLocale,
+        initialView: "fiveYears",
+        data: [
+            { id: "leliq", stroke: "#666600", name: "{% if lang == 'en' %}Leliq and Notaliq{% else %}Leliq y Notaliq{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/leliq_notaliq"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 200 }
+    });
+
+    const g3 = new responsiveChart({
+        id: "depositos-gobierno-pesos",
+        containerId: "chart3",
+        numberLocale: numberLocale,
+        initialView: "fiveYears",
+        data: [
+            { id: "dep-pesos", stroke: "#003333", name: "{% if lang == 'en' %}Government Deposits (Pesos){% else %}Depósitos Gobierno (Pesos){% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_gobierno_pesos"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 260 }
+    });
+
+    const g4 = new responsiveChart({
+        id: "depositos-gobierno-usd",
+        containerId: "chart4",
+        numberLocale: numberLocale,
+        initialView: "fiveYears",
+        data: [
+            { id: "dep-usd", stroke: "#333300", name: "{% if lang == 'en' %}Government Deposits (USD){% else %}Depósitos Gobierno (USD){% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_gobierno_usd"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 250 }
+    });
+
+    removeLoading();
+    let t;
+    window.addEventListener('resize', () => {
+        clearTimeout(t);
+        t = setTimeout(() => { g1.resize(); g2.resize(); g3.resize(); g4.resize(); }, 150);
+    });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

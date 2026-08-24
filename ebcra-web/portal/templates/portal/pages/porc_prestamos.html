@@ -1,0 +1,83 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}Loans vs Deposits (%){% else %}Porcentaje Préstamos vs Depósitos{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Loans as a Percentage of Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}The following report shows the percentage of <a href="/en/argentina_loans">Loans</a> relative to total <a href="/en/argentina_deposits">Deposits</a> in the Argentine financial system. This is our own calculation based on data published by the BCRA — not an official BCRA indicator. It serves as a measure of financial intermediation and the degree of internal indebtedness.{% else %}El siguiente reporte muestra el porcentaje de <a href="/prestamos_argentina">Préstamos</a> en relación a los <a href="/depositos_argentina">Depósitos</a> del sistema financiero argentino. Es una elaboración propia calculada a partir de los datos publicados por el BCRA, no un indicador oficial. Sirve para evaluar el grado de intermediación financiera y el nivel de endeudamiento interno.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Loans as a Percentage of Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Percentages{% else %}Valores expresados en Porcentajes{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans_by_type{% else %}/prestamos_por_tipo_argentina{% endif %}">{% if lang == 'en' %}Loans by Type{% else %}Préstamos por Tipo{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_mortgage_and_secured_loans{% else %}/prestamos_hipotecarios_y_prendarios_argentina{% endif %}">{% if lang == 'en' %}Mortgage and Secured Loans{% else %}Hipotecarios y Prendarios{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans_by_borrower{% else %}/prestamos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Loans by Borrower{% else %}Préstamos por Titular{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_sector{% else %}/depositos_por_sector_argentina{% endif %}">{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_usd_deposits{% else %}/depositos_en_dolares_argentina{% endif %}">{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_financial_system_liquidity{% else %}/liquidez_sistema_financiero_argentina{% endif %}">{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Profitability{% else %}Rentabilidades{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/porc_prestamos_vs_depositos"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({
+        id: "rent-dollar",
+        containerId: "chart",
+        initialView: "fiveYears",
+        data: [{
+            id: "r-usd",
+            stroke: "#003333",
+            name: "{% if lang == 'en' %}Porc. Loans vs Deposits{% else %}Porc. Préstamos vs Depósitos{% endif %}",
+            data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/porc_prestamos_vs_depositos"]
+        }],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        numberLocale: numberLocale,
+        conf: {
+            views: chartViewsConf,
+            lang: chartLang,
+            toolTipContainerBGWidth: 260,
+            showResultsPane: false,
+            leftMargin: 24,
+            addPercent: true,
+            numberOfDigits: 2
+        }
+    });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

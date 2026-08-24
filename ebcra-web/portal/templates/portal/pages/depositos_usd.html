@@ -1,0 +1,184 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}USD Deposits — Private Non-Financial Sector{% else %}Depósitos en Dólares — Sector Privado No Financiero{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}<strong>Total USD Deposits</strong> (ID 1563) covers all deposits and other liabilities of the private non-financial sector denominated in US dollars. <strong>Cash USD Deposits</strong> (ID 1564) is the cash-only subset of total USD deposits, excluding other liabilities. Both series are published daily by the BCRA. The <strong>interest rate</strong> chart shows the nominal annual rate on USD time deposits, broken down by all clients, individuals (personas humanas), and legal entities (personas jurídicas).{% else %}Los <strong>Depósitos Totales en Dólares</strong> (ID 1563) comprenden el total de depósitos y otros pasivos en dólares del sector privado no financiero. Los <strong>Depósitos de Efectivo en Dólares</strong> (ID 1564) son el subconjunto de depósitos en efectivo del total anterior, excluyendo otros pasivos. Ambas series son publicadas diariamente por el BCRA. El gráfico de <strong>tasas de interés</strong> muestra la tasa nominal anual de los depósitos a plazo fijo en dólares, desagregada por total, personas humanas y personas jurídicas.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of USD{% else %}Valores expresados en Millones de USD{% endif %}</div>
+</div>
+
+{% if variations %}
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="variations-container">
+    <h2>{% if lang == 'en' %}Total USD Deposits{% else %}Depósitos Totales en Dólares{% endif %}</h2>
+
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.tot_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.tot_date_last|format_date }}</small> : <small>{{ variations.tot_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.tot_val_last|calculate_variation:variations.tot_val_daily }}</h3>
+            <div><small>{{ variations.tot_date_daily|format_date }}</small> : <small>{{ variations.tot_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.tot_val_last|calculate_variation:variations.tot_val_monthly }}</h3>
+            <div><small>{{ variations.tot_date_monthly|format_date }}</small> : <small>{{ variations.tot_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.tot_val_last|calculate_variation:variations.tot_val_yearly }}</h3>
+            <div><small>{{ variations.tot_date_yearly|format_date }}</small> : <small>{{ variations.tot_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.tot_val_last|calculate_variation:variations.tot_val_2years }}</h3>
+            <div><small>{{ variations.tot_date_2years|format_date }}</small> : <small>{{ variations.tot_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.tot_val_last|calculate_variation:variations.tot_val_3years }}</h3>
+            <div><small>{{ variations.tot_date_3years|format_date }}</small> : <small>{{ variations.tot_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.tot_val_5years %}
+            <h3>{{ variations.tot_val_last|calculate_variation:variations.tot_val_5years }}</h3>
+            <div><small>{{ variations.tot_date_5years|format_date }}</small> : <small>{{ variations.tot_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.tot_val_10years %}
+            <h3>{{ variations.tot_val_last|calculate_variation:variations.tot_val_10years }}</h3>
+            <div><small>{{ variations.tot_date_10years|format_date }}</small> : <small>{{ variations.tot_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+
+    <h2>{% if lang == 'en' %}Cash USD Deposits{% else %}Depósitos de Efectivo en Dólares{% endif %}</h2>
+
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.ef_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.ef_date_last|format_date }}</small> : <small>{{ variations.ef_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.ef_val_last|calculate_variation:variations.ef_val_daily }}</h3>
+            <div><small>{{ variations.ef_date_daily|format_date }}</small> : <small>{{ variations.ef_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.ef_val_last|calculate_variation:variations.ef_val_monthly }}</h3>
+            <div><small>{{ variations.ef_date_monthly|format_date }}</small> : <small>{{ variations.ef_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.ef_val_last|calculate_variation:variations.ef_val_yearly }}</h3>
+            <div><small>{{ variations.ef_date_yearly|format_date }}</small> : <small>{{ variations.ef_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.ef_val_last|calculate_variation:variations.ef_val_2years }}</h3>
+            <div><small>{{ variations.ef_date_2years|format_date }}</small> : <small>{{ variations.ef_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.ef_val_last|calculate_variation:variations.ef_val_3years }}</h3>
+            <div><small>{{ variations.ef_date_3years|format_date }}</small> : <small>{{ variations.ef_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.ef_val_5years %}
+            <h3>{{ variations.ef_val_last|calculate_variation:variations.ef_val_5years }}</h3>
+            <div><small>{{ variations.ef_date_5years|format_date }}</small> : <small>{{ variations.ef_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.ef_val_10years %}
+            <h3>{{ variations.ef_val_last|calculate_variation:variations.ef_val_10years }}</h3>
+            <div><small>{{ variations.ef_date_10years|format_date }}</small> : <small>{{ variations.ef_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+</div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="variations-chart-container">
+    <div id="variations-chart" class="loading"></div>
+</div>
+{% endif %}
+
+<div class="subtitle"><h3>{% if lang == 'en' %}USD Time Deposit Interest Rates{% else %}Tasas de Interés — Plazo Fijo en Dólares{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="rates-chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}% nominal annual rate{% else %}% tasa nominal anual{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_sector{% else %}/depositos_por_sector_argentina{% endif %}">{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_holder{% else %}/depositos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Deposits by Holder{% else %}Depósitos por Titular{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_financial_system_liquidity{% else %}/liquidez_sistema_financiero_argentina{% endif %}">{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage Loans vs Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposit_interest_rates{% else %}/tasas_de_interes_de_depositos_argentina{% endif %}">{% if lang == 'en' %}Deposit Rates{% else %}Tasas de Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_in_usd{% else %}/base_monetaria_argentina_en_usd{% endif %}">{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria en USD{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/depositos_usd_total",
+    "{{ CHART_API_BASE_URL }}/depositos_usd_efectivo",
+    "{{ CHART_API_BASE_URL }}/tasa_depositos_plazo_fijo_usd",
+    "{{ CHART_API_BASE_URL }}/tasa_depositos_plazo_fijo_usd_humanas",
+    "{{ CHART_API_BASE_URL }}/tasa_depositos_plazo_fijo_usd_juridicas"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({ id: "depositos-usd", containerId: "chart", numberLocale: numberLocale, initialView: "fiveYears", data: [{ id: "usd-tot", stroke: "#0C6680", name: "{% if lang == 'en' %}Total Deposits{% else %}Depósitos Totales{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_usd_total"] }, { id: "usd-ef", stroke: "#666600", name: "{% if lang == 'en' %}Cash Deposits{% else %}Depósitos de Efectivo{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_usd_efectivo"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 250 } });
+    const v1 = new responsiveVariations({ id: "depositos-usd-variation", containerId: "variations-chart", numberLocale: numberLocale, initialView: "monthly", data: [{ id: "usd-tot", stroke: "#0C6680", name: "{% if lang == 'en' %}Total Deposits{% else %}Depósitos Totales{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_usd_total"] }, { id: "usd-ef", stroke: "#666600", name: "{% if lang == 'en' %}Cash Deposits{% else %}Depósitos de Efectivo{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_usd_efectivo"] }], conf: { lang: variationsLang, toolTipContainerBGWidth: 250 } });
+    const g2 = new responsiveChart({ id: "depositos-usd-tasas", containerId: "rates-chart", numberLocale: numberLocale, initialView: "fiveYears", data: [{ id: "tasa-tot", stroke: "#0C6680", name: "{% if lang == 'en' %}All Clients{% else %}Total{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_depositos_plazo_fijo_usd"] }, { id: "tasa-hum", stroke: "#666600", name: "{% if lang == 'en' %}Individuals{% else %}Personas Humanas{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_depositos_plazo_fijo_usd_humanas"] }, { id: "tasa-jur", stroke: "#003333", name: "{% if lang == 'en' %}Legal Entities{% else %}Personas Jurídicas{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_depositos_plazo_fijo_usd_juridicas"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 250 } });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); v1.resize(); g2.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

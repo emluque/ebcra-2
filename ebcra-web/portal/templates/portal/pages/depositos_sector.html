@@ -1,0 +1,326 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector Privado y Público{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}<strong>Private Sector Vista Deposits</strong> are demand deposits (checking accounts and savings accounts) held by the private sector. <strong>Private Sector Plazo Deposits</strong> are time deposits and investments by the private sector (plazo fijo). <strong>Public Sector Total Deposits</strong> are all deposits held by the public sector. <strong>Public Sector Vista Deposits</strong> and <strong>Public Sector Plazo Deposits</strong> provide the demand/time breakdown within public sector holdings.{% else %}Los <strong>Depósitos a la Vista del Sector Privado</strong> comprenden cuentas corrientes y cajas de ahorro en pesos del sector privado. Los <strong>Depósitos a Plazo del Sector Privado</strong> incluyen plazos fijos e inversiones a plazo del sector privado. Los <strong>Depósitos del Sector Público</strong> corresponden al total de depósitos en pesos del sector público. Los <strong>Depósitos a la Vista del Sector Público</strong> y <strong>Depósitos a Plazo del Sector Público</strong> muestran el desglose vista/plazo dentro del sector público.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
+</div>
+
+{% if variations %}
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="variations-container">
+    <h2>{% if lang == 'en' %}Private Sector Vista Deposits{% else %}Depósitos a la Vista del Sector Privado{% endif %}</h2>
+
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.priv_vis_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.priv_vis_date_last|format_date }}</small> : <small>{{ variations.priv_vis_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.priv_vis_val_last|calculate_variation:variations.priv_vis_val_daily }}</h3>
+            <div><small>{{ variations.priv_vis_date_daily|format_date }}</small> : <small>{{ variations.priv_vis_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.priv_vis_val_last|calculate_variation:variations.priv_vis_val_monthly }}</h3>
+            <div><small>{{ variations.priv_vis_date_monthly|format_date }}</small> : <small>{{ variations.priv_vis_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.priv_vis_val_last|calculate_variation:variations.priv_vis_val_yearly }}</h3>
+            <div><small>{{ variations.priv_vis_date_yearly|format_date }}</small> : <small>{{ variations.priv_vis_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.priv_vis_val_last|calculate_variation:variations.priv_vis_val_2years }}</h3>
+            <div><small>{{ variations.priv_vis_date_2years|format_date }}</small> : <small>{{ variations.priv_vis_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.priv_vis_val_last|calculate_variation:variations.priv_vis_val_3years }}</h3>
+            <div><small>{{ variations.priv_vis_date_3years|format_date }}</small> : <small>{{ variations.priv_vis_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.priv_vis_val_5years %}
+            <h3>{{ variations.priv_vis_val_last|calculate_variation:variations.priv_vis_val_5years }}</h3>
+            <div><small>{{ variations.priv_vis_date_5years|format_date }}</small> : <small>{{ variations.priv_vis_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.priv_vis_val_10years %}
+            <h3>{{ variations.priv_vis_val_last|calculate_variation:variations.priv_vis_val_10years }}</h3>
+            <div><small>{{ variations.priv_vis_date_10years|format_date }}</small> : <small>{{ variations.priv_vis_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+
+    <h2>{% if lang == 'en' %}Private Sector Plazo Deposits{% else %}Depósitos a Plazo del Sector Privado{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.priv_pla_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.priv_pla_date_last|format_date }}</small> : <small>{{ variations.priv_pla_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.priv_pla_val_last|calculate_variation:variations.priv_pla_val_daily }}</h3>
+            <div><small>{{ variations.priv_pla_date_daily|format_date }}</small> : <small>{{ variations.priv_pla_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.priv_pla_val_last|calculate_variation:variations.priv_pla_val_monthly }}</h3>
+            <div><small>{{ variations.priv_pla_date_monthly|format_date }}</small> : <small>{{ variations.priv_pla_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.priv_pla_val_last|calculate_variation:variations.priv_pla_val_yearly }}</h3>
+            <div><small>{{ variations.priv_pla_date_yearly|format_date }}</small> : <small>{{ variations.priv_pla_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.priv_pla_val_last|calculate_variation:variations.priv_pla_val_2years }}</h3>
+            <div><small>{{ variations.priv_pla_date_2years|format_date }}</small> : <small>{{ variations.priv_pla_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.priv_pla_val_last|calculate_variation:variations.priv_pla_val_3years }}</h3>
+            <div><small>{{ variations.priv_pla_date_3years|format_date }}</small> : <small>{{ variations.priv_pla_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.priv_pla_val_5years %}
+            <h3>{{ variations.priv_pla_val_last|calculate_variation:variations.priv_pla_val_5years }}</h3>
+            <div><small>{{ variations.priv_pla_date_5years|format_date }}</small> : <small>{{ variations.priv_pla_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.priv_pla_val_10years %}
+            <h3>{{ variations.priv_pla_val_last|calculate_variation:variations.priv_pla_val_10years }}</h3>
+            <div><small>{{ variations.priv_pla_date_10years|format_date }}</small> : <small>{{ variations.priv_pla_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+
+    <h2>{% if lang == 'en' %}Public Sector Total Deposits{% else %}Depósitos del Sector Público{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.pub_tot_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.pub_tot_date_last|format_date }}</small> : <small>{{ variations.pub_tot_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.pub_tot_val_last|calculate_variation:variations.pub_tot_val_daily }}</h3>
+            <div><small>{{ variations.pub_tot_date_daily|format_date }}</small> : <small>{{ variations.pub_tot_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.pub_tot_val_last|calculate_variation:variations.pub_tot_val_monthly }}</h3>
+            <div><small>{{ variations.pub_tot_date_monthly|format_date }}</small> : <small>{{ variations.pub_tot_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.pub_tot_val_last|calculate_variation:variations.pub_tot_val_yearly }}</h3>
+            <div><small>{{ variations.pub_tot_date_yearly|format_date }}</small> : <small>{{ variations.pub_tot_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.pub_tot_val_last|calculate_variation:variations.pub_tot_val_2years }}</h3>
+            <div><small>{{ variations.pub_tot_date_2years|format_date }}</small> : <small>{{ variations.pub_tot_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.pub_tot_val_last|calculate_variation:variations.pub_tot_val_3years }}</h3>
+            <div><small>{{ variations.pub_tot_date_3years|format_date }}</small> : <small>{{ variations.pub_tot_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.pub_tot_val_5years %}
+            <h3>{{ variations.pub_tot_val_last|calculate_variation:variations.pub_tot_val_5years }}</h3>
+            <div><small>{{ variations.pub_tot_date_5years|format_date }}</small> : <small>{{ variations.pub_tot_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.pub_tot_val_10years %}
+            <h3>{{ variations.pub_tot_val_last|calculate_variation:variations.pub_tot_val_10years }}</h3>
+            <div><small>{{ variations.pub_tot_date_10years|format_date }}</small> : <small>{{ variations.pub_tot_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+
+    <h2>{% if lang == 'en' %}Public Sector Vista Deposits{% else %}Depósitos a la Vista del Sector Público{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.pub_vis_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.pub_vis_date_last|format_date }}</small> : <small>{{ variations.pub_vis_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.pub_vis_val_last|calculate_variation:variations.pub_vis_val_daily }}</h3>
+            <div><small>{{ variations.pub_vis_date_daily|format_date }}</small> : <small>{{ variations.pub_vis_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.pub_vis_val_last|calculate_variation:variations.pub_vis_val_monthly }}</h3>
+            <div><small>{{ variations.pub_vis_date_monthly|format_date }}</small> : <small>{{ variations.pub_vis_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.pub_vis_val_last|calculate_variation:variations.pub_vis_val_yearly }}</h3>
+            <div><small>{{ variations.pub_vis_date_yearly|format_date }}</small> : <small>{{ variations.pub_vis_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.pub_vis_val_last|calculate_variation:variations.pub_vis_val_2years }}</h3>
+            <div><small>{{ variations.pub_vis_date_2years|format_date }}</small> : <small>{{ variations.pub_vis_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.pub_vis_val_last|calculate_variation:variations.pub_vis_val_3years }}</h3>
+            <div><small>{{ variations.pub_vis_date_3years|format_date }}</small> : <small>{{ variations.pub_vis_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.pub_vis_val_5years %}
+            <h3>{{ variations.pub_vis_val_last|calculate_variation:variations.pub_vis_val_5years }}</h3>
+            <div><small>{{ variations.pub_vis_date_5years|format_date }}</small> : <small>{{ variations.pub_vis_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.pub_vis_val_10years %}
+            <h3>{{ variations.pub_vis_val_last|calculate_variation:variations.pub_vis_val_10years }}</h3>
+            <div><small>{{ variations.pub_vis_date_10years|format_date }}</small> : <small>{{ variations.pub_vis_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+
+    <h2>{% if lang == 'en' %}Public Sector Plazo Deposits{% else %}Depósitos a Plazo del Sector Público{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.pub_pla_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.pub_pla_date_last|format_date }}</small> : <small>{{ variations.pub_pla_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.pub_pla_val_last|calculate_variation:variations.pub_pla_val_daily }}</h3>
+            <div><small>{{ variations.pub_pla_date_daily|format_date }}</small> : <small>{{ variations.pub_pla_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.pub_pla_val_last|calculate_variation:variations.pub_pla_val_monthly }}</h3>
+            <div><small>{{ variations.pub_pla_date_monthly|format_date }}</small> : <small>{{ variations.pub_pla_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.pub_pla_val_last|calculate_variation:variations.pub_pla_val_yearly }}</h3>
+            <div><small>{{ variations.pub_pla_date_yearly|format_date }}</small> : <small>{{ variations.pub_pla_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.pub_pla_val_last|calculate_variation:variations.pub_pla_val_2years }}</h3>
+            <div><small>{{ variations.pub_pla_date_2years|format_date }}</small> : <small>{{ variations.pub_pla_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.pub_pla_val_last|calculate_variation:variations.pub_pla_val_3years }}</h3>
+            <div><small>{{ variations.pub_pla_date_3years|format_date }}</small> : <small>{{ variations.pub_pla_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.pub_pla_val_5years %}
+            <h3>{{ variations.pub_pla_val_last|calculate_variation:variations.pub_pla_val_5years }}</h3>
+            <div><small>{{ variations.pub_pla_date_5years|format_date }}</small> : <small>{{ variations.pub_pla_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.pub_pla_val_10years %}
+            <h3>{{ variations.pub_pla_val_last|calculate_variation:variations.pub_pla_val_10years }}</h3>
+            <div><small>{{ variations.pub_pla_date_10years|format_date }}</small> : <small>{{ variations.pub_pla_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+</div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="variations-chart-container">
+    <div id="variations-chart" class="loading"></div>
+</div>
+{% endif %}
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_usd_deposits{% else %}/depositos_en_dolares_argentina{% endif %}">{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_holder{% else %}/depositos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Deposits by Holder{% else %}Depósitos por Titular{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_financial_system_liquidity{% else %}/liquidez_sistema_financiero_argentina{% endif %}">{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans_by_type{% else %}/prestamos_por_tipo_argentina{% endif %}">{% if lang == 'en' %}Loans by Type{% else %}Préstamos por Tipo{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage Loans vs Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposit_interest_rates{% else %}/tasas_de_interes_de_depositos_argentina{% endif %}">{% if lang == 'en' %}Deposit Rates{% else %}Tasas de Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/depositos_vista_privado",
+    "{{ CHART_API_BASE_URL }}/depositos_plazo_privado",
+    "{{ CHART_API_BASE_URL }}/depositos_publico",
+    "{{ CHART_API_BASE_URL }}/depositos_vista_publico",
+    "{{ CHART_API_BASE_URL }}/depositos_plazo_publico"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({ id: "depositos-sector", containerId: "chart", numberLocale: numberLocale, initialView: "fiveYears", data: [{ id: "priv-vis", stroke: "#0C6680", name: "{% if lang == 'en' %}Private Vista{% else %}Vista Privado{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_vista_privado"] }, { id: "priv-pla", stroke: "#666600", name: "{% if lang == 'en' %}Private Plazo{% else %}Plazo Privado{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_plazo_privado"] }, { id: "pub-tot", stroke: "#003333", name: "{% if lang == 'en' %}Public Total{% else %}Público Total{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_publico"] }, { id: "pub-vis", stroke: "#660000", name: "{% if lang == 'en' %}Public Vista{% else %}Vista Público{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_vista_publico"] }, { id: "pub-pla", stroke: "#333333", name: "{% if lang == 'en' %}Public Plazo{% else %}Plazo Público{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_plazo_publico"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 250 } });
+    const v1 = new responsiveVariations({ id: "depositos-sector-variation", containerId: "variations-chart", numberLocale: numberLocale, initialView: "monthly", data: [{ id: "priv-vis", stroke: "#0C6680", name: "{% if lang == 'en' %}Private Vista{% else %}Vista Privado{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_vista_privado"] }, { id: "priv-pla", stroke: "#666600", name: "{% if lang == 'en' %}Private Plazo{% else %}Plazo Privado{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_plazo_privado"] }, { id: "pub-tot", stroke: "#003333", name: "{% if lang == 'en' %}Public Total{% else %}Público Total{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_publico"] }, { id: "pub-vis", stroke: "#660000", name: "{% if lang == 'en' %}Public Vista{% else %}Vista Público{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_vista_publico"] }, { id: "pub-pla", stroke: "#333333", name: "{% if lang == 'en' %}Public Plazo{% else %}Plazo Público{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/depositos_plazo_publico"] }], conf: { lang: variationsLang, toolTipContainerBGWidth: 250 } });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); v1.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

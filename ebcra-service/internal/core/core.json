@@ -1,0 +1,168 @@
+[
+["/milestones", "milestones", "milestones", "milestones"],
+
+["/base", "base_monetaria", "bcra_base_monetaria", "int"],
+["/base_usd", "base_monetaria_usd", "calculated_base_en_dollar", "float"],
+["/base_usd_of", "base_monetaria_usd_of", "calculated_base_en_dollar_oficial", "float"],
+
+["/m1", "m1", "bcra_m1", "float"],
+["/m1_usd", "m1_usd", "calculated_m1_en_dollar", "float"],
+["/m1_usd_of", "m1_usd_of", "calculated_m1_en_dollar_oficial", "float"],
+["/m1_div_res", "m1_div_res", "calculated_m1_dividido_reservas", "float"],
+
+["/m2", "m2", "bcra_m2", "float"],
+["/m2_usd", "m2_usd", "calculated_m2_en_dollar", "float"],
+["/m2_usd_of", "m2_usd_of", "calculated_m2_en_dollar_oficial", "float"],
+
+["/m2_transaccional_privado", "m2_transaccional_privado", "bcra_m2_transaccional_privado", "float"],
+["/m2_transaccional_privado_usd", "m2_transaccional_privado_usd", "calculated_m2_transaccional_privado_en_dollar", "float"],
+["/m2_transaccional_privado_usd_of", "m2_transaccional_privado_usd_of", "calculated_m2_transaccional_privado_en_dollar_oficial", "float"],
+
+["/m2_privado", "m2_privado", "bcra_m2_privado", "float"],
+["/m2_privado_usd", "m2_privado_usd", "calculated_m2_privado_en_dollar", "float"],
+["/m2_privado_usd_of", "m2_privado_usd_of", "calculated_m2_privado_en_dollar_oficial", "float"],
+
+
+
+["/reservas", "reservas", "bcra_reservas_internacionales", "int"],
+["/base_div_res", "base_div_res", "calculated_base_dividido_reservas", "float"],
+["/m2_div_res", "m2_div_res", "calculated_m2_dividido_reservas", "float"],
+
+["/m3", "m3", "bcra_m3", "float"],
+["/m3_usd", "m3_usd", "calculated_m3_en_dollar", "float"],
+["/m3_usd_of", "m3_usd_of", "calculated_m3_en_dollar_oficial", "float"],
+["/m3_div_res", "m3_div_res", "calculated_m3_dividido_reservas", "float"],
+
+
+["/usd", "usd", "dollar_blue_unified", "float"],
+["/usd_of", "usd_of", "bcra_usd_mayorista", "float"],
+
+["/circulacion_monetaria", "circulacion_monetaria", "bcra_circulacion_monetaria", "float"],
+["/billetes_y_monedas", "billetes_y_monedas", "bcra_billetes_y_monedas_publico", "float"],
+["/efectivo_en_ent_fin", "efectivo_en_ent_fin", "bcra_efectivo_en_entidades_financieras", "float"],
+["/depositos_cuenta_ent_fin", "lebac", "bcra_depositos_bancos_en_cuenta_corriente_del_bcra", "float"],
+
+["/depositos", "depositos", "bcra_depositos_efectivo_entidades_financieras_total", "float"],
+["/cuentas_corrientes", "cuentas_corrientes", "bcra_depositos_cuentas_corrientes", "float"],
+["/cajas_ahorro", "cajas_ahorro", "bcra_depositos_cajas_ahorro", "float"],
+["/plazo_fijo", "plazo_fijo", "bcra_depositos_a_plazo", "float"],
+["/tasa_depositos_30_dias", "tasa_depositos_30_dias", "bcra_tasa_depositos_30_dias", "float"],
+
+["/depositos_vista_privado",  "depositos_vista_privado",  "bcra_depositos_vista_privado",  "float"],
+["/depositos_plazo_privado",  "depositos_plazo_privado",  "bcra_depositos_plazo_privado",  "float"],
+["/depositos_publico",        "depositos_publico",        "bcra_depositos_publico",        "float"],
+["/depositos_vista_publico",  "depositos_vista_publico",  "bcra_depositos_vista_publico",  "float"],
+["/depositos_plazo_publico",  "depositos_plazo_publico",  "bcra_depositos_plazo_publico",  "float"],
+
+["/depositos_usd_total",                     "depositos_usd_total",                     "bcra_depositos_usd_total",                     "float"],
+["/depositos_usd_efectivo",                  "depositos_usd_efectivo",                  "bcra_depositos_usd_efectivo",                  "float"],
+["/tasa_depositos_plazo_fijo_usd",           "tasa_depositos_plazo_fijo_usd",           "bcra_tasa_depositos_plazo_fijo_usd",           "float"],
+["/tasa_depositos_plazo_fijo_usd_humanas",   "tasa_depositos_plazo_fijo_usd_humanas",   "bcra_tasa_depositos_plazo_fijo_usd_humanas",   "float"],
+["/tasa_depositos_plazo_fijo_usd_juridicas", "tasa_depositos_plazo_fijo_usd_juridicas", "bcra_tasa_depositos_plazo_fijo_usd_juridicas", "float"],
+
+["/prestamos", "prestamos", "bcra_prestamos_entidades_financieras_sector_privado", "float"],
+["/prestamos_adelantos_documentos",   "prestamos_adelantos_documentos",   "bcra_prestamos_adelantos_documentos",   "float"],
+["/prestamos_personales_tarjetas",    "prestamos_personales_tarjetas",    "bcra_prestamos_personales_tarjetas",    "float"],
+["/prestamos_hipotecarios_prendarios","prestamos_hipotecarios_prendarios","bcra_prestamos_hipotecarios_prendarios","float"],
+["/prestamos_otros",                  "prestamos_otros",                  "bcra_prestamos_otros",                  "float"],
+["/tasa_prestamos_personales", "tasa_prestamos_personales", "bcra_tasa_prestamos_personales", "float"],
+["/tasa_adelantos_cuenta_corriente", "tasa_adelantos_cuenta_corriente", "bcra_tasa_adelantos_cuenta_corriente", "float"],
+
+["/porc_prestamos_vs_depositos", "porc_prestamos_vs_depositos", "calculated_porcentaje_prestamos_vs_depositos", "float"],
+
+
+["/cer", "cer", "bcra_cer", "float"],
+["/uva", "uva", "bcra_uva", "float"],
+["/uvi", "uvi", "bcra_uvi", "float"],
+["/icl", "icl", "bcra_icl", "float"],
+
+["/tasa_badlar", "tasa_badlar", "bcra_tasa_badlar", "float"],
+["/tasa_badlar_publicos_y_privados", "tasa_badlar_publicos_y_privados", "bcra_tasa_badlar_publicos_y_privados", "float"],
+["/tasa_tamar_privados", "tasa_tamar_privados", "bcra_tasa_tamar_privados", "float"],
+["/tasa_tamar_publicos_y_privados", "tasa_tamar_publicos_y_privados", "bcra_tasa_tamar_publicos_y_privados", "float"],
+["/tasa_baibar", "tasa_baibar", "bcra_tasa_baibar", "float"],
+["/tasa_tm20", "tasa_tm20", "bcra_tasa_tm20", "float"],
+["/tasa_pase_activas_1_dia", "tasa_pase_activas_1_dia", "bcra_tasa_pase_activas_1_dia", "float"],
+["/tasa_pase_pasivas_1_dia", "tasa_pase_pasivas_1_dia", "bcra_tasa_pase_pasivas_1_dia", "float"],
+["/tasa_pases_terceros_1_dia", "tasa_pases_terceros_1_dia", "bcra_tasa_pases_terceros_1_dia", "float"],
+
+["/tasa_tarjetas_credito",     "tasa_tarjetas_credito",     "bcra_tasa_tarjetas_credito",     "float"],
+["/tasa_documentos_sola_firma","tasa_documentos_sola_firma","bcra_tasa_documentos_sola_firma","float"],
+["/tasa_hipotecarios_fija",    "tasa_hipotecarios_fija",    "bcra_tasa_hipotecarios_fija",    "float"],
+["/tasa_prendarios_fija",      "tasa_prendarios_fija",      "bcra_tasa_prendarios_fija",      "float"],
+["/tasa_hipotecarios_uva",     "tasa_hipotecarios_uva",     "bcra_tasa_hipotecarios_uva",     "float"],
+
+["/tasa_dep_caja_ahorro_a", "tasa_dep_caja_ahorro_a", "bcra_tasa_dep_caja_ahorro_a", "float"],
+["/tasa_dep_pf_total_a",    "tasa_dep_pf_total_a",    "bcra_tasa_dep_pf_total_a",    "float"],
+["/tasa_dep_pf_7_59d_a",   "tasa_dep_pf_7_59d_a",   "bcra_tasa_dep_pf_7_59d_a",   "float"],
+["/tasa_dep_pf_30d_a",     "tasa_dep_pf_30d_a",     "bcra_tasa_dep_pf_30d_a",     "float"],
+["/tasa_dep_pf_60mas_a",   "tasa_dep_pf_60mas_a",   "bcra_tasa_dep_pf_60mas_a",   "float"],
+
+["/dep_titular_privado_total", "dep_titular_privado_total", "bcra_dep_titular_privado_total", "float"],
+["/dep_titular_humanas",       "dep_titular_humanas",       "bcra_dep_titular_humanas",       "float"],
+["/dep_titular_juridicas",     "dep_titular_juridicas",     "bcra_dep_titular_juridicas",     "float"],
+["/dep_titular_fci",           "dep_titular_fci",           "bcra_dep_titular_fci",           "float"],
+["/dep_titular_pymes",         "dep_titular_pymes",         "bcra_dep_titular_pymes",         "float"],
+["/dep_titular_cc_privado",    "dep_titular_cc_privado",    "bcra_dep_titular_cc_privado",    "float"],
+["/dep_titular_ca_privado",    "dep_titular_ca_privado",    "bcra_dep_titular_ca_privado",    "float"],
+["/dep_titular_pf_privado",    "dep_titular_pf_privado",    "bcra_dep_titular_pf_privado",    "float"],
+
+["/hip_construccion",  "hip_construccion",  "bcra_hip_construccion",  "float"],
+["/hip_refaccion",     "hip_refaccion",     "bcra_hip_refaccion",     "float"],
+["/hip_nueva",         "hip_nueva",         "bcra_hip_nueva",         "float"],
+["/hip_usada",         "hip_usada",         "bcra_hip_usada",         "float"],
+["/hip_otros",         "hip_otros",         "bcra_hip_otros",         "float"],
+["/prend_autos",       "prend_autos",       "bcra_prend_autos",       "float"],
+["/prend_maquinarias", "prend_maquinarias", "bcra_prend_maquinarias", "float"],
+["/prend_otros",       "prend_otros",       "bcra_prend_otros",       "float"],
+
+["/prest_titular_privado_total", "prest_titular_privado_total", "bcra_prest_titular_privado_total", "float"],
+["/prest_titular_humanas",       "prest_titular_humanas",       "bcra_prest_titular_humanas",       "float"],
+["/prest_titular_juridicas",     "prest_titular_juridicas",     "bcra_prest_titular_juridicas",     "float"],
+["/prest_titular_pymes",         "prest_titular_pymes",         "bcra_prest_titular_pymes",         "float"],
+["/prest_titular_hipotecarios",  "prest_titular_hipotecarios",  "bcra_prest_titular_hipotecarios",  "float"],
+["/prest_titular_prendarios",    "prest_titular_prendarios",    "bcra_prest_titular_prendarios",    "float"],
+
+["/pases_terceros_1_dia_monto", "pases_terceros_1_dia_monto", "bcra_pases_terceros_1_dia_monto", "float"],
+["/pases_pasivos_bcra_saldo", "pases_pasivos_bcra_saldo", "bcra_pases_pasivos_bcra_saldo", "float"],
+["/pases_pasivos_bcra_fci_saldo", "pases_pasivos_bcra_fci_saldo", "bcra_pases_pasivos_bcra_fci_saldo", "float"],
+["/pases_activos_bcra_saldo", "pases_activos_bcra_saldo", "bcra_pases_activos_bcra_saldo", "float"],
+
+
+["/var_usd_vs_usd_of", "var_usd_vs_usd_of", "var_dollar_blue_vs_oficial", "float"],
+
+["/inflacion_mensual_oficial", "inflacion_mensual_oficial", "bcra_inflacion_mensual", "float"],
+["/inflacion_interanual_oficial", "inflacion_interanual_oficial", "bcra_inflacion_interanual", "float"],
+["/inflacion_esperada_oficial", "inflacion_esperada_oficial", "bcra_inflacion_esperada", "float"],
+
+
+
+
+["/var_usd_interanual", "var_usd_interanual", "var_dollar_interanual", "float"],
+["/var_usd_oficial_interanual", "var_usd_oficial_interanual", "var_dollar_oficial_interanual", "float"],
+["/var_merval_interanual", "var_merval_interanual", "var_merval_interanual", "float"],
+
+
+["/merval", "merval", "merval_unified", "float"],
+["/merval_usd", "merval_usd", "merval_en_dollar", "float"],
+
+["/adelantos_transitorios", "adelantos_transitorios", "bcra_adelantos_transitorios_imd", "float"],
+["/leliq_notaliq", "leliq_notaliq", "bcra_leliq_notaliq", "float"],
+["/depositos_gobierno_pesos", "depositos_gobierno_pesos", "bcra_depositos_gobierno_pesos", "float"],
+["/depositos_gobierno_usd", "depositos_gobierno_usd", "bcra_depositos_gobierno_usd", "float"],
+
+["/creditos_sistema_financiero", "creditos_sistema_financiero", "bcra_creditos_sistema_financiero", "float"],
+["/liquidez_pesos",              "liquidez_pesos",              "bcra_liquidez_pesos",              "float"],
+["/liquidez_total",              "liquidez_total",              "bcra_liquidez_total",              "float"],
+
+["/oro_divisas_colocaciones_plazo",          "oro_divisas_colocaciones_plazo",          "bcra_oro_divisas_colocaciones_plazo",          "float"],
+["/divisas_pase_pasivo_exterior",            "divisas_pase_pasivo_exterior",            "bcra_divisas_pase_pasivo_exterior",            "float"],
+["/reservas_excluidas_deg_2009",             "reservas_excluidas_deg_2009",             "bcra_reservas_excluidas_deg_2009",             "float"],
+["/asignaciones_deg_2009",                   "asignaciones_deg_2009",                   "bcra_asignaciones_deg_2009",                   "float"],
+["/reservas_compra_divisas",                 "reservas_compra_divisas",                 "bcra_reservas_compra_divisas",                 "float"],
+["/reservas_organismos_internacionales",     "reservas_organismos_internacionales",     "bcra_reservas_organismos_internacionales",     "float"],
+["/reservas_sector_publico",                 "reservas_sector_publico",                 "bcra_reservas_sector_publico",                 "float"],
+["/reservas_efectivo_minimo",                "reservas_efectivo_minimo",                "bcra_reservas_efectivo_minimo",                "float"],
+["/reservas_otras_operaciones",              "reservas_otras_operaciones",              "bcra_reservas_otras_operaciones",              "float"]
+]
+

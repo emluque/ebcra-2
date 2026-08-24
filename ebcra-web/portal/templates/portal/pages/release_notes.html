@@ -1,0 +1,67 @@
+{% extends "portal/base.html" %}
+{% block page_title %}Release Notes — Estadísticas BCRA{% endblock %}
+{% block content %}
+<div class="title"><div class="title-container"><h1>Release Notes</h1></div></div>
+<div class="explanation documentation">
+    <h2>Release Notes V2.0</h2>
+    <p>
+        El sitio no fue actualizado durante aproximadamente dos años. El motivo fue que el BCRA cambió la forma en que publicaba su informe estadístico, lo que dejó de funcionar el proceso de scraping que utilizábamos para obtener los datos. El sitio ahora utiliza la API oficial del BCRA. Este es un proyecto independiente y sin fines de lucro, y fue actualizado cuando finalmente hubo tiempo para hacerlo.
+    </p>
+
+    <h3>Fuentes</h3>
+    <ul>
+        <li>Los datos ahora se obtienen directamente desde la API oficial del BCRA, en lugar de scrapear la página de estadísticas del Banco Central.</li>
+    </ul>
+
+    <h3>Librería de Gráficos</h3>
+    <ul>
+        <li><strong>Mejora funcional:</strong> Ahora es posible hacer clic en un hito para hacer zoom en ese período de tiempo (por ejemplo, una presidencia o un período de un ministro de economía).</li>
+        <li><strong>Mejoras visuales:</strong> Numerosas mejoras visuales en toda la interfaz.</li>
+    </ul>
+
+    <h3>Reportes</h3>
+    <p>La selección de reportes fue revisada y simplificada. Se incorporaron nuevos reportes y se eliminaron aquellos que ya no son relevantes.</p>
+    <p><strong>Nuevos reportes:</strong></p>
+    <ul>
+        <li><a href="/m2">M2</a></li>
+        <li><a href="/m2_en_usd">M2 en USD</a></li>
+        <li><a href="/m2_dividido_reservas_internacionales_argentina">M2 Dividido Reservas Internacionales y Cotización del Dólar</a></li>
+        <li><a href="/pases_argentina">Operaciones de Pase BCRA</a></li>
+        <li><a href="/icl">ICL</a></li>
+        <li><a href="/rentabilidades">Rentabilidades</a> — consolida en un único reporte las tres páginas de rentabilidad que existían anteriormente.</li>
+    </ul>
+    <p><strong>Reportes eliminados:</strong></p>
+    <ul>
+        <li>LEBAC — El BCRA dejó de utilizar este instrumento de política monetaria, por lo que el reporte ya no tiene relevancia.</li>
+        <li>LELIQ — El BCRA dejó de utilizar este instrumento de política monetaria, por lo que el reporte ya no tiene relevancia.</li>
+        <li>LELIQ En USD — El BCRA dejó de utilizar este instrumento de política monetaria, por lo que el reporte ya no tiene relevancia.</li>
+        <li>M2 Privado Variación Mensual — Reemplazado por los nuevos reportes de M2, que ofrecen una visión más completa del agregado monetario.</li>
+        <li>Inflación Interanual vs Base Interanual — Estos reportes superponían dos series en un mismo gráfico, lo cual resulta visualmente intuitivo pero metodológicamente incorrecto. Para analizar la relación entre estas variables lo apropiado es un análisis de correlación, no un gráfico de líneas compartido. Dado que no queremos presentar información de forma no metodológicamente correcta, decidimos eliminarlos.</li>
+        <li>Inflación Interanual vs Dólar Interanual — Ídem anterior.</li>
+        <li>Inflación Interanual vs Dólar Oficial Interanual — Ídem anterior.</li>
+        <li>Inflación Interanual vs Merval Interanual — Ídem anterior.</li>
+        <li>Rentabilidad Anual del Dólar vs Tasa de Interés por Depósitos — reemplazado por <a href="/rentabilidades">Rentabilidades</a>.</li>
+        <li>Rentabilidad Anual del Dólar Oficial vs Tasa de Interés por Depósitos — reemplazado por <a href="/rentabilidades">Rentabilidades</a>.</li>
+        <li>Rentabilidad Anual del Merval vs Tasa de Interés por Depósitos — reemplazado por <a href="/rentabilidades">Rentabilidades</a>.</li>
+    </ul>
+
+    <h2>Release Notes V1.2.4</h2>
+    <ul>
+        <li>Se movió todo el sitio a HTTPS.</li>
+        <li>Debidos a los cambios en la información presentada en la página de estadísticas del BCRA se publicán nuevos reportes:</li>
+        <li>
+            <ul>
+                <li><a href="/inflacion_interanual_argentina">Inflación Interanual</a></li>
+                <li><a href="/inflacion_esperada_argentina">Inflación Esperada</a></li>
+                <li><a href="/inflacion_interanual_vs_base_monetaria_interanual_argentina">Inflación Interanual vs Base Interanual</a></li>
+                <li><a href="/inflacion_interanual_vs_usd_interanual_argentina">Inflación Interanual vs Dólar Interanual</a></li>
+                <li><a href="/inflacion_interanual_vs_usd_oficial_interanual_argentina">Inflación Interanual vs Dólar Oficial Interanual</a></li>
+                <li><a href="/inflacion_interanual_vs_merval_interanual_argentina">Inflación interanual vs Merval Interanual</a></li>
+                <li><a href="/leliq">LELIQ</a></li>
+                <li><a href="/leliq_en_usd">LELIQ En USD</a></li>
+            </ul>
+        </li>
+        <li>El BCRA esta publicando algunas series desde fechas anteriores a las que publicaba anteriormente, por ejemplo en el reporte de Base Monetaria y el de Reservas Internacionales.</li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades Anuales{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+<div class="title"><div class="title-container title-size-four"><h1>{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades Anuales{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}Nominal annual return in pesos of the free dollar, the official dollar, and the Merval index, compared to the 30-day deposit interest rate. Values are not inflation-adjusted and represent nominal returns only. Each series is calculated by comparing the value on a given day to the value of that same day one year later.{% else %}Rentabilidad anual nominal en pesos del dólar (libre y oficial) y del índice Merval, comparada con la tasa de interés por depósitos a 30 días. No se ajusta por inflación, por lo que los valores reflejan rentabilidad nominal. Cada serie se calcula comparando el valor de un determinado día con el valor de ese mismo día un año después.{% endif %}</p></div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades Anuales{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Percentages{% else %}Valores expresados en Porcentajes{% endif %}</div>
+</div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_divided_by_international_reserves{% else %}/base_monetaria_dividida_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}Monetary Base / Int. Reserves{% else %}Base Monetaria / Reservas{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/merval_index{% else %}/indice_merval{% endif %}">{% if lang == 'en' %}Merval Index{% else %}Índice Merval{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/merval_in_usd{% else %}/merval_en_dolares{% endif %}">{% if lang == 'en' %}Merval Index in USD{% else %}Índice Merval en Dólares{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monthly_inflation{% else %}/inflacion_mensual_argentina{% endif %}">{% if lang == 'en' %}Monthly Inflation{% else %}Inflación Mensual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_expected_inflation{% else %}/inflacion_esperada_argentina{% endif %}">{% if lang == 'en' %}Expected Inflation{% else %}Inflación Esperada{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = ["{{ CHART_API_BASE_URL }}/var_usd_interanual","{{ CHART_API_BASE_URL }}/var_usd_oficial_interanual","{{ CHART_API_BASE_URL }}/var_merval_interanual","{{ CHART_API_BASE_URL }}/tasa_depositos_30_dias"];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+const displayCharts = () => {
+    const opts = {
+        id: "rentabilidades",
+        containerId: "chart",
+        initialView: "fiveYears",
+        data: [
+            { id: "r-usd",    stroke: "#0C6680", name: "{% if lang == 'en' %}Annual USD Return{% else %}Rent. Anual USD{% endif %}",            data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/var_usd_interanual"] },
+            { id: "r-usd-of", stroke: "#666600", name: "{% if lang == 'en' %}Annual USD Return (Official){% else %}Rent. Anual USD (Oficial){% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/var_usd_oficial_interanual"] },
+            { id: "r-merval", stroke: "#003333", name: "{% if lang == 'en' %}Annual Merval Return{% else %}Rent. Anual Merval{% endif %}",      data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/var_merval_interanual"] },
+            { id: "int-dep",  stroke: "#333333", name: "{% if lang == 'en' %}Deposit Interest Rate{% else %}Tasa Int. Depósitos{% endif %}",    data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_depositos_30_dias"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        numberLocale: numberLocale,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 270, showResultsPane: false, leftMargin: 30, addPercent: true }
+    };
+    const g = new responsiveChart(opts); let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g.resize(); }, 150); });
+};
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

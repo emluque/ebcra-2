@@ -1,0 +1,275 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}Loans by Type{% else %}Préstamos por Tipo{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Private Sector Loans by Type{% else %}Préstamos al Sector Privado por Tipo{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}<strong>Advances and Discounts</strong> are short-term commercial credit lines including overdrafts and discounted promissory notes. <strong>Personal Loans and Credit Cards</strong> capture consumer financing. <strong>Mortgage and Pledge Loans</strong> cover real-estate and asset-backed lending. <strong>Other Loans</strong> includes leasing, foreign-currency loans, and miscellaneous credit not captured in the other categories. The four series sum to approximately total private-sector loans.{% else %}Los <strong>Adelantos y Documentos</strong> son líneas de crédito comercial de corto plazo, incluidos descubiertos y descuento de pagarés. Los <strong>Préstamos Personales y Tarjetas de Crédito</strong> representan el financiamiento al consumo. Los <strong>Préstamos Hipotecarios y Prendarios</strong> cubren el crédito con garantía real. Los <strong>Otros Préstamos</strong> incluyen leasing, préstamos en moneda extranjera y demás créditos no comprendidos en las categorías anteriores. Las cuatro series suman aproximadamente el total de préstamos al sector privado.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Private Sector Loans by Type{% else %}Préstamos al Sector Privado por Tipo{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
+</div>
+
+{% if variations %}
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="variations-container">
+    <h2>{% if lang == 'en' %}Advances and Discounts{% else %}Adelantos y Documentos{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.ad_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.ad_date_last|format_date }}</small> : <small>{{ variations.ad_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.ad_val_last|calculate_variation:variations.ad_val_daily }}</h3>
+            <div><small>{{ variations.ad_date_daily|format_date }}</small> : <small>{{ variations.ad_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.ad_val_last|calculate_variation:variations.ad_val_monthly }}</h3>
+            <div><small>{{ variations.ad_date_monthly|format_date }}</small> : <small>{{ variations.ad_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.ad_val_last|calculate_variation:variations.ad_val_yearly }}</h3>
+            <div><small>{{ variations.ad_date_yearly|format_date }}</small> : <small>{{ variations.ad_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.ad_val_last|calculate_variation:variations.ad_val_2years }}</h3>
+            <div><small>{{ variations.ad_date_2years|format_date }}</small> : <small>{{ variations.ad_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.ad_val_last|calculate_variation:variations.ad_val_3years }}</h3>
+            <div><small>{{ variations.ad_date_3years|format_date }}</small> : <small>{{ variations.ad_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.ad_val_5years %}
+            <h3>{{ variations.ad_val_last|calculate_variation:variations.ad_val_5years }}</h3>
+            <div><small>{{ variations.ad_date_5years|format_date }}</small> : <small>{{ variations.ad_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.ad_val_10years %}
+            <h3>{{ variations.ad_val_last|calculate_variation:variations.ad_val_10years }}</h3>
+            <div><small>{{ variations.ad_date_10years|format_date }}</small> : <small>{{ variations.ad_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+
+    <h2>{% if lang == 'en' %}Personal Loans and Credit Cards{% else %}Préstamos Personales y Tarjetas de Crédito{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.pt_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.pt_date_last|format_date }}</small> : <small>{{ variations.pt_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.pt_val_last|calculate_variation:variations.pt_val_daily }}</h3>
+            <div><small>{{ variations.pt_date_daily|format_date }}</small> : <small>{{ variations.pt_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.pt_val_last|calculate_variation:variations.pt_val_monthly }}</h3>
+            <div><small>{{ variations.pt_date_monthly|format_date }}</small> : <small>{{ variations.pt_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.pt_val_last|calculate_variation:variations.pt_val_yearly }}</h3>
+            <div><small>{{ variations.pt_date_yearly|format_date }}</small> : <small>{{ variations.pt_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.pt_val_last|calculate_variation:variations.pt_val_2years }}</h3>
+            <div><small>{{ variations.pt_date_2years|format_date }}</small> : <small>{{ variations.pt_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.pt_val_last|calculate_variation:variations.pt_val_3years }}</h3>
+            <div><small>{{ variations.pt_date_3years|format_date }}</small> : <small>{{ variations.pt_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.pt_val_5years %}
+            <h3>{{ variations.pt_val_last|calculate_variation:variations.pt_val_5years }}</h3>
+            <div><small>{{ variations.pt_date_5years|format_date }}</small> : <small>{{ variations.pt_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.pt_val_10years %}
+            <h3>{{ variations.pt_val_last|calculate_variation:variations.pt_val_10years }}</h3>
+            <div><small>{{ variations.pt_date_10years|format_date }}</small> : <small>{{ variations.pt_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+
+    <h2>{% if lang == 'en' %}Mortgage and Pledge Loans{% else %}Préstamos Hipotecarios y Prendarios{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.hp_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.hp_date_last|format_date }}</small> : <small>{{ variations.hp_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.hp_val_last|calculate_variation:variations.hp_val_daily }}</h3>
+            <div><small>{{ variations.hp_date_daily|format_date }}</small> : <small>{{ variations.hp_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.hp_val_last|calculate_variation:variations.hp_val_monthly }}</h3>
+            <div><small>{{ variations.hp_date_monthly|format_date }}</small> : <small>{{ variations.hp_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.hp_val_last|calculate_variation:variations.hp_val_yearly }}</h3>
+            <div><small>{{ variations.hp_date_yearly|format_date }}</small> : <small>{{ variations.hp_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.hp_val_last|calculate_variation:variations.hp_val_2years }}</h3>
+            <div><small>{{ variations.hp_date_2years|format_date }}</small> : <small>{{ variations.hp_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.hp_val_last|calculate_variation:variations.hp_val_3years }}</h3>
+            <div><small>{{ variations.hp_date_3years|format_date }}</small> : <small>{{ variations.hp_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.hp_val_5years %}
+            <h3>{{ variations.hp_val_last|calculate_variation:variations.hp_val_5years }}</h3>
+            <div><small>{{ variations.hp_date_5years|format_date }}</small> : <small>{{ variations.hp_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.hp_val_10years %}
+            <h3>{{ variations.hp_val_last|calculate_variation:variations.hp_val_10years }}</h3>
+            <div><small>{{ variations.hp_date_10years|format_date }}</small> : <small>{{ variations.hp_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+
+    <h2>{% if lang == 'en' %}Other Loans{% else %}Otros Préstamos{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.ot_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.ot_date_last|format_date }}</small> : <small>{{ variations.ot_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.ot_val_last|calculate_variation:variations.ot_val_daily }}</h3>
+            <div><small>{{ variations.ot_date_daily|format_date }}</small> : <small>{{ variations.ot_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.ot_val_last|calculate_variation:variations.ot_val_monthly }}</h3>
+            <div><small>{{ variations.ot_date_monthly|format_date }}</small> : <small>{{ variations.ot_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.ot_val_last|calculate_variation:variations.ot_val_yearly }}</h3>
+            <div><small>{{ variations.ot_date_yearly|format_date }}</small> : <small>{{ variations.ot_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.ot_val_last|calculate_variation:variations.ot_val_2years }}</h3>
+            <div><small>{{ variations.ot_date_2years|format_date }}</small> : <small>{{ variations.ot_val_2years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.ot_val_last|calculate_variation:variations.ot_val_3years }}</h3>
+            <div><small>{{ variations.ot_date_3years|format_date }}</small> : <small>{{ variations.ot_val_3years|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.ot_val_5years %}
+            <h3>{{ variations.ot_val_last|calculate_variation:variations.ot_val_5years }}</h3>
+            <div><small>{{ variations.ot_date_5years|format_date }}</small> : <small>{{ variations.ot_val_5years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.ot_val_10years %}
+            <h3>{{ variations.ot_val_last|calculate_variation:variations.ot_val_10years }}</h3>
+            <div><small>{{ variations.ot_date_10years|format_date }}</small> : <small>{{ variations.ot_val_10years|format_number:lang }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+</div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="variations-chart-container">
+    <div id="variations-chart" class="loading"></div>
+</div>
+{% endif %}
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Total Loans{% else %}Préstamos Totales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_mortgage_and_secured_loans{% else %}/prestamos_hipotecarios_y_prendarios_argentina{% endif %}">{% if lang == 'en' %}Mortgage and Secured Loans{% else %}Hipotecarios y Prendarios{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans_by_borrower{% else %}/prestamos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Loans by Borrower{% else %}Préstamos por Titular{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage Loans vs Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_sector{% else %}/depositos_por_sector_argentina{% endif %}">{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_usd_deposits{% else %}/depositos_en_dolares_argentina{% endif %}">{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_financial_system_liquidity{% else %}/liquidez_sistema_financiero_argentina{% endif %}">{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_lending_interest_rates{% else %}/tasas_de_interes_de_prestamos_argentina{% endif %}">{% if lang == 'en' %}Lending Rates{% else %}Tasas de Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/prestamos_adelantos_documentos",
+    "{{ CHART_API_BASE_URL }}/prestamos_personales_tarjetas",
+    "{{ CHART_API_BASE_URL }}/prestamos_hipotecarios_prendarios",
+    "{{ CHART_API_BASE_URL }}/prestamos_otros"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({ id: "prestamos_por_tipo", containerId: "chart", numberLocale: numberLocale, initialView: "fiveYears", data: [{ id: "ad", stroke: "#0C6680", name: "{% if lang == 'en' %}Advances & Discounts{% else %}Adelantos y Documentos{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/prestamos_adelantos_documentos"] }, { id: "pt", stroke: "#666600", name: "{% if lang == 'en' %}Personal & Credit Cards{% else %}Personales y Tarjetas{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/prestamos_personales_tarjetas"] }, { id: "hp", stroke: "#003333", name: "{% if lang == 'en' %}Mortgage & Pledge{% else %}Hipotecarios y Prendarios{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/prestamos_hipotecarios_prendarios"] }, { id: "ot", stroke: "#333333", name: "{% if lang == 'en' %}Other Loans{% else %}Otros Préstamos{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/prestamos_otros"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 250 } });
+    const v1 = new responsiveVariations({ id: "prestamos_por_tipo-variation", containerId: "variations-chart", numberLocale: numberLocale, initialView: "monthly", data: [{ id: "ad", stroke: "#0C6680", name: "{% if lang == 'en' %}Advances & Discounts{% else %}Adelantos y Documentos{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/prestamos_adelantos_documentos"] }, { id: "pt", stroke: "#666600", name: "{% if lang == 'en' %}Personal & Credit Cards{% else %}Personales y Tarjetas{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/prestamos_personales_tarjetas"] }, { id: "hp", stroke: "#003333", name: "{% if lang == 'en' %}Mortgage & Pledge{% else %}Hipotecarios y Prendarios{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/prestamos_hipotecarios_prendarios"] }, { id: "ot", stroke: "#333333", name: "{% if lang == 'en' %}Other Loans{% else %}Otros Préstamos{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/prestamos_otros"] }], conf: { lang: variationsLang, toolTipContainerBGWidth: 250 } });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); v1.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

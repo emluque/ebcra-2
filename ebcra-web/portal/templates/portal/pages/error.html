@@ -1,0 +1,12 @@
+{% extends "portal/base.html" %}
+{% block page_title %}Error {{ error_code }} — Estadísticas BCRA{% endblock %}
+{% block content %}
+<div class="title"><div class="title-container"><h1>Error {{ error_code }}</h1></div></div>
+<div class="explanation"><p>
+{% if error_code == 404 %}
+  {% if lang == 'en' %}The page you requested was not found.{% else %}La página que buscas no existe.{% endif %}
+{% else %}
+  {% if lang == 'en' %}We're sorry, an error has occurred on the site. The administrator has been notified.{% else %}Lo lamentamos pero ha ocurrido un error en el sitio. El administrador ha sido contactado.{% endif %}
+{% endif %}
+</p></div>
+{% endblock %}

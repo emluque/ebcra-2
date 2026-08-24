@@ -1,0 +1,341 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Sources{% else %}Fuentes{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Sources{% else %}Fuentes{% endif %}</h1></div></div>
+
+<div class="explanation documentation">
+    <h2>{% if lang == 'en' %}Data published by the BCRA{% else %}Datos publicados por el BCRA{% endif %}</h2>
+    <p>{% if lang == 'en' %}BCRA variable data is obtained daily via the official <a href="https://www.bcra.gob.ar/en/central-bank-api-catalog/">BCRA public API</a>. This replaced the previous approach of scraping data directly from the BCRA website.{% else %}Los datos de variables del BCRA se obtienen diariamente a través de la <a href="https://www.bcra.gob.ar/en/central-bank-api-catalog/">API pública oficial del BCRA</a>. Esto reemplazó el enfoque anterior de extraer los datos directamente del sitio web del BCRA.{% endif %}</p>
+    <p>{% if lang == 'en' %}It is important to note that the <strong>BCRA</strong> publishes its data with several days of delay (generally 5 to 10 days). In addition, certain data — specifically bank account information — is published with an even greater delay.{% else %}Es importante considerar que el <strong>BCRA</strong> publica sus datos con varios días de atraso (en general de 5 a 10 días). Además de esto, hay ciertos datos, específicamente la información de cuentas bancarias, que es publicada con un atraso aun mayor.{% endif %}</p>
+    <p>{% if lang == 'en' %}This is why the information on the site may appear delayed.{% else %}Es por estos motivos que la información aparece atrasada en el sitio.{% endif %}</p>
+
+    <h2>{% if lang == 'en' %}Data Completion{% else %}Completamiento de Datos{% endif %}</h2>
+    <p>{% if lang == 'en' %}Since the BCRA does not provide data for every day (e.g. weekends or holidays), to develop the charts on days without data, the value from the last preceding day with records is used. For example, if July 9 has no records due to a public holiday, but July 8 and July 10 do, the values from July 8 are used to fill in July 9.{% else %}Dado que el BCRA no proporciona datos para todos los días (por ejemplo fines de semana o feriados) para poder desarrollar los gráficos en los días que no hay datos se toma el valor del último día anterior del que existen registros. Por ejemplo, si el día 9 de Julio no hay registros por ser feriado, pero los hay para el 8 de Julio y para el 10 de Julio, se toman los valores del día 8 de Julio para completar los del 9 de Julio.{% endif %}</p>
+
+    <h2>{% if lang == 'en' %}Dollar Blue{% else %}Dólar Blue{% endif %}</h2>
+    <p>{% if lang == 'en' %}Given that this site has been running for over ten years, the Dollar Blue historical series was built from multiple sources over time, which are unified into a single continuous series:{% else %}Dado que este sitio lleva más de diez años en funcionamiento, la serie histórica del Dólar Blue fue construida a partir de varias fuentes a lo largo del tiempo, que se unifican en una única serie continua:{% endif %}</p>
+    <ul>
+        <li>{% if lang == 'en' %}<strong>Up to January 1, 2019:</strong> Data collected by a previous version of the system from <strong>Cronista</strong>.{% else %}<strong>Hasta el 1 de enero de 2019:</strong> Datos recolectados por una versión anterior del sistema a partir de <strong>Cronista</strong>.{% endif %}</li>
+        <li>{% if lang == 'en' %}<strong>From January 2, 2019 onwards:</strong> Data obtained from <a href="https://www.ambito.com/contenidos/dolar-informal-historico.html">ambito.com</a> via active automated scraping.{% else %}<strong>Desde el 2 de enero de 2019 en adelante:</strong> Datos obtenidos a partir de <a href="https://www.ambito.com/contenidos/dolar-informal-historico.html">ambito.com</a> mediante scraping automatizado activo.{% endif %}</li>
+    </ul>
+
+    <h2>{% if lang == 'en' %}MERVAL Index{% else %}Índice MERVAL{% endif %}</h2>
+    <p>{% if lang == 'en' %}Similarly, the MERVAL historical series was built from multiple sources unified into a single continuous series:{% else %}De igual manera, la serie histórica del MERVAL fue construida a partir de varias fuentes unificadas en una única serie continua:{% endif %}</p>
+    <ul>
+        <li>{% if lang == 'en' %}<strong>Up to November 26, 2018:</strong> Data collected by a previous version of the system from <strong>Invertia</strong>.{% else %}<strong>Hasta el 26 de noviembre de 2018:</strong> Datos recolectados por una versión anterior del sistema a partir de <strong>Invertia</strong>.{% endif %}</li>
+        <li>{% if lang == 'en' %}<strong>From November 27, 2018 to August 30, 2024:</strong> Data collected by a previous version of the system from <strong>Ámbito Financiero</strong>.{% else %}<strong>Del 27 de noviembre de 2018 al 30 de agosto de 2024:</strong> Datos recolectados por una versión anterior del sistema a partir de <strong>Ámbito Financiero</strong>.{% endif %}</li>
+        <li>{% if lang == 'en' %}<strong>From August 31, 2024 onwards:</strong> Data obtained from <a href="https://es.finance.yahoo.com/quote/%5EMERV/history/">Yahoo Finance</a> via active automated scraping.{% else %}<strong>Desde el 31 de agosto de 2024 en adelante:</strong> Datos obtenidos a partir de <a href="https://es.finance.yahoo.com/quote/%5EMERV/history/">Yahoo Finance</a> mediante scraping automatizado activo.{% endif %}</li>
+    </ul>
+
+    <h2>{% if lang == 'en' %}Own Elaboration{% else %}Elaboración Propia{% endif %}</h2>
+    <p>{% if lang == 'en' %}Some series shown on the site are not published directly by any official source but are calculated by this site from primary data. These are labeled "Own Elaboration" in the per-page breakdown below. Typical operations include: dividing a monetary aggregate in ARS by an exchange rate to obtain a USD value, summing two monetary aggregates, dividing one series by another to express it as a ratio, and computing year-over-year percentage change using the formula <code>((current value / value one year prior) × 100) − 100</code>.{% else %}Algunas series que se muestran en el sitio no son publicadas directamente por ninguna fuente oficial, sino que son calculadas por este sitio a partir de datos primarios. Estas se denominan "Elaboración Propia" en el detalle por página más abajo. Las operaciones típicas incluyen: dividir un agregado monetario en ARS por un tipo de cambio para obtener el valor en dólares, sumar dos agregados monetarios, dividir una serie por otra para expresarla como un ratio, y calcular la variación interanual mediante la fórmula <code>((valor actual / valor del año anterior) × 100) − 100</code>.{% endif %}</p>
+</div>
+
+<div class="explanation documentation">
+    <h2>{% if lang == 'en' %}Sources by Page{% else %}Fuentes por Página{% endif %}</h2>
+
+    <h3><a href="{% if lang == 'en' %}/en{% else %}/{% endif %}">{% if lang == 'en' %}Home{% else %}Inicio{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#15</strong> — Monetary base (millions of ARS){% else %}Variable BCRA <strong>#15</strong> — Base monetaria (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1</strong> — International reserves (millions of USD){% else %}Variable BCRA <strong>#1</strong> — Reservas internacionales (en millones de USD){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#15</strong> — Monetary base (millions of ARS){% else %}Variable BCRA <strong>#15</strong> — Base monetaria (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_monetary_base_in_usd{% else %}/base_monetaria_argentina_en_usd{% endif %}">{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria en USD{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: monetary base (BCRA Variable <strong>#15</strong>) ÷ Dollar Blue{% else %}Elaboración Propia: base monetaria (Variable BCRA <strong>#15</strong>) ÷ Dólar Blue{% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: monetary base (BCRA Variable <strong>#15</strong>) ÷ wholesale reference exchange rate (BCRA Variable <strong>#5</strong>){% else %}Elaboración Propia: base monetaria (Variable BCRA <strong>#15</strong>) ÷ tipo de cambio mayorista de referencia (Variable BCRA <strong>#5</strong>){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_monetary_base_divided_by_international_reserves{% else %}/base_monetaria_dividida_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}Monetary Base / International Reserves{% else %}Base Monetaria / Reservas Internacionales{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: monetary base (BCRA Variable <strong>#15</strong>) ÷ international reserves (BCRA Variable <strong>#1</strong>){% else %}Elaboración Propia: base monetaria (Variable BCRA <strong>#15</strong>) ÷ reservas internacionales (Variable BCRA <strong>#1</strong>){% endif %}</li>
+        <li>{% if lang == 'en' %}Dollar Blue (see Dollar Blue section above){% else %}Dólar Blue (ver sección Dólar Blue más arriba){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#5</strong> — Wholesale reference exchange rate (official USD){% else %}Variable BCRA <strong>#5</strong> — Tipo de cambio mayorista de referencia (dólar oficial){% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: percentage difference between Dollar Blue and official USD{% else %}Elaboración Propia: diferencia porcentual entre el Dólar Blue y el dólar oficial{% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_monetary_base_components{% else %}/componentes_base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base Components{% else %}Componentes de la Base Monetaria{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#16</strong> — Monetary circulation (millions of ARS){% else %}Variable BCRA <strong>#16</strong> — Circulación monetaria (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#17</strong> — Banknotes and coins held by the public (millions of ARS){% else %}Variable BCRA <strong>#17</strong> — Billetes y monedas en poder del público (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#18</strong> — Cash in pesos held by financial institutions (millions of ARS){% else %}Variable BCRA <strong>#18</strong> — Efectivo en pesos en entidades financieras (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#19</strong> — Deposits of financial institutions in current account at the BCRA (millions of ARS){% else %}Variable BCRA <strong>#19</strong> — Depósitos de las entidades financieras en cuenta corriente en el BCRA (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1</strong> — International reserves (millions of USD){% else %}Variable BCRA <strong>#1</strong> — Reservas internacionales (en millones de USD){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_international_reserves_composition{% else %}/composicion_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#75</strong> — Gross reserve assets: gold, foreign exchange, term placements and other reserve assets (millions of USD){% else %}Variable BCRA <strong>#75</strong> — Oro, divisas, colocaciones a plazo y otros activos de reserva (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#76</strong> — FX swap liability with the rest of the world (millions of USD){% else %}Variable BCRA <strong>#76</strong> — Divisas-pase pasivo en dólares con el exterior (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#83</strong> — SDR allocations 2009 (millions of USD){% else %}Variable BCRA <strong>#83</strong> — Asignaciones de DEGs del año 2009 (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#74</strong> — International reserves excluding 2009 SDR allocations (millions of USD){% else %}Variable BCRA <strong>#74</strong> — Reservas internacionales excluidas asignaciones DEG 2009 (en millones de USD){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_international_reserves_variation_factors{% else %}/factores_variacion_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves Variation Factors{% else %}Factores de Variación de las Reservas Internacionales{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#78</strong> — Change in international reserves from FX purchases (millions of USD){% else %}Variable BCRA <strong>#78</strong> — Variación de reservas internacionales por compra de divisas (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#79</strong> — Change from operations with international organizations (millions of USD){% else %}Variable BCRA <strong>#79</strong> — Variación por operaciones con organismos internacionales (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#80</strong> — Change from other public sector operations (millions of USD){% else %}Variable BCRA <strong>#80</strong> — Variación por otras operaciones del sector público (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#81</strong> — Change from minimum cash requirements (millions of USD){% else %}Variable BCRA <strong>#81</strong> — Variación por efectivo mínimo (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#82</strong> — Change from other operations not included elsewhere (millions of USD){% else %}Variable BCRA <strong>#82</strong> — Variación por otras operaciones no incluidas en otros rubros (en millones de USD){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m1{% else %}/m1{% endif %}">M1</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1232</strong> — M1: banknotes and coins held by the public + cancellation checks in pesos + current accounts of the private and public sector in pesos (millions of ARS){% else %}Variable BCRA <strong>#1232</strong> — M1: billetes y monedas en poder del público + cheques cancelatorios en pesos + cuentas corrientes del sector privado y público en pesos (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m1_in_usd{% else %}/m1_en_usd{% endif %}">{% if lang == 'en' %}M1 in USD{% else %}M1 en USD{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: M1 (BCRA Variable <strong>#1232</strong>) ÷ Dollar Blue{% else %}Elaboración Propia: M1 (Variable BCRA <strong>#1232</strong>) ÷ Dólar Blue{% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: M1 (BCRA Variable <strong>#1232</strong>) ÷ wholesale exchange rate (BCRA Variable <strong>#5</strong>){% else %}Elaboración Propia: M1 (Variable BCRA <strong>#1232</strong>) ÷ tipo de cambio mayorista (Variable BCRA <strong>#5</strong>){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m1_divided_by_international_reserves{% else %}/m1_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M1 / International Reserves{% else %}M1 / Reservas Internacionales{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: M1 (BCRA Variable <strong>#1232</strong>) ÷ international reserves (BCRA Variable <strong>#1</strong>){% else %}Elaboración Propia: M1 (Variable BCRA <strong>#1232</strong>) ÷ reservas internacionales (Variable BCRA <strong>#1</strong>){% endif %}</li>
+        <li>{% if lang == 'en' %}Dollar Blue (see Dollar Blue section above){% else %}Dólar Blue (ver sección Dólar Blue más arriba){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#5</strong> — Wholesale reference exchange rate (official USD){% else %}Variable BCRA <strong>#5</strong> — Tipo de cambio mayorista de referencia (dólar oficial){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#109</strong> — M2 (millions of ARS){% else %}Variable BCRA <strong>#109</strong> — M2 (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#197</strong> — Transactional M2 of the private sector (millions of ARS){% else %}Variable BCRA <strong>#197</strong> — M2 transaccional del sector privado (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m2_in_usd{% else %}/m2_en_usd{% endif %}">{% if lang == 'en' %}M2 in USD{% else %}M2 en USD{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: M2 (BCRA Variable <strong>#109</strong>) ÷ Dollar Blue{% else %}Elaboración Propia: M2 (Variable BCRA <strong>#109</strong>) ÷ Dólar Blue{% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: M2 (BCRA Variable <strong>#109</strong>) ÷ wholesale exchange rate (BCRA Variable <strong>#5</strong>){% else %}Elaboración Propia: M2 (Variable BCRA <strong>#109</strong>) ÷ tipo de cambio mayorista (Variable BCRA <strong>#5</strong>){% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: transactional private M2 (BCRA Variable <strong>#197</strong>) ÷ Dollar Blue{% else %}Elaboración Propia: M2 transaccional privado (Variable BCRA <strong>#197</strong>) ÷ Dólar Blue{% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: transactional private M2 (BCRA Variable <strong>#197</strong>) ÷ wholesale exchange rate (BCRA Variable <strong>#5</strong>){% else %}Elaboración Propia: M2 transaccional privado (Variable BCRA <strong>#197</strong>) ÷ tipo de cambio mayorista (Variable BCRA <strong>#5</strong>){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m2_divided_by_international_reserves{% else %}/m2_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M2 / International Reserves{% else %}M2 / Reservas Internacionales{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: M2 (BCRA Variable <strong>#109</strong>) ÷ international reserves (BCRA Variable <strong>#1</strong>){% else %}Elaboración Propia: M2 (Variable BCRA <strong>#109</strong>) ÷ reservas internacionales (Variable BCRA <strong>#1</strong>){% endif %}</li>
+        <li>{% if lang == 'en' %}Dollar Blue (see Dollar Blue section above){% else %}Dólar Blue (ver sección Dólar Blue más arriba){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#5</strong> — Wholesale reference exchange rate (official USD){% else %}Variable BCRA <strong>#5</strong> — Tipo de cambio mayorista de referencia (dólar oficial){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m3{% else %}/m3{% endif %}">M3</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1234</strong> — M3: M2 + term deposits and other deposits of the private and public sector in pesos (millions of ARS){% else %}Variable BCRA <strong>#1234</strong> — M3: M2 + depósitos a plazo y otros depósitos del sector privado y público en pesos (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m3_in_usd{% else %}/m3_en_usd{% endif %}">{% if lang == 'en' %}M3 in USD{% else %}M3 en USD{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: M3 (BCRA Variable <strong>#1234</strong>) ÷ Dollar Blue{% else %}Elaboración Propia: M3 (Variable BCRA <strong>#1234</strong>) ÷ Dólar Blue{% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: M3 (BCRA Variable <strong>#1234</strong>) ÷ wholesale exchange rate (BCRA Variable <strong>#5</strong>){% else %}Elaboración Propia: M3 (Variable BCRA <strong>#1234</strong>) ÷ tipo de cambio mayorista (Variable BCRA <strong>#5</strong>){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_m3_divided_by_international_reserves{% else %}/m3_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M3 / International Reserves{% else %}M3 / Reservas Internacionales{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: M3 (BCRA Variable <strong>#1234</strong>) ÷ international reserves (BCRA Variable <strong>#1</strong>){% else %}Elaboración Propia: M3 (Variable BCRA <strong>#1234</strong>) ÷ reservas internacionales (Variable BCRA <strong>#1</strong>){% endif %}</li>
+        <li>{% if lang == 'en' %}Dollar Blue (see Dollar Blue section above){% else %}Dólar Blue (ver sección Dólar Blue más arriba){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#5</strong> — Wholesale reference exchange rate (official USD){% else %}Variable BCRA <strong>#5</strong> — Tipo de cambio mayorista de referencia (dólar oficial){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#21</strong> — Total cash deposits at financial institutions (millions of ARS){% else %}Variable BCRA <strong>#21</strong> — Depósitos en efectivo en entidades financieras, total (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#22</strong> — Deposits in current accounts (net of FUCO usage), millions of ARS{% else %}Variable BCRA <strong>#22</strong> — Depósitos en cuentas corrientes (neto de utilización FUCO), en millones de ARS{% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#23</strong> — Deposits in savings accounts (millions of ARS){% else %}Variable BCRA <strong>#23</strong> — Depósitos en cajas de ahorro (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#24</strong> — Time deposits (millions of ARS){% else %}Variable BCRA <strong>#24</strong> — Depósitos a plazo (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#12</strong> — Interest rate on 30-day deposits at financial institutions (% per annum){% else %}Variable BCRA <strong>#12</strong> — Tasa de interés de depósitos a 30 días en entidades financieras (% nominal anual){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_deposits_by_sector{% else %}/depositos_por_sector_argentina{% endif %}">{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1241</strong> — Vista deposits of the private sector (current accounts and savings accounts) (millions of ARS){% else %}Variable BCRA <strong>#1241</strong> — Depósitos a la vista del sector privado (cuentas corrientes y cajas de ahorro) (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1242</strong> — Term deposits of the private sector (time deposits and investments) (millions of ARS){% else %}Variable BCRA <strong>#1242</strong> — Depósitos a plazo del sector privado (a plazo fijo e inversiones) (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1229</strong> — Total deposits of the public sector (millions of ARS){% else %}Variable BCRA <strong>#1229</strong> — Depósitos del sector público totales (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1230</strong> — Vista deposits of the public sector (current accounts and savings accounts) (millions of ARS){% else %}Variable BCRA <strong>#1230</strong> — Depósitos a la vista del sector público (cuentas corrientes y cajas de ahorro) (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1231</strong> — Term deposits of the public sector (time deposits and investments) (millions of ARS){% else %}Variable BCRA <strong>#1231</strong> — Depósitos a plazo del sector público (a plazo fijo e inversiones) (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_usd_deposits{% else %}/depositos_en_dolares_argentina{% endif %}">{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1563</strong> — Total deposits and other liabilities of financial institutions of the non-financial private sector (millions of USD){% else %}Variable BCRA <strong>#1563</strong> — Depósitos totales y otros pasivos de las entidades financieras del sector privado no financiero (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1564</strong> — Total cash deposits of the non-financial private sector (millions of USD){% else %}Variable BCRA <strong>#1564</strong> — Depósitos totales de efectivo del sector privado no financiero (en millones de USD){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1193</strong> — Interest rate on USD time deposits (% per annum){% else %}Variable BCRA <strong>#1193</strong> — Tasa de interés de depósitos a plazo fijo en dólares (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1194</strong> — Interest rate on USD time deposits for individuals (% per annum){% else %}Variable BCRA <strong>#1194</strong> — Tasa de interés de depósitos a plazo fijo en dólares de personas humanas (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1195</strong> — Interest rate on USD time deposits for legal entities (% per annum){% else %}Variable BCRA <strong>#1195</strong> — Tasa de interés de depósitos a plazo fijo en dólares de personas jurídicas (% nominal anual){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_deposits_by_holder{% else %}/depositos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Deposits by Holder{% else %}Depósitos por Titular{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#981</strong> — Total private-sector deposits by holder (MEyML, millions of ARS){% else %}Variable BCRA <strong>#981</strong> — Total depósitos del sector privado por titular (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#982</strong> — Deposits held by individuals (<em>personas humanas</em>) (millions of ARS){% else %}Variable BCRA <strong>#982</strong> — Depósitos de personas humanas (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#983</strong> — Deposits held by companies (<em>personas jurídicas</em>) (millions of ARS){% else %}Variable BCRA <strong>#983</strong> — Depósitos de personas jurídicas (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#986</strong> — Deposits held by mutual funds (<em>FCIs</em>) (millions of ARS){% else %}Variable BCRA <strong>#986</strong> — Depósitos de Fondos Comunes de Inversión (FCIs) (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#990</strong> — Deposits held by SMEs (<em>PyMEs</em>) (millions of ARS){% else %}Variable BCRA <strong>#990</strong> — Depósitos de PyMEs (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1014</strong> — Private-sector checking-account deposits (millions of ARS){% else %}Variable BCRA <strong>#1014</strong> — Depósitos en cuentas corrientes del sector privado (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1047</strong> — Private-sector savings-account deposits (millions of ARS){% else %}Variable BCRA <strong>#1047</strong> — Depósitos en cajas de ahorro del sector privado (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1080</strong> — Private-sector time deposits (<em>plazos fijos</em>) (millions of ARS){% else %}Variable BCRA <strong>#1080</strong> — Depósitos a plazo fijo del sector privado (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_financial_system_liquidity{% else %}/liquidez_sistema_financiero_argentina{% endif %}">{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1224</strong> — BCRA credits to the financial system (millions of ARS){% else %}Variable BCRA <strong>#1224</strong> — Créditos del BCRA al sistema financiero (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1221</strong> — Liquidity in pesos of financial institutions (% of deposits){% else %}Variable BCRA <strong>#1221</strong> — Liquidez en pesos de las entidades financieras (% de depósitos){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1228</strong> — Liquidity of financial institutions in pesos and foreign currency (% of deposits){% else %}Variable BCRA <strong>#1228</strong> — Liquidez de las entidades financieras en pesos y en moneda extranjera (% de depósitos){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#26</strong> — Loans from financial institutions to the private sector (millions of ARS){% else %}Variable BCRA <strong>#26</strong> — Préstamos de entidades financieras al sector privado (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#14</strong> — Interest rate on personal loans (% per annum){% else %}Variable BCRA <strong>#14</strong> — Tasa de interés de préstamos personales (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#13</strong> — Interest rate on current account overdrafts (% per annum){% else %}Variable BCRA <strong>#13</strong> — Tasa de interés por adelantos en cuenta corriente (% nominal anual){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_loans_by_type{% else %}/prestamos_por_tipo_argentina{% endif %}">{% if lang == 'en' %}Loans by Type{% else %}Préstamos por Tipo{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1235</strong> — Loans to the private sector via advances and discounts (millions of ARS){% else %}Variable BCRA <strong>#1235</strong> — Préstamos al sector privado mediante adelantos y documentos (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1236</strong> — Personal loans and credit card loans (millions of ARS){% else %}Variable BCRA <strong>#1236</strong> — Préstamos personales y mediante tarjetas de crédito (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1237</strong> — Mortgage and pledge loans to the private sector (millions of ARS){% else %}Variable BCRA <strong>#1237</strong> — Préstamos hipotecarios y prendarios al sector privado (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1238</strong> — Other loans to the private sector (millions of ARS){% else %}Variable BCRA <strong>#1238</strong> — Otros préstamos al sector privado (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_mortgage_and_secured_loans{% else %}/prestamos_hipotecarios_y_prendarios_argentina{% endif %}">{% if lang == 'en' %}Mortgage and Secured Loans{% else %}Hipotecarios y Prendarios{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1115</strong> — New-home mortgage loans (MEyML, millions of ARS){% else %}Variable BCRA <strong>#1115</strong> — Préstamos hipotecarios para viviendas nuevas (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1116</strong> — Used-home mortgage loans (MEyML, millions of ARS){% else %}Variable BCRA <strong>#1116</strong> — Préstamos hipotecarios para viviendas usadas (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1113</strong> — Construction mortgage loans (MEyML, millions of ARS){% else %}Variable BCRA <strong>#1113</strong> — Préstamos hipotecarios para construcción (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1114</strong> — Renovation mortgage loans (MEyML, millions of ARS){% else %}Variable BCRA <strong>#1114</strong> — Préstamos hipotecarios para refacción (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1117</strong> — Other mortgage loans (MEyML, millions of ARS){% else %}Variable BCRA <strong>#1117</strong> — Otros préstamos hipotecarios (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1118</strong> — Auto pledge loans (MEyML, millions of ARS){% else %}Variable BCRA <strong>#1118</strong> — Préstamos prendarios para automotores (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1119</strong> — Machinery pledge loans (MEyML, millions of ARS){% else %}Variable BCRA <strong>#1119</strong> — Préstamos prendarios para maquinarias (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1120</strong> — Other pledge loans (MEyML, millions of ARS){% else %}Variable BCRA <strong>#1120</strong> — Otros préstamos prendarios (MEyML, en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_loans_by_borrower{% else %}/prestamos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Loans by Borrower{% else %}Préstamos por Titular{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#882</strong> — Total private-sector loans by borrower (MEyML, millions of ARS){% else %}Variable BCRA <strong>#882</strong> — Total préstamos al sector privado por titular (MEyML, en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#883</strong> — Loans to individuals (<em>personas humanas</em>) (millions of ARS){% else %}Variable BCRA <strong>#883</strong> — Préstamos a personas humanas (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#884</strong> — Loans to companies (<em>personas jurídicas</em>) (millions of ARS){% else %}Variable BCRA <strong>#884</strong> — Préstamos a personas jurídicas (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#891</strong> — Loans to SMEs (<em>PyMEs</em>) (millions of ARS){% else %}Variable BCRA <strong>#891</strong> — Préstamos a PyMEs (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#915</strong> — Mortgage loans by borrower type (millions of ARS){% else %}Variable BCRA <strong>#915</strong> — Préstamos hipotecarios por tipo de titular (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#948</strong> — Secured (pledge) loans by borrower type (millions of ARS){% else %}Variable BCRA <strong>#948</strong> — Préstamos prendarios por tipo de titular (en millones de ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage Loans vs. Deposits{% else %}Porcentaje Préstamos vs. Depósitos{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: (loans / deposits) × 100 — using BCRA Variables <strong>#26</strong> and <strong>#21</strong>{% else %}Elaboración Propia: (préstamos / depósitos) × 100 — usando Variables BCRA <strong>#26</strong> y <strong>#21</strong>{% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#7</strong> — BADLAR rate, private banks (% per annum){% else %}Variable BCRA <strong>#7</strong> — Tasa BADLAR de bancos privados (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#138</strong> — BADLAR rate, public and private banks (% per annum){% else %}Variable BCRA <strong>#138</strong> — Tasa BADLAR de bancos públicos y privados (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#11</strong> — BAIBAR rate (% per annum){% else %}Variable BCRA <strong>#11</strong> — Tasa BAIBAR (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#8</strong> — TM20 rate, private banks (% per annum){% else %}Variable BCRA <strong>#8</strong> — Tasa TM20 de bancos privados (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#44</strong> — TAMAR rate, private banks (% per annum){% else %}Variable BCRA <strong>#44</strong> — Tasa TAMAR de bancos privados (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#135</strong> — TAMAR rate, public and private banks (% per annum){% else %}Variable BCRA <strong>#135</strong> — Tasa TAMAR de bancos públicos y privados (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#164</strong> — Rate on BCRA active repo operations, 1 day (% per annum){% else %}Variable BCRA <strong>#164</strong> — Tasa de pases activos para el BCRA a 1 día (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#162</strong> — Rate on BCRA passive repo operations, 1 day (% per annum){% else %}Variable BCRA <strong>#162</strong> — Tasa de pases pasivos para el BCRA a 1 día (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#14</strong> — Interest rate on personal loans (% per annum){% else %}Variable BCRA <strong>#14</strong> — Tasa de interés de préstamos personales (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#13</strong> — Interest rate on current account overdrafts (% per annum){% else %}Variable BCRA <strong>#13</strong> — Tasa de interés por adelantos en cuenta corriente (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#12</strong> — Interest rate on 30-day deposits (% per annum){% else %}Variable BCRA <strong>#12</strong> — Tasa de interés de depósitos a 30 días (% nominal anual){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_lending_interest_rates{% else %}/tasas_de_interes_de_prestamos_argentina{% endif %}">{% if lang == 'en' %}Lending Interest Rates{% else %}Tasas de Interés de Préstamos{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1215</strong> — Credit card interest rate (% per annum){% else %}Variable BCRA <strong>#1215</strong> — Tasa de interés de tarjetas de crédito (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1216</strong> — Single-signature document rate (% per annum){% else %}Variable BCRA <strong>#1216</strong> — Tasa de documentos a sola firma (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#14</strong> — Personal loan rate (% per annum){% else %}Variable BCRA <strong>#14</strong> — Tasa de préstamos personales (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#13</strong> — Current account advance rate (% per annum){% else %}Variable BCRA <strong>#13</strong> — Tasa de adelantos en cuenta corriente (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1217</strong> — Fixed-rate mortgage rate (% per annum){% else %}Variable BCRA <strong>#1217</strong> — Tasa de préstamos hipotecarios a tasa fija (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1218</strong> — Fixed-rate auto/equipment (pledge) loan rate (% per annum){% else %}Variable BCRA <strong>#1218</strong> — Tasa de préstamos prendarios a tasa fija (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1240</strong> — UVA mortgage rate (% per annum){% else %}Variable BCRA <strong>#1240</strong> — Tasa de préstamos hipotecarios UVA (% nominal anual){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_deposit_interest_rates{% else %}/tasas_de_interes_de_depositos_argentina{% endif %}">{% if lang == 'en' %}Deposit Interest Rates{% else %}Tasas de Interés de Depósitos{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1203</strong> — Savings account rate (<em>caja de ahorro</em>) (% per annum){% else %}Variable BCRA <strong>#1203</strong> — Tasa de caja de ahorro (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#12</strong> — 30-day deposit reference rate (% per annum){% else %}Variable BCRA <strong>#12</strong> — Tasa de depósitos a 30 días (referencia) (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1205</strong> — 7–59 day time deposit rate (% per annum){% else %}Variable BCRA <strong>#1205</strong> — Tasa de depósitos a plazo fijo de 7 a 59 días (% nominal anual){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1208</strong> — 60-day-or-more time deposit rate (% per annum){% else %}Variable BCRA <strong>#1208</strong> — Tasa de depósitos a plazo fijo de 60 días o más (% nominal anual){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#152</strong> — BCRA passive repo operations, balance including repos with mutual funds (millions of ARS){% else %}Variable BCRA <strong>#152</strong> — Pases pasivos para el BCRA, saldo incluye pases con fondos comunes de inversión (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#154</strong> — BCRA active repo operations, balance (millions of ARS){% else %}Variable BCRA <strong>#154</strong> — Pases activos para el BCRA, saldo (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#153</strong> — BCRA passive repos with mutual funds, balance (millions of ARS){% else %}Variable BCRA <strong>#153</strong> — Pases pasivos para el BCRA con fondos comunes de inversión, saldo (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#151</strong> — Third-party repo operations, 1 day, amount (millions of ARS){% else %}Variable BCRA <strong>#151</strong> — Operaciones de pases entre terceros a 1 día, monto (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#150</strong> — Interest rate on third-party repo operations, 1 day (% per annum){% else %}Variable BCRA <strong>#150</strong> — Tasa de interés por operaciones de pases entre terceros a 1 día (% nominal anual){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/fiscal_monetary_interface{% else %}/interfaz_fiscal_monetaria{% endif %}">{% if lang == 'en' %}Fiscal-Monetary Interface{% else %}Interfaz Fiscal-Monetaria{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1225</strong> — Temporary advances from the BCRA to the National Government (millions of ARS){% else %}Variable BCRA <strong>#1225</strong> — Adelantos transitorios del BCRA al Gobierno Nacional (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1260</strong> — Leliq and notaliq (millions of ARS){% else %}Variable BCRA <strong>#1260</strong> — Leliq y notaliq (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1265</strong> — Government deposits at the BCRA in pesos (millions of ARS){% else %}Variable BCRA <strong>#1265</strong> — Depósitos del gobierno en el BCRA en pesos (en millones de ARS){% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#1266</strong> — Government deposits at the BCRA in foreign currency (millions of USD){% else %}Variable BCRA <strong>#1266</strong> — Depósitos del gobierno en el BCRA en moneda extranjera (en millones de USD){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/cer{% else %}/cer{% endif %}">CER</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#30</strong> — Reference stabilization coefficient (base 2.2.02=1){% else %}Variable BCRA <strong>#30</strong> — Coeficiente de estabilización de referencia (base 2.2.02=1){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/unit_of_purchasing_value{% else %}/unidad_de_valor_adquisitivo{% endif %}">{% if lang == 'en' %}UVA — Unit of Purchasing Value{% else %}UVA — Unidad de Valor Adquisitivo{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#31</strong> — Unit of purchasing value (base 31.3.16=14.05, in ARS){% else %}Variable BCRA <strong>#31</strong> — Unidad de valor adquisitivo (base 31.3.16=14.05, en ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/unit_of_dwelling{% else %}/unidad_de_vivienda{% endif %}">{% if lang == 'en' %}UVI — Unit of Dwelling{% else %}UVI — Unidad de Vivienda{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#32</strong> — Unit of dwelling (base 31.3.16=14.05, in ARS){% else %}Variable BCRA <strong>#32</strong> — Unidad de vivienda (base 31.3.16=14.05, en ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/icl{% else %}/icl{% endif %}">{% if lang == 'en' %}ICL — Rental Contract Index{% else %}ICL — Índice para Contratos de Locación{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#40</strong> — Index for rental contracts (base 30.6.20=1, in ARS){% else %}Variable BCRA <strong>#40</strong> — Índice para contratos de locación (base 30.6.20=1, en ARS){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_monthly_inflation{% else %}/inflacion_mensual_argentina{% endif %}">{% if lang == 'en' %}Monthly Inflation{% else %}Inflación Mensual{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#27</strong> — Monthly variation of the consumer price index (%){% else %}Variable BCRA <strong>#27</strong> — Variación mensual del índice de precios al consumidor (%){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#28</strong> — Year-over-year variation of the consumer price index (%){% else %}Variable BCRA <strong>#28</strong> — Variación interanual del índice de precios al consumidor (%){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_expected_inflation{% else %}/inflacion_esperada_argentina{% endif %}">{% if lang == 'en' %}Expected Inflation{% else %}Inflación Esperada{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#29</strong> — Median expected year-over-year CPI variation for the next 12 months (Market Expectations Survey — REM) (%){% else %}Variable BCRA <strong>#29</strong> — Mediana de la variación interanual esperada del IPC para los próximos 12 meses (Relevamiento de Expectativas de Mercado — REM) (%){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/merval_index{% else %}/indice_merval{% endif %}">{% if lang == 'en' %}MERVAL Index{% else %}Índice MERVAL{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}MERVAL index (see MERVAL Index section above){% else %}Índice MERVAL (ver sección Índice MERVAL más arriba){% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/merval_in_usd{% else %}/merval_en_dolares{% endif %}">{% if lang == 'en' %}MERVAL in USD{% else %}MERVAL en Dólares{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: MERVAL index ÷ Dollar Blue{% else %}Elaboración Propia: índice MERVAL ÷ Dólar Blue{% endif %}</li>
+    </ul>
+
+    <h3><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades Anuales{% endif %}</a></h3>
+    <ul>
+        <li>{% if lang == 'en' %}Elaboración Propia: year-over-year percentage change of the Dollar Blue — <code>((current / prior year) × 100) − 100</code>{% else %}Elaboración Propia: variación porcentual interanual del Dólar Blue — <code>((valor actual / valor del año anterior) × 100) − 100</code>{% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: year-over-year percentage change of the official USD (BCRA Variable <strong>#5</strong>){% else %}Elaboración Propia: variación porcentual interanual del dólar oficial (Variable BCRA <strong>#5</strong>){% endif %}</li>
+        <li>{% if lang == 'en' %}Elaboración Propia: year-over-year percentage change of the MERVAL index{% else %}Elaboración Propia: variación porcentual interanual del índice MERVAL{% endif %}</li>
+        <li>{% if lang == 'en' %}BCRA Variable <strong>#12</strong> — Interest rate on 30-day deposits (% per annum){% else %}Variable BCRA <strong>#12</strong> — Tasa de interés de depósitos a 30 días (% nominal anual){% endif %}</li>
+    </ul>
+</div>
+{% endblock %}

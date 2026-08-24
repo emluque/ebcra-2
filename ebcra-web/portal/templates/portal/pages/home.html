@@ -1,0 +1,190 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}Argentine Central Bank Statistics{% else %}Estadísticas BCRA{% endif %}{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Statistics and charts for the Argentine Central Bank — Monetary Base, International Reserves, Inflation and more.{% else %}Estadísticas y gráficos del Banco Central de la República Argentina — Base Monetaria, Reservas Internacionales, Inflación y más.{% endif %}{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container title-size-four"><h1>{% if lang == 'en' %}Argentine Monetary Statistics{% else %}Estadísticas Monetarias de la República Argentina{% endif %}</h1></div></div>
+<div class="explanation"><p>
+{% if lang == 'en' %}
+<a href="/en">Estadísticas BCRA</a> is an <strong>Independent</strong> site (not affiliated with the BCRA, the Argentine government, any political party or movement, or any media outlet). The objective of the site is to bring the data published by the BCRA and its temporal variations to the public in a clear and precise manner. To learn about sources, visit <a href="/en/sources">Sources</a>.
+{% else %}
+<a href="/">Estadísticas BCRA</a> es un sitio <strong>Independiente</strong> (No afiliado con el BCRA, ni con el gobierno Argentino, ni con ningún partido o movimiento político, ni con ningún medio de comunicación de ningún tipo). El objetivo del sitio es acercar a la población los datos que publica el BCRA y sus variaciones temporales de manera clara y precisa. Si quiere saber mas sobre las fuentes que se usan en el sitio, visite <a href="/fuentes">Fuentes</a>.
+{% endif %}
+</p></div>
+
+<div class="subtitle home-subtitle">
+    <h3>{% if lang == 'en' %}Monetary Base vs International Reserves{% else %}Base Monetaria vs Reservas Internacionales{% endif %}</h3>
+</div>
+
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos or Dollars{% else %}Valores expresados en Millones de Pesos o Dolares{% endif %}</div>
+</div>
+
+{% if variations %}
+<div class="subtitle">
+    <h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3>
+</div>
+
+<div class="variations-container">
+    <h2>{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.base_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.base_date_last|format_date }}</small> : <small>{{ variations.base_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.base_val_last|calculate_variation:variations.base_val_daily }}</h3>
+            <div><small>{{ variations.base_date_daily|format_date }}</small> : <small>{{ variations.base_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.base_val_last|calculate_variation:variations.base_val_monthly }}</h3>
+            <div><small>{{ variations.base_date_monthly|format_date }}</small> : <small>{{ variations.base_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.base_val_last|calculate_variation:variations.base_val_yearly }}</h3>
+            <div><small>{{ variations.base_date_yearly|format_date }}</small> : <small>{{ variations.base_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+    <h2>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.res_val_last|format_number:lang }}</h3>
+            <div><small>{{ variations.res_date_last|format_date }}</small> : <small>{{ variations.res_val_last|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_daily }}</h3>
+            <div><small>{{ variations.res_date_daily|format_date }}</small> : <small>{{ variations.res_val_daily|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_monthly }}</h3>
+            <div><small>{{ variations.res_date_monthly|format_date }}</small> : <small>{{ variations.res_val_monthly|format_number:lang }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_yearly }}</h3>
+            <div><small>{{ variations.res_date_yearly|format_date }}</small> : <small>{{ variations.res_val_yearly|format_number:lang }}</small></div>
+        </div>
+    </div>
+</div>
+
+<div class="subtitle">
+    <h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3>
+</div>
+<div class="variations-chart-container">
+    <div id="variations-chart" class="loading"></div>
+</div>
+{% endif %}
+
+<div class="subtitle" id="reportes">
+    <h3>{% if lang == 'en' %}Other Reports{% else %}Otros Reportes{% endif %}</h3>
+</div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves_composition{% else %}/composicion_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves_variation_factors{% else %}/factores_variacion_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves Variation Factors{% else %}Factores de Variación de las Reservas{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_divided_by_international_reserves{% else %}/base_monetaria_dividida_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}Monetary Base Divided by International Reserves and Dollar Rate{% else %}Base Monetaria Dividida Reservas Internacionales y Cotización del Dólar{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1_divided_by_international_reserves{% else %}/m1_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M1 Divided by International Reserves and Dollar Rate{% else %}M1 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2_divided_by_international_reserves{% else %}/m2_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M2 Divided by International Reserves and Dollar Rate{% else %}M2 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3_divided_by_international_reserves{% else %}/m3_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M3 Divided by International Reserves and Dollar Rate{% else %}M3 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_in_usd{% else %}/base_monetaria_argentina_en_usd{% endif %}">{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_components{% else %}/componentes_base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base Components{% else %}Componentes de la Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1{% else %}/m1{% endif %}">M1</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1_in_usd{% else %}/m1_en_usd{% endif %}">{% if lang == 'en' %}M1 in USD{% else %}M1 en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2_in_usd{% else %}/m2_en_usd{% endif %}">{% if lang == 'en' %}M2 in USD{% else %}M2 en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3{% else %}/m3{% endif %}">M3</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3_in_usd{% else %}/m3_en_usd{% endif %}">{% if lang == 'en' %}M3 in USD{% else %}M3 en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/fiscal_monetary_interface{% else %}/interfaz_fiscal_monetaria{% endif %}">{% if lang == 'en' %}Fiscal-Monetary Interface{% else %}Interfaz Fiscal-Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/merval_index{% else %}/indice_merval{% endif %}">{% if lang == 'en' %}Merval{% else %}Merval{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/merval_in_usd{% else %}/merval_en_dolares{% endif %}">{% if lang == 'en' %}Merval in USD{% else %}Merval en Dólares{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Profitability{% else %}Rentabilidades{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_sector{% else %}/depositos_por_sector_argentina{% endif %}">{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_usd_deposits{% else %}/depositos_en_dolares_argentina{% endif %}">{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits_by_holder{% else %}/depositos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Deposits by Holder{% else %}Depósitos por Titular{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_financial_system_liquidity{% else %}/liquidez_sistema_financiero_argentina{% endif %}">{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans_by_type{% else %}/prestamos_por_tipo_argentina{% endif %}">{% if lang == 'en' %}Loans by Type{% else %}Préstamos por Tipo{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_mortgage_and_secured_loans{% else %}/prestamos_hipotecarios_y_prendarios_argentina{% endif %}">{% if lang == 'en' %}Mortgage and Secured Loans{% else %}Hipotecarios y Prendarios{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans_by_borrower{% else %}/prestamos_por_titular_argentina{% endif %}">{% if lang == 'en' %}Loans by Borrower{% else %}Préstamos por Titular{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage Loans vs Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_lending_interest_rates{% else %}/tasas_de_interes_de_prestamos_argentina{% endif %}">{% if lang == 'en' %}Lending Rates{% else %}Tasas de Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposit_interest_rates{% else %}/tasas_de_interes_de_depositos_argentina{% endif %}">{% if lang == 'en' %}Deposit Rates{% else %}Tasas de Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monthly_inflation{% else %}/inflacion_mensual_argentina{% endif %}">{% if lang == 'en' %}Monthly Inflation{% else %}Inflación Mensual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_expected_inflation{% else %}/inflacion_esperada_argentina{% endif %}">{% if lang == 'en' %}Expected Inflation{% else %}Inflación Esperada{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/cer{% else %}/cer{% endif %}">CER</a></li>
+                <li><a href="{% if lang == 'en' %}/en/unit_of_purchasing_value{% else %}/unidad_de_valor_adquisitivo{% endif %}">UVA</a></li>
+                <li><a href="{% if lang == 'en' %}/en/unit_of_dwelling{% else %}/unidad_de_vivienda{% endif %}">UVI</a></li>
+                <li><a href="{% if lang == 'en' %}/en/icl{% else %}/icl{% endif %}">ICL</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/base",
+    "{{ CHART_API_BASE_URL }}/reservas",
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const opts_chart = {
+        id: "base-res",
+        containerId: "chart",
+        numberLocale: numberLocale,
+        initialView: "fiveYears",
+        data: [
+            { id: "base-monetaria", stroke: "#666600", name: "{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/base"] },
+            { id: "reservas", stroke: "#003333", name: "{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas"] },
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang },
+    };
+    const opts_var = {
+        id: "base-res-variation",
+        containerId: "variations-chart",
+        numberLocale: numberLocale,
+        initialView: "monthly",
+        data: [
+            { id: "base-monetaria", stroke: "#666600", name: "{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/base"] },
+            { id: "reservas", stroke: "#003333", name: "{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas"] },
+        ],
+        conf: { lang: variationsLang, toolTipContainerBGWidth: 240 },
+    };
+    const g = new responsiveChart(opts_chart);
+    const v = new responsiveVariations(opts_var);
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g.resize(); v.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

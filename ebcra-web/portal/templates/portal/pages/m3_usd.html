@@ -1,0 +1,60 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}M3 in USD{% else %}M3 en USD{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}M3 in USD{% else %}M3 expresado en USD{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}<a href="/en/argentina_m3">M3</a> monetary aggregate expressed in USD at the free and official wholesale exchange rates.{% else %}Agregado monetario <a href="/m3">M3</a> expresado en dólares al tipo de cambio libre y oficial mayorista.{% endif %}</p></div>
+
+<div class="subtitle"><h3>M3 {% if lang == 'en' %}in USD{% else %}expresado en USD{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of USD{% else %}Valores expresados en Millones de USD{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3{% else %}/m3{% endif %}">M3</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3_divided_by_international_reserves{% else %}/m3_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M3 Divided by International Reserves{% else %}M3 Dividido Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1{% else %}/m1{% endif %}">M1</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1_in_usd{% else %}/m1_en_usd{% endif %}">{% if lang == 'en' %}M1 in USD{% else %}M1 en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2{% else %}/m2{% endif %}">M2</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2_in_usd{% else %}/m2_en_usd{% endif %}">{% if lang == 'en' %}M2 in USD{% else %}M2 en USD{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_in_usd{% else %}/base_monetaria_argentina_en_usd{% endif %}">{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria en USD{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_usd_deposits{% else %}/depositos_en_dolares_argentina{% endif %}">{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/m3_usd",
+    "{{ CHART_API_BASE_URL }}/m3_usd_of"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({ id: "m3-usd", containerId: "chart", numberLocale: numberLocale, initialView: "fiveYears", data: [{ id: "m3-usd", stroke: "#666600", name: "M3 (USD)", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/m3_usd"] }, { id: "m3-usd-of", stroke: "#003333", name: "{% if lang == 'en' %}M3 (Official USD){% else %}M3 (USD Oficial){% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/m3_usd_of"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 220 } });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

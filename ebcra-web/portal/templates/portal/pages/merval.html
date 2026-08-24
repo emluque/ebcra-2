@@ -1,0 +1,68 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}Merval Index{% else %}Índice Merval{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Merval Index{% else %}Índice Merval{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}The <a href="https://en.wikipedia.org/wiki/MERVAL">Merval Index</a> is the benchmark stock market index of the Buenos Aires Stock Exchange (BYMA), tracking the performance of the most actively traded Argentine equities. It is denominated in Argentine pesos and is widely used as an indicator of investor confidence and economic expectations. The chart below shows the historical evolution of the index.{% else %}El <a href="https://es.wikipedia.org/wiki/MERVAL">Índice Merval</a> es el principal índice bursátil de la Bolsa de Buenos Aires (BYMA), que sigue el desempeño de las acciones argentinas con mayor volumen de negociación. Está denominado en pesos argentinos y es ampliamente utilizado como indicador de la confianza de los inversores y las expectativas económicas. El siguiente gráfico muestra la evolución histórica del índice.{% endif %}</p></div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Merval Index{% else %}Índice Merval{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+</div>
+{% if variations %}
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="variations-container">
+    <h2>Merval</h2>
+    <div class="section group">
+        <div class="col span_1_of_4"><h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4><h3>{{ variations.mer_val_last|format_number:lang }}</h3><div><small>{{ variations.mer_date_last|format_date }}</small> : <small>{{ variations.mer_val_last|format_number:lang }}</small></div></div>
+        <div class="col span_1_of_4"><h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4><h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_daily }}</h3><div><small>{{ variations.mer_date_daily|format_date }}</small> : <small>{{ variations.mer_val_daily|format_number:lang }}</small></div></div>
+        <div class="col span_1_of_4"><h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4><h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_monthly }}</h3><div><small>{{ variations.mer_date_monthly|format_date }}</small> : <small>{{ variations.mer_val_monthly|format_number:lang }}</small></div></div>
+        <div class="col span_1_of_4"><h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4><h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_yearly }}</h3><div><small>{{ variations.mer_date_yearly|format_date }}</small> : <small>{{ variations.mer_val_yearly|format_number:lang }}</small></div></div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4"><h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4><h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_2years }}</h3><div><small>{{ variations.mer_date_2years|format_date }}</small> : <small>{{ variations.mer_val_2years|format_number:lang }}</small></div></div>
+        <div class="col span_1_of_4"><h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4><h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_3years }}</h3><div><small>{{ variations.mer_date_3years|format_date }}</small> : <small>{{ variations.mer_val_3years|format_number:lang }}</small></div></div>
+        <div class="col span_1_of_4"><h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>{% if variations.mer_val_5years %}<h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_5years }}</h3><div><small>{{ variations.mer_date_5years|format_date }}</small> : <small>{{ variations.mer_val_5years|format_number:lang }}</small></div>{% else %}<h3>Sin Datos</h3>{% endif %}</div>
+        <div class="col span_1_of_4"><h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>{% if variations.mer_val_10years %}<h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_10years }}</h3><div><small>{{ variations.mer_date_10years|format_date }}</small> : <small>{{ variations.mer_val_10years|format_number:lang }}</small></div>{% else %}<h3>Sin Datos</h3>{% endif %}</div>
+    </div>
+</div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="variations-chart-container"><div id="variations-chart" class="loading"></div></div>
+{% endif %}
+<div class="subtitle"><h3>{% if lang == 'en' %}Other Reports{% else %}Otros Reportes{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/merval_in_usd{% else %}/merval_en_dolares{% endif %}">{% if lang == 'en' %}Merval Index in USD{% else %}Índice Merval en Dólares{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades Anuales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves{% else %}/reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_divided_by_international_reserves{% else %}/base_monetaria_dividida_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}Monetary Base / Int. Reserves{% else %}Base Monetaria / Reservas{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monthly_inflation{% else %}/inflacion_mensual_argentina{% endif %}">{% if lang == 'en' %}Monthly Inflation{% else %}Inflación Mensual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_expected_inflation{% else %}/inflacion_esperada_argentina{% endif %}">{% if lang == 'en' %}Expected Inflation{% else %}Inflación Esperada{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = ["{{ CHART_API_BASE_URL }}/merval"];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+const displayCharts = () => {
+    const opts = { id: "merval", containerId: "chart", numberLocale: numberLocale, initialView: "fiveYears", data: [{ id: "merval", stroke: "#003333", name: "Merval", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/merval"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang } };
+    const opts_var = { id: "merval-var", containerId: "variations-chart", numberLocale: numberLocale, initialView: "monthly", data: [{ id: "merval", stroke: "#003333", name: "Merval", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/merval"] }], conf: { lang: variationsLang } };
+    const g = new responsiveChart(opts); const v = new responsiveVariations(opts_var); let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g.resize(); v.resize(); }, 150); });
+};
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

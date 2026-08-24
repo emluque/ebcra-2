@@ -1,0 +1,122 @@
+{% extends "portal/base.html" %}
+{% load portal_extras %}
+{% block page_title %}{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}<a href="https://en.wikipedia.org/wiki/Foreign-exchange_reserves">International reserves</a> are the foreign-currency assets held by the BCRA — including gold, SDRs, and deposits at foreign central banks — that back the monetary base and serve as a buffer against external shocks. The chart below tracks the BCRA's declared gross reserves over time.{% else %}Las <a href="https://es.wikipedia.org/wiki/Reserva_internacional">Reservas Internacionales</a> son los activos en moneda extranjera que posee el BCRA — incluyendo oro, DEG y depósitos en bancos centrales del exterior — que respaldan la base monetaria y actúan como amortiguador ante shocks externos. El siguiente gráfico muestra la evolución de las reservas brutas declaradas por el BCRA.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of USD{% else %}Valores expresados en Millones de USD{% endif %}</div>
+</div>
+
+{% if variations %}
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="variations-container">
+    <h2>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h2>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
+            <h3>{{ variations.res_val_last }}</h3>
+            <div><small>{{ variations.res_date_last|format_date }}</small> : <small>{{ variations.res_val_last }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4>
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_daily }}</h3>
+            <div><small>{{ variations.res_date_daily|format_date }}</small> : <small>{{ variations.res_val_daily }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Monthly Variation{% else %}Variación Mensual{% endif %}</h4>
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_monthly }}</h3>
+            <div><small>{{ variations.res_date_monthly|format_date }}</small> : <small>{{ variations.res_val_monthly }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}Annual Variation{% else %}Variación Anual{% endif %}</h4>
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_yearly }}</h3>
+            <div><small>{{ variations.res_date_yearly|format_date }}</small> : <small>{{ variations.res_val_yearly }}</small></div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}2 Year Variation{% else %}Variación 2 Años{% endif %}</h4>
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_2years }}</h3>
+            <div><small>{{ variations.res_date_2years|format_date }}</small> : <small>{{ variations.res_val_2years }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}3 Year Variation{% else %}Variación 3 Años{% endif %}</h4>
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_3years }}</h3>
+            <div><small>{{ variations.res_date_3years|format_date }}</small> : <small>{{ variations.res_val_3years }}</small></div>
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}5 Year Variation{% else %}Variación 5 Años{% endif %}</h4>
+            {% if variations.res_val_5years %}
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_5years }}</h3>
+            <div><small>{{ variations.res_date_5years|format_date }}</small> : <small>{{ variations.res_val_5years }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+        <div class="col span_1_of_4">
+            <h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>
+            {% if variations.res_val_10years %}
+            <h3>{{ variations.res_val_last|calculate_variation:variations.res_val_10years }}</h3>
+            <div><small>{{ variations.res_date_10years|format_date }}</small> : <small>{{ variations.res_val_10years }}</small></div>
+            {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
+        </div>
+    </div>
+</div>
+<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="variations-chart-container">
+    <div id="variations-chart" class="loading"></div>
+</div>
+{% endif %}
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves_composition{% else %}/composicion_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_international_reserves_variation_factors{% else %}/factores_variacion_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}International Reserves Variation Factors{% else %}Factores de Variación de las Reservas{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_divided_by_international_reserves{% else %}/base_monetaria_dividida_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}Monetary Base Divided by International Reserves{% else %}Base Monetaria Dividida Reservas Internacionales y Cotización del Dólar{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m1_divided_by_international_reserves{% else %}/m1_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M1 Divided by International Reserves{% else %}M1 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m2_divided_by_international_reserves{% else %}/m2_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M2 Divided by International Reserves{% else %}M2 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_m3_divided_by_international_reserves{% else %}/m3_dividido_reservas_internacionales_argentina{% endif %}">{% if lang == 'en' %}M3 Divided by International Reserves{% else %}M3 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base{% else %}/base_monetaria_argentina{% endif %}">{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monetary_base_in_usd{% else %}/base_monetaria_argentina_en_usd{% endif %}">{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria expresada en USD{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monthly_inflation{% else %}/inflacion_mensual_argentina{% endif %}">{% if lang == 'en' %}Monthly Inflation{% else %}Inflación Mensual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_expected_inflation{% else %}/inflacion_esperada_argentina{% endif %}">{% if lang == 'en' %}Expected Inflation{% else %}Inflación Esperada{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_repo_operations{% else %}/pases_argentina{% endif %}">{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/reservas"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const g1 = new responsiveChart({ id: "reservas", containerId: "chart", numberLocale: numberLocale, initialView: "fiveYears", data: [{ id: "reservas", stroke: "#003333", name: "{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas"] }], milestones: ResponsiveChartLibraryDataLoader.milestones, milestonesTextFunc: milestonesTextFunc, conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 240 } });
+    const v1 = new responsiveVariations({ id: "reservas-variation", containerId: "variations-chart", numberLocale: numberLocale, initialView: "monthly", data: [{ id: "reservas", stroke: "#003333", name: "{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/reservas"] }], conf: { lang: variationsLang, toolTipContainerBGWidth: 240 } });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); v1.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

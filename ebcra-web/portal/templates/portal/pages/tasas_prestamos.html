@@ -1,0 +1,111 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Lending Interest Rates{% else %}Tasas de Interés de Préstamos{% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Lending Interest Rates{% else %}Tasas de Interés de Préstamos{% endif %}</h1></div></div>
+
+<div class="subtitle">
+    <h3>{% if lang == 'en' %}Consumer Credit{% else %}Crédito al Consumo{% endif %}</h3>
+</div>
+<div class="explanation"><p>{% if lang == 'en' %}Annual nominal interest rates charged by banks on the most common consumer loan products. <strong>Credit card rates</strong> apply to revolving balances. <strong>Personal loan rates</strong> cover unsecured consumer credit. <strong>Current account advance rates</strong> (<em>adelantos en cuenta corriente</em>) are overdraft and short-term business credit — typically the most expensive form of bank financing. <strong>Single-signature documents</strong> (<em>documentos a sola firma</em>) are short-term promissory notes used primarily by businesses. Source: BCRA Informe Monetario Diario (monthly).{% else %}Tasas de interés nominal anual que cobran los bancos en los principales productos de crédito al consumo. La <strong>tasa de tarjetas de crédito</strong> corresponde al financiamiento de saldos rotatorios. La <strong>tasa de préstamos personales</strong> cubre el crédito al consumo sin garantía. La <strong>tasa de adelantos en cuenta corriente</strong> incluye sobregiros y crédito empresarial de corto plazo, siendo habitualmente la forma de financiamiento más costosa. Los <strong>documentos a sola firma</strong> son pagarés de corto plazo utilizados principalmente por empresas. Fuente: BCRA Informe Monetario Diario (frecuencia mensual).{% endif %}</p></div>
+
+<div class="chart-container sub-chart">
+    <div id="chart0" class="rwd-chart loading"></div>
+</div>
+
+<div class="subtitle">
+    <h3>{% if lang == 'en' %}Secured and Mortgage Loans{% else %}Préstamos con Garantía Real{% endif %}</h3>
+</div>
+<div class="explanation"><p>{% if lang == 'en' %}<strong>Fixed-rate mortgage loans</strong> are denominated in pesos at a nominal annual rate. <strong>UVA mortgages</strong> carry a lower nominal rate but are indexed to the CER (a consumer price index), so the real balance adjusts with inflation. <strong>Auto and equipment loans</strong> (<em>préstamos prendarios</em>) are secured by a lien on the purchased asset. Source: BCRA Informe Monetario Diario (monthly).{% else %}Los <strong>préstamos hipotecarios a tasa fija</strong> se otorgan en pesos a una tasa nominal anual. Los <strong>créditos hipotecarios UVA</strong> tienen una tasa nominal más baja pero están indexados por CER (un índice de precios al consumidor), por lo que el capital ajusta con la inflación. Los <strong>préstamos prendarios</strong> están garantizados por una prenda sobre el bien adquirido (automóviles, maquinaria). Fuente: BCRA Informe Monetario Diario (frecuencia mensual).{% endif %}</p></div>
+
+<div class="chart-container sub-chart">
+    <div id="chart1" class="rwd-chart loading"></div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_interest_rates{% else %}/tasas_de_interes_argentina{% endif %}">{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposit_interest_rates{% else %}/tasas_de_interes_de_depositos_argentina{% endif %}">{% if lang == 'en' %}Deposit Rates{% else %}Tasas de Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_deposits{% else %}/depositos_argentina{% endif %}">{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans_by_type{% else %}/prestamos_por_tipo_argentina{% endif %}">{% if lang == 'en' %}Loans by Type{% else %}Préstamos por Tipo{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_mortgage_and_secured_loans{% else %}/prestamos_hipotecarios_y_prendarios_argentina{% endif %}">{% if lang == 'en' %}Mortgage and Secured Loans{% else %}Hipotecarios y Prendarios{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage of Loans vs Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/unit_of_purchasing_value{% else %}/unidad_de_valor_adquisitivo{% endif %}">UVA</a></li>
+                <li><a href="{% if lang == 'en' %}/en/cer{% else %}/cer{% endif %}">CER</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Annual Profitability{% else %}Rentabilidades{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = [
+    "{{ CHART_API_BASE_URL }}/tasa_tarjetas_credito",
+    "{{ CHART_API_BASE_URL }}/tasa_documentos_sola_firma",
+    "{{ CHART_API_BASE_URL }}/tasa_prestamos_personales",
+    "{{ CHART_API_BASE_URL }}/tasa_adelantos_cuenta_corriente",
+    "{{ CHART_API_BASE_URL }}/tasa_hipotecarios_fija",
+    "{{ CHART_API_BASE_URL }}/tasa_prendarios_fija",
+    "{{ CHART_API_BASE_URL }}/tasa_hipotecarios_uva"
+];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+const displayCharts = () => {
+    const bGraph0 = new responsiveChart({
+        id: "tasas_prest0",
+        containerId: "chart0",
+        numberLocale: numberLocale,
+        initialView: "fiveYears",
+        data: [
+            { id: "tarjetas",     stroke: "#CC4400", name: "{% if lang == 'en' %}Credit Card Rate{% else %}Tasa Tarjetas de Crédito{% endif %}",        data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_tarjetas_credito"] },
+            { id: "personales",   stroke: "#0C6680", name: "{% if lang == 'en' %}Personal Loan Rate{% else %}Tasa Préstamos Personales{% endif %}",     data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_prestamos_personales"] },
+            { id: "adelantos_cc", stroke: "#666600", name: "{% if lang == 'en' %}Current Acct. Advance{% else %}Tasa Ad. Cta. Corriente{% endif %}",    data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_adelantos_cuenta_corriente"] },
+            { id: "documentos",   stroke: "#003333", name: "{% if lang == 'en' %}Single-Signature Doc.{% else %}Documentos a Sola Firma{% endif %}",    data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_documentos_sola_firma"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 215, showResultsPane: false, leftMargin: 30, addPercent: true, numberOfDigits: 2 }
+    });
+
+    const bGraph1 = new responsiveChart({
+        id: "tasas_prest1",
+        containerId: "chart1",
+        numberLocale: numberLocale,
+        initialView: "allTime",
+        data: [
+            { id: "hip_fija", stroke: "#0C6680", name: "{% if lang == 'en' %}Mortgage Rate (fixed){% else %}Tasa Hipotecarios (fija){% endif %}",  data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_hipotecarios_fija"] },
+            { id: "hip_uva",  stroke: "#666600", name: "{% if lang == 'en' %}Mortgage Rate (UVA){% else %}Tasa Hipotecarios UVA{% endif %}",       data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_hipotecarios_uva"] },
+            { id: "prend",    stroke: "#003333", name: "{% if lang == 'en' %}Auto/Equipment Loan Rate{% else %}Tasa Prendarios{% endif %}",         data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/tasa_prendarios_fija"] }
+        ],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        conf: { views: chartViewsConf, lang: chartLang, toolTipContainerBGWidth: 200, showResultsPane: false, leftMargin: 24, addPercent: true, numberOfDigits: 2 }
+    });
+
+    removeLoading();
+    let t;
+    window.addEventListener('resize', () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+            bGraph0.resize();
+            bGraph1.resize();
+        }, 150);
+    });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

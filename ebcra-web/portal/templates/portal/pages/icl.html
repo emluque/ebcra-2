@@ -1,0 +1,75 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Rental Contract Index (ICL){% else %}Índice para Contratos de Locación (ICL){% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container title-size-four"><h1>{% if lang == 'en' %}Rental Contract Index (ICL){% else %}Índice para Contratos de Locación (ICL){% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}The ICL (Índice para Contratos de Locación) is a blended index published by the BCRA, used to adjust residential rental contracts in Argentina under Law 27.551. It is calculated as a weighted average of CPI inflation (IPC) and formal wage growth (RIPTE), updated daily. Base value: 1 as of 30 June 2020.{% else %}El ICL (Índice para Contratos de Locación) es un índice compuesto publicado por el BCRA, utilizado para actualizar contratos de alquiler residencial en Argentina bajo la Ley 27.551. Se calcula como un promedio ponderado de la inflación (IPC) y el crecimiento salarial formal (RIPTE), actualizado diariamente. Valor base: 1 al 30 de junio de 2020.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Rental Contract Index (ICL){% else %}Índice para Contratos de Locación (ICL){% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Percentages{% else %}Valores expresados en Porcentajes{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/cer{% else %}/cer{% endif %}">CER</a></li>
+                <li><a href="{% if lang == 'en' %}/en/unit_of_purchasing_value{% else %}/unidad_de_valor_adquisitivo{% endif %}">UVA</a></li>
+                <li><a href="{% if lang == 'en' %}/en/unit_of_dwelling{% else %}/unidad_de_vivienda{% endif %}">UVI</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage of Loans vs Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monthly_inflation{% else %}/inflacion_mensual_argentina{% endif %}">{% if lang == 'en' %}Monthly Inflation{% else %}Inflación Mensual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_expected_inflation{% else %}/inflacion_esperada_argentina{% endif %}">{% if lang == 'en' %}Expected Inflation{% else %}Inflación Esperada{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Profitability{% else %}Rentabilidades{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = ["{{ CHART_API_BASE_URL }}/icl"];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+chartViewsConf = [
+    { view: [0, 3, 0], text: {% if lang == 'en' %}"3 months"{% else %}"3 meses"{% endif %}, id: "threeMonths" },
+    { view: [0, 0, 1], text: {% if lang == 'en' %}"1 year"{% else %}"1 año"{% endif %}, id: "oneYear" }
+];
+
+const displayCharts = () => {
+    const g = new responsiveChart({
+        id: "icl",
+        containerId: "chart",
+        initialView: "oneYear",
+        data: [{ id: "icl", stroke: "#003333", name: "ICL", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/icl"] }],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        numberLocale: numberLocale,
+        conf: {
+            views: chartViewsConf,
+            lang: chartLang,
+            toolTipContainerBGWidth: 146,
+            showResultsPane: true,
+            leftMargin: 30
+        }
+    });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}

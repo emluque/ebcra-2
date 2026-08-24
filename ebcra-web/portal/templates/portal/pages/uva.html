@@ -1,0 +1,75 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Unit of Purchasing Value (UVA){% else %}Unidad de Valor Adquisitivo (UVA){% endif %} — Estadísticas BCRA{% endblock %}
+{% block content %}
+
+<div class="title"><div class="title-container title-size-four"><h1>{% if lang == 'en' %}Unit of Purchasing Value (UVA){% else %}Unidad de Valor Adquisitivo (UVA){% endif %}</h1></div></div>
+<div class="explanation"><p>{% if lang == 'en' %}The Unit of Purchasing Value (UVA) is a unit of account created by the BCRA in 2016, initially set at 1/1000 of the average residential construction cost per square meter (≈ $14.05 ARS). Its value updates daily in line with the Consumer Price Index (CPI), preserving purchasing power over time. It is mainly used as the basis for inflation-adjusted mortgage loans, where the outstanding balance evolves with inflation rather than at a fixed nominal rate.{% else %}La Unidad de Valor Adquisitivo (UVA) es una unidad de cuenta creada por el BCRA en 2016, establecida inicialmente en 1/1000 del costo promedio de construcción residencial por metro cuadrado (≈ $14,05 ARS). Su valor se actualiza diariamente en función del Índice de Precios al Consumidor (IPC), preservando el poder adquisitivo a lo largo del tiempo. Se utiliza principalmente como base para créditos hipotecarios ajustados por inflación, en los que el capital adeudado evoluciona con la inflación en lugar de una tasa nominal fija.{% endif %}</p></div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Unit of Purchasing Value (UVA){% else %}Unidad de Valor Adquisitivo (UVA){% endif %}</h3></div>
+<div class="chart-container">
+    <div id="chart" class="rwd-chart loading"></div>
+    <div class="explainer">{% if lang == 'en' %}Values expressed in Percentages{% else %}Valores expresados en Porcentajes{% endif %}</div>
+</div>
+
+<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="other-links-container">
+    <div class="section group">
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/cer{% else %}/cer{% endif %}">CER</a></li>
+                <li><a href="{% if lang == 'en' %}/en/unit_of_dwelling{% else %}/unidad_de_vivienda{% endif %}">UVI</a></li>
+                <li><a href="{% if lang == 'en' %}/en/icl{% else %}/icl{% endif %}">ICL</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_loans{% else %}/prestamos_argentina{% endif %}">{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_percentage_loans_vs_deposits{% else %}/porcentaje_prestamos_vs_depositos_argentina{% endif %}">{% if lang == 'en' %}Percentage of Loans vs Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</a></li>
+            </ul>
+        </div>
+        <div class="col span_2_of_4">
+            <ul>
+                <li><a href="{% if lang == 'en' %}/en/argentina_monthly_inflation{% else %}/inflacion_mensual_argentina{% endif %}">{% if lang == 'en' %}Monthly Inflation{% else %}Inflación Mensual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_inflation{% else %}/inflacion_interanual_argentina{% endif %}">{% if lang == 'en' %}Annual Inflation{% else %}Inflación Interanual{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_expected_inflation{% else %}/inflacion_esperada_argentina{% endif %}">{% if lang == 'en' %}Expected Inflation{% else %}Inflación Esperada{% endif %}</a></li>
+                <li><a href="{% if lang == 'en' %}/en/argentina_annual_profitability{% else %}/rentabilidades{% endif %}">{% if lang == 'en' %}Profitability{% else %}Rentabilidades{% endif %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+{% include "portal/_js_common.html" %}
+<script>
+const sources = ["{{ CHART_API_BASE_URL }}/uva"];
+const milestones = "{{ CHART_API_BASE_URL }}/milestones";
+const jsToken = "{{ jsToken }}";
+
+chartViewsConf = [
+    { view: [0, 3, 0], text: {% if lang == 'en' %}"3 months"{% else %}"3 meses"{% endif %}, id: "threeMonths" },
+    { view: [0, 0, 1], text: {% if lang == 'en' %}"1 year"{% else %}"1 año"{% endif %}, id: "oneYear" }
+];
+
+const displayCharts = () => {
+    const g = new responsiveChart({
+        id: "uva",
+        containerId: "chart",
+        initialView: "oneYear",
+        data: [{ id: "uva", stroke: "#003333", name: "UVA", data: ResponsiveChartLibraryDataLoader.data["{{ CHART_API_BASE_URL }}/uva"] }],
+        milestones: ResponsiveChartLibraryDataLoader.milestones,
+        milestonesTextFunc: milestonesTextFunc,
+        numberLocale: numberLocale,
+        conf: {
+            views: chartViewsConf,
+            lang: chartLang,
+            toolTipContainerBGWidth: 146,
+            showResultsPane: true,
+            leftMargin: 30
+        }
+    });
+    let t;
+    removeLoading();
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g.resize(); }, 150); });
+};
+
+window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+</script>
+{% endblock %}
