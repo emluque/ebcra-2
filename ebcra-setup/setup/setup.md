@@ -30,12 +30,11 @@ sudo docker exec -i -e PGPASSWORD=postgres-password postgres psql -U postgres -f
 
 ## 4. Restore from full dump
 
-A dated full dump lives at `setup/postgres/*.estadisticasbcra.full.dump`.
+A dated full dump lives at `setup/postgres/*.estadisticasbcra.sql`.
 
 ```bash
 sudo docker exec -i -e PGPASSWORD=postgres-password postgres \
-    pg_restore -U postgres -d estadisticasbcra --no-owner --no-acl -v < setup/postgres/<dump-file>.estadisticasbcra.full.dump
-
+    psql -U postgres -d estadisticasbcra -f - < setup/postgres/<dump-file>.estadisticasbcra.sql
 ```
 
 ## 5. Build and start all services
