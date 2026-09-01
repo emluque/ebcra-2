@@ -495,7 +495,7 @@ footer a {
     padding-left: 0.2em; } }
 
 .loading {
-  background-image: url("http://estadisticasbcra.com/img/loading.gif");
+  background-image: url("http://estadisticasbcra.com/static/img/loading.gif");
   background-repeat: no-repeat;
   background-position: center center;
   min-height: 450px; }
