@@ -8,6 +8,8 @@ handler404 = portal_views.page_not_found
 handler500 = portal_views.error_page
 
 urlpatterns = [
+    path("robots.txt", portal_views.robots_txt, name="robots_txt"),
+    path("sitemap.xml", portal_views.sitemap_xml, name="sitemap_xml"),
     path("", include("portal.urls_es")),
     path("en/", include("portal.urls_en")),
     path("api/documentacion", portal_views.api_info, name="api_info_es"),

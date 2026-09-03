@@ -2,6 +2,7 @@ import logging
 
 import httpx
 from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import render
 
 logger = logging.getLogger(__name__)
@@ -57,6 +58,9 @@ _ALTERNATE_URLS = {
     "error":          ("/error",                                                             "/en/error"),
     "api_info":       ("/api/documentacion",                                                 "/api/documentation"),
 }
+
+# Pages excluded from the sitemap (not real content pages).
+_SITEMAP_EXCLUDED_PAGES = {"error"}
 
 # Pages that require a backend variations API call, mapped to the API path
 _VARIATIONS_PATHS = {
@@ -147,6 +151,31 @@ def page_not_found(request, exception=None):
     ctx = _ctx(request, "error")
     ctx["error_code"] = 404
     return render(request, "portal/pages/error.html", ctx, status=404)
+
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "",
+        f"Sitemap: {settings.SITE_URL}/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+def sitemap_xml(request):
+    seen = set()
+    urls = []
+    for page, (es_url, en_url) in _ALTERNATE_URLS.items():
+        if page in _SITEMAP_EXCLUDED_PAGES:
+            continue
+        for url in (es_url, en_url):
+            if url not in seen:
+                seen.add(url)
+                urls.append(url)
+    urls.sort()
+    response = render(request, "portal/sitemap.xml", {"urls": urls}, content_type="application/xml")
+    return _cache_headers(response)
 
 
 def api_info(request):
