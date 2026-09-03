@@ -62,6 +62,10 @@ _ALTERNATE_URLS = {
 # Pages excluded from the sitemap (not real content pages).
 _SITEMAP_EXCLUDED_PAGES = {"error"}
 
+# Pages that aren't a single BCRA time-series report (landing page, static text,
+# error page, API docs) — excluded from the per-page Dataset JSON-LD.
+_NON_DATASET_PAGES = {"home", "sources", "credits", "nota_inflacion", "release_notes", "error", "api_info"}
+
 # Pages that require a backend variations API call, mapped to the API path
 _VARIATIONS_PATHS = {
     "base":        "/var_base",
@@ -100,7 +104,12 @@ def _ctx(request, page):
     lang = _lang(request)
     es_url, en_url = _ALTERNATE_URLS.get(page, ("/", "/en"))
     alternate_url = en_url if lang == "es" else es_url
-    return {"lang": lang, "page": page, "alternate_url": alternate_url}
+    return {
+        "lang": lang,
+        "page": page,
+        "alternate_url": alternate_url,
+        "is_dataset": page not in _NON_DATASET_PAGES,
+    }
 
 
 def _fetch_variations(path):
@@ -181,6 +190,6 @@ def sitemap_xml(request):
 def api_info(request):
     lang = "en" if request.path.endswith("/documentation") else "es"
     es_url, en_url = _ALTERNATE_URLS["api_info"]
-    ctx = {"lang": lang, "page": "api_info", "alternate_url": en_url if lang == "es" else es_url}
+    ctx = {"lang": lang, "page": "api_info", "alternate_url": en_url if lang == "es" else es_url, "is_dataset": False}
     response = render(request, "portal/pages/api_info.html", ctx)
     return _cache_headers(response)

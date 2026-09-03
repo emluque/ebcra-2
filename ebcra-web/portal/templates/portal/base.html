@@ -33,6 +33,33 @@
 
     <meta property="fb:admins" content="1124782958">
 
+    {% block_content 'page_title' as jsonld_title %}
+    {% block_content 'meta_description' as jsonld_description %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "{{ SITE_URL }}/#website",
+          "name": "Estadísticas BCRA",
+          "url": "{{ SITE_URL }}/",
+          "description": "{% if lang == 'en' %}Estadísticas BCRA is an Independent site (not affiliated with the BCRA, the Argentine government, any political party or movement, or any media outlet). The objective of the site is to bring the data published by the BCRA and its temporal variations to the public in a clear and precise manner.{% else %}Estadísticas BCRA es un sitio Independiente (No afiliado con el BCRA, ni con el gobierno Argentino, ni con ningún partido o movimiento político, ni con ningún medio de comunicación de ningún tipo). El objetivo del sitio es acercar a la población los datos que publica el BCRA y sus variaciones temporales de manera clara y precisa.{% endif %}",
+          "inLanguage": ["es", "en"]
+        }{% if is_dataset %},
+        {
+          "@type": "Dataset",
+          "name": "{{ jsonld_title|cut:" — Estadísticas BCRA"|escapejs }}",
+          "description": "{{ jsonld_description|escapejs }}",
+          "url": "{{ SITE_URL }}{{ request.path }}",
+          "inLanguage": "{{ lang }}",
+          "isAccessibleForFree": true,
+          "isPartOf": {"@id": "{{ SITE_URL }}/#website"}
+        }{% endif %}
+      ]
+    }
+    </script>
+
     <script src="{% static 'js/d3/d3.min.js' %}"></script>
     <script src="{% static 'js/library.js' %}?version=2.0.6"></script>
     <link rel="stylesheet" href="{% static 'css/fonts/stylesheet.css' %}" type="text/css" charset="utf-8">
