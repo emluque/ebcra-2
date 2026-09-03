@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Loans to the Private Sector{% else %}Préstamos al Sector Privado{% endif %}</h1></div></div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Loans to the Private Sector{% else %}Préstamos al Sector Privado{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Loans to the Private Sector{% else %}Préstamos al Sector Privado{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
@@ -17,9 +17,9 @@
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
-    <h2>{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -69,23 +69,23 @@
         </div>
     </div>
 </div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
 </div>
 {% endif %}
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Personal Loan Interest Rate{% else %}Tasa de interés de préstamos personales{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Personal Loan Interest Rate{% else %}Tasa de interés de préstamos personales{% endif %}</h2></div>
 <div class="chart-container sub-chart">
     <div id="chart2" class="rwd-chart loading"></div>
 </div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Overdraft Interest Rate{% else %}Tasa de interés de préstamos por adelantos en cuenta corriente{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Overdraft Interest Rate{% else %}Tasa de interés de préstamos por adelantos en cuenta corriente{% endif %}</h2></div>
 <div class="chart-container sub-chart">
     <div id="chart3" class="rwd-chart loading"></div>
 </div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">

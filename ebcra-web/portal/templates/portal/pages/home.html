@@ -16,7 +16,7 @@
 </p></div>
 
 <div class="subtitle home-subtitle">
-    <h3>{% if lang == 'en' %}Monetary Base vs International Reserves{% else %}Base Monetaria vs Reservas Internacionales{% endif %}</h3>
+    <h2>{% if lang == 'en' %}Monetary Base vs International Reserves{% else %}Base Monetaria vs Reservas Internacionales{% endif %}</h2>
 </div>
 
 <div class="chart-container">
@@ -26,11 +26,11 @@
 
 {% if variations %}
 <div class="subtitle">
-    <h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3>
+    <h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2>
 </div>
 
 <div class="variations-container">
-    <h2>{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -53,7 +53,7 @@
             <div><small>{{ variations.base_date_yearly|format_date }}</small> : <small>{{ variations.base_val_yearly|format_number:lang }}</small></div>
         </div>
     </div>
-    <h2>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h2>
+    <h3>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -79,7 +79,7 @@
 </div>
 
 <div class="subtitle">
-    <h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3>
+    <h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2>
 </div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
@@ -87,7 +87,7 @@
 {% endif %}
 
 <div class="subtitle" id="reportes">
-    <h3>{% if lang == 'en' %}Other Reports{% else %}Otros Reportes{% endif %}</h3>
+    <h2>{% if lang == 'en' %}Other Reports{% else %}Otros Reportes{% endif %}</h2>
 </div>
 <div class="other-links-container">
     <div class="section group">

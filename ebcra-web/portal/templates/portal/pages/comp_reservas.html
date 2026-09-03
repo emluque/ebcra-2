@@ -9,17 +9,17 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}<strong>Gross Reserve Assets</strong> (Oro, divisas y colocaciones a plazo) are what the BCRA actually holds: gold, foreign currency deposits, and time deposits at foreign banks. <strong>FX Swap Liability</strong> (Pase pasivo con el exterior) represents dollars encumbered by repo or swap agreements with foreign counterparts — primarily the China swap line — which are included in the gross figure but must be returned. <strong>SDR Allocations 2009</strong> (Asignaciones DEG 2009) are Special Drawing Rights allocated by the IMF in 2009; they count in gross reserves but represent a liability to the IMF. <strong>Reserves Excluding SDR Allocations</strong> (Reservas excluidas DEG) is the headline figure minus the SDR liability, the metric most commonly used by the IMF and Argentine economists to gauge usable reserves.{% else %}<strong>Activos Brutos de Reserva</strong> (Oro, divisas y colocaciones a plazo) son los activos que el BCRA efectivamente posee: oro, divisas y depósitos a plazo en bancos del exterior. <strong>Pase Pasivo con el Exterior</strong> son dólares comprometidos en repos o swaps con contrapartes extranjeras —principalmente la línea de swap con China— que se incluyen en las reservas brutas pero deben ser devueltos. <strong>Asignaciones de DEG 2009</strong> son Derechos Especiales de Giro asignados por el FMI en 2009; se contabilizan en las reservas brutas pero representan un pasivo con el FMI. <strong>Reservas Excluidas DEG</strong> es la cifra de reservas brutas menos el pasivo DEG, la métrica más utilizada por el FMI y economistas argentinos para evaluar las reservas disponibles.{% endif %}</p></div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of USD{% else %}Valores expresados en Millones de USD{% endif %}</div>
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
 
-    <h2>{% if lang == 'en' %}Gross Reserve Assets{% else %}Activos Brutos de Reserva{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Gross Reserve Assets{% else %}Activos Brutos de Reserva{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}FX Swap Liability with Foreign Counterparts{% else %}Divisas - Pase Pasivo con el Exterior{% endif %}</h2>
+    <h3>{% if lang == 'en' %}FX Swap Liability with Foreign Counterparts{% else %}Divisas - Pase Pasivo con el Exterior{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -119,7 +119,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}SDR Allocations 2009{% else %}Asignaciones de DEG 2009{% endif %}</h2>
+    <h3>{% if lang == 'en' %}SDR Allocations 2009{% else %}Asignaciones de DEG 2009{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -169,7 +169,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}Reserves Excluding SDR Allocations{% else %}Reservas Excluidas Asignaciones DEG{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Reserves Excluding SDR Allocations{% else %}Reservas Excluidas Asignaciones DEG{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -220,13 +220,13 @@
     </div>
 
 </div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
 </div>
 {% endif %}
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">

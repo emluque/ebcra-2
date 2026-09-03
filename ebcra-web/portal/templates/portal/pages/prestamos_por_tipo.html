@@ -9,16 +9,16 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Private Sector Loans by Type{% else %}Préstamos al Sector Privado por Tipo{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}<strong>Advances and Discounts</strong> are short-term commercial credit lines including overdrafts and discounted promissory notes. <strong>Personal Loans and Credit Cards</strong> capture consumer financing. <strong>Mortgage and Pledge Loans</strong> cover real-estate and asset-backed lending. <strong>Other Loans</strong> includes leasing, foreign-currency loans, and miscellaneous credit not captured in the other categories. The four series sum to approximately total private-sector loans.{% else %}Los <strong>Adelantos y Documentos</strong> son líneas de crédito comercial de corto plazo, incluidos descubiertos y descuento de pagarés. Los <strong>Préstamos Personales y Tarjetas de Crédito</strong> representan el financiamiento al consumo. Los <strong>Préstamos Hipotecarios y Prendarios</strong> cubren el crédito con garantía real. Los <strong>Otros Préstamos</strong> incluyen leasing, préstamos en moneda extranjera y demás créditos no comprendidos en las categorías anteriores. Las cuatro series suman aproximadamente el total de préstamos al sector privado.{% endif %}</p></div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Private Sector Loans by Type{% else %}Préstamos al Sector Privado por Tipo{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Private Sector Loans by Type{% else %}Préstamos al Sector Privado por Tipo{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
-    <h2>{% if lang == 'en' %}Advances and Discounts{% else %}Adelantos y Documentos{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Advances and Discounts{% else %}Adelantos y Documentos{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}Personal Loans and Credit Cards{% else %}Préstamos Personales y Tarjetas de Crédito{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Personal Loans and Credit Cards{% else %}Préstamos Personales y Tarjetas de Crédito{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -118,7 +118,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}Mortgage and Pledge Loans{% else %}Préstamos Hipotecarios y Prendarios{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Mortgage and Pledge Loans{% else %}Préstamos Hipotecarios y Prendarios{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -168,7 +168,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}Other Loans{% else %}Otros Préstamos{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Other Loans{% else %}Otros Préstamos{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -218,13 +218,13 @@
         </div>
     </div>
 </div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
 </div>
 {% endif %}
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">

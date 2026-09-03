@@ -9,16 +9,16 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}M3 Divided by International Reserves and Dollar Exchange Rate{% else %}M3 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}The following report is obtained by dividing the daily value of <a href="/en/argentina_m3">M3</a> by the <a href="/en/argentina_international_reserves">International Reserves</a>, a value known as the <strong>M3 Shadow Dollar</strong>. This indicator is used as a reference to estimate the implicit exchange rate using the broadest measure of the money supply.{% else %}El siguiente reporte se obtiene dividiendo el valor diario de <a href="/m3">M3</a> por las <a href="/reservas_internacionales_argentina">Reservas Internacionales</a>, valor conocido como <strong>Dólar Sombra M3</strong>. Este indicador es utilizado como referencia para estimar el tipo de cambio implícito considerando la medida más amplia de la oferta monetaria.{% endif %}</p></div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}M3 Divided by International Reserves and Dollar Exchange Rate{% else %}M3 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}M3 Divided by International Reserves and Dollar Exchange Rate{% else %}M3 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}Values expressed in Pesos{% else %}Valores expresados en Pesos{% endif %}</div>
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
-    <h2>{% if lang == 'en' %}M3 / International Reserves{% else %}M3 Dividido Reservas Internacionales{% endif %}</h2>
+    <h3>{% if lang == 'en' %}M3 / International Reserves{% else %}M3 Dividido Reservas Internacionales{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -65,13 +65,13 @@
     </div>
 </div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
 </div>
 {% endif %}
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">

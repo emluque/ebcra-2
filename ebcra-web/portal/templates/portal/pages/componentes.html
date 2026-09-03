@@ -9,16 +9,16 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Monetary Base Components{% else %}Componentes de la Base Monetaria{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}<strong>Monetary Circulation</strong> is banknotes and coins held by the public and financial institutions, plus cheques cancelatorios. <strong>Bills and Coins</strong> (Billetes y Monedas) is monetary circulation minus cash held by financial institutions. <strong>Cash at Financial Institutions</strong> is the peso cash held by banks and other financial entities. <strong>Bank Deposits</strong> are current account deposits in pesos that financial institutions hold at the BCRA, which also form part of the monetary base.{% else %}La <strong>Circulación Monetaria</strong> incluye billetes y monedas en poder del público y de las entidades financieras, más cheques cancelatorios. Los <strong>Billetes y Monedas</strong> corresponden a la circulación monetaria menos el efectivo en poder de las entidades financieras. El <strong>Efectivo en Entidades Financieras</strong> es el dinero en pesos que los bancos y entidades financieras mantienen en su poder. Los <strong>Depósitos de los Bancos</strong> son los depósitos en cuenta corriente en pesos que las entidades financieras mantienen en el BCRA, y que también integran la base monetaria.{% endif %}</p></div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Monetary Base Components{% else %}Componentes de la Base Monetaria{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Monetary Base Components{% else %}Componentes de la Base Monetaria{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
-    <h2>{% if lang == 'en' %}Monetary Circulation{% else %}Circulación Monetaria{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Monetary Circulation{% else %}Circulación Monetaria{% endif %}</h3>
 
     <div class="section group">
         <div class="col span_1_of_4">
@@ -68,7 +68,7 @@
             {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
         </div>
     </div>
-    <h2>{% if lang == 'en' %}Bills and Coins Held by the Public{% else %}Billetes y Monedas en Poder del Público{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Bills and Coins Held by the Public{% else %}Billetes y Monedas en Poder del Público{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -117,7 +117,7 @@
             {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
         </div>
     </div>
-    <h2>{% if lang == 'en' %}Cash at Financial Institutions{% else %}Efectivo en Entidades Financieras{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Cash at Financial Institutions{% else %}Efectivo en Entidades Financieras{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -166,7 +166,7 @@
             {% else %}<h3>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</h3><div><small>{% if lang == 'en' %}No Data{% else %}Sin Datos{% endif %}</small></div>{% endif %}
         </div>
     </div>
-    <h2>{% if lang == 'en' %}Bank Deposits in BCRA Account{% else %}Depósitos de los Bancos en Cuenta del BCRA{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Bank Deposits in BCRA Account{% else %}Depósitos de los Bancos en Cuenta del BCRA{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -216,13 +216,13 @@
         </div>
     </div>
 </div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
 </div>
 {% endif %}
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">

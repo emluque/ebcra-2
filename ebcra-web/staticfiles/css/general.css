@@ -83,8 +83,9 @@ nav.displayed {
   #nav-links a {
     text-decoration: none;
     color: var(--color-light); }
-  #nav-links h2 {
+  #nav-links .nav-category {
     font-size: 1.4em;
+    font-weight: 700;
     margin-bottom: 0.6em;
     color: var(--color-olive); }
   #nav-links ul {

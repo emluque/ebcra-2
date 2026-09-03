@@ -9,16 +9,16 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}<strong>BCRA Credits to the Financial System</strong> (ID 1224) measure the stock of credit extended by the Central Bank to financial institutions, expressed in Millions of Pesos. <strong>Peso Liquidity</strong> (ID 1221) and <strong>Total Liquidity</strong> (ID 1228) are banking system health indicators expressing the ratio of liquid assets to total deposits, in both pesos only and pesos plus foreign currency respectively.{% else %}<strong>Créditos del BCRA al Sistema Financiero</strong> (ID 1224) mide el stock de crédito otorgado por el Banco Central a las entidades financieras, expresado en Millones de Pesos. <strong>Liquidez en Pesos</strong> (ID 1221) y <strong>Liquidez Total</strong> (ID 1228) son indicadores de salud del sistema bancario que expresan la relación entre activos líquidos y depósitos totales, en pesos únicamente y en pesos más moneda extranjera respectivamente.{% endif %}</p></div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}BCRA Credits to the Financial System{% else %}Créditos del BCRA al Sistema Financiero{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}BCRA Credits to the Financial System{% else %}Créditos del BCRA al Sistema Financiero{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart-creditos" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of Pesos{% else %}Valores expresados en Millones de Pesos{% endif %}</div>
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
-    <h2>{% if lang == 'en' %}BCRA Credits to the Financial System{% else %}Créditos del BCRA al Sistema Financiero{% endif %}</h2>
+    <h3>{% if lang == 'en' %}BCRA Credits to the Financial System{% else %}Créditos del BCRA al Sistema Financiero{% endif %}</h3>
 
     <div class="section group">
         <div class="col span_1_of_4">
@@ -69,19 +69,19 @@
         </div>
     </div>
 </div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
 </div>
 {% endif %}
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Financial System Liquidity Ratios{% else %}Ratios de Liquidez del Sistema Financiero{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Financial System Liquidity Ratios{% else %}Ratios de Liquidez del Sistema Financiero{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart-liquidez" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}Values expressed as % of deposits{% else %}Valores expresados en % de depósitos{% endif %}</div>
 </div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">

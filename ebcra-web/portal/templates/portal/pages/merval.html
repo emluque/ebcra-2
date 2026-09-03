@@ -7,14 +7,14 @@
 {% block content %}
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Merval Index{% else %}Índice Merval{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}The <a href="https://en.wikipedia.org/wiki/MERVAL">Merval Index</a> is the benchmark stock market index of the Buenos Aires Stock Exchange (BYMA), tracking the performance of the most actively traded Argentine equities. It is denominated in Argentine pesos and is widely used as an indicator of investor confidence and economic expectations. The chart below shows the historical evolution of the index.{% else %}El <a href="https://es.wikipedia.org/wiki/MERVAL">Índice Merval</a> es el principal índice bursátil de la Bolsa de Buenos Aires (BYMA), que sigue el desempeño de las acciones argentinas con mayor volumen de negociación. Está denominado en pesos argentinos y es ampliamente utilizado como indicador de la confianza de los inversores y las expectativas económicas. El siguiente gráfico muestra la evolución histórica del índice.{% endif %}</p></div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Merval Index{% else %}Índice Merval{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Merval Index{% else %}Índice Merval{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
 </div>
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
-    <h2>Merval</h2>
+    <h3>Merval</h3>
     <div class="section group">
         <div class="col span_1_of_4"><h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4><h3>{{ variations.mer_val_last|format_number:lang }}</h3><div><small>{{ variations.mer_date_last|format_date }}</small> : <small>{{ variations.mer_val_last|format_number:lang }}</small></div></div>
         <div class="col span_1_of_4"><h4>{% if lang == 'en' %}Daily Variation{% else %}Variación Diaria{% endif %}</h4><h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_daily }}</h3><div><small>{{ variations.mer_date_daily|format_date }}</small> : <small>{{ variations.mer_val_daily|format_number:lang }}</small></div></div>
@@ -28,10 +28,10 @@
         <div class="col span_1_of_4"><h4>{% if lang == 'en' %}10 Year Variation{% else %}Variación 10 Años{% endif %}</h4>{% if variations.mer_val_10years %}<h3>{{ variations.mer_val_last|calculate_variation:variations.mer_val_10years }}</h3><div><small>{{ variations.mer_date_10years|format_date }}</small> : <small>{{ variations.mer_val_10years|format_number:lang }}</small></div>{% else %}<h3>Sin Datos</h3>{% endif %}</div>
     </div>
 </div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container"><div id="variations-chart" class="loading"></div></div>
 {% endif %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Other Reports{% else %}Otros Reportes{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Other Reports{% else %}Otros Reportes{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">

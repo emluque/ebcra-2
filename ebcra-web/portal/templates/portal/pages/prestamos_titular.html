@@ -9,7 +9,7 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Private Sector Loans by Borrower{% else %}Préstamos al Sector Privado por Tipo de Titular{% endif %}</h1></div></div>
 
 <div class="subtitle">
-    <h3>{% if lang == 'en' %}By Borrower Type{% else %}Por Tipo de Titular{% endif %}</h3>
+    <h2>{% if lang == 'en' %}By Borrower Type{% else %}Por Tipo de Titular{% endif %}</h2>
 </div>
 <div class="explanation"><p>{% if lang == 'en' %}<strong>Individuals</strong> (<em>personas humanas</em>) and <strong>companies</strong> (<em>personas jurídicas</em>) are the two main borrower segments in the private sector. <strong>SMEs</strong> (<em>pequeños y medianos emprendimientos</em>) are reported separately by the BCRA. All values are in Millions of Pesos (MEyML — includes peso-equivalent of foreign currency). Source: BCRA Estadísticas Monetarias (monthly).{% else %}<strong>Personas humanas</strong> y <strong>personas jurídicas</strong> son los dos principales segmentos de tomadores de crédito del sector privado. Las <strong>Pequeñas y Medianas Empresas (PyMEs)</strong> son informadas por el BCRA como categoría separada. Todos los valores están expresados en Millones de Pesos (MEyML — incluye equivalente en pesos de moneda extranjera). Fuente: BCRA Estadísticas Monetarias (frecuencia mensual).{% endif %}</p></div>
 
@@ -19,10 +19,10 @@
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
 
-    <h2>{% if lang == 'en' %}Total Private Sector{% else %}Total Sector Privado{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Total Private Sector{% else %}Total Sector Privado{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}Individuals{% else %}Personas Humanas{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Individuals{% else %}Personas Humanas{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -122,7 +122,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}Companies{% else %}Personas Jurídicas{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Companies{% else %}Personas Jurídicas{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -172,7 +172,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}SMEs{% else %}Pequeñas y Medianas Empresas{% endif %}</h2>
+    <h3>{% if lang == 'en' %}SMEs{% else %}Pequeñas y Medianas Empresas{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -223,14 +223,14 @@
     </div>
 
 </div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
 </div>
 {% endif %}
 
 <div class="subtitle">
-    <h3>{% if lang == 'en' %}By Loan Type{% else %}Por Tipo de Préstamo{% endif %}</h3>
+    <h2>{% if lang == 'en' %}By Loan Type{% else %}Por Tipo de Préstamo{% endif %}</h2>
 </div>
 <div class="explanation"><p>{% if lang == 'en' %}<strong>Mortgage loans</strong> (<em>hipotecarios</em>) and <strong>secured loans</strong> (<em>prendarios</em>) are the two collateralised credit categories tracked separately within total private-sector lending. Their evolution reflects activity in the housing and auto markets. All values are in Millions of Pesos (MEyML). Source: BCRA Estadísticas Monetarias (monthly).{% else %}Los <strong>préstamos hipotecarios</strong> y los <strong>préstamos prendarios</strong> son las dos categorías de crédito con garantía real que el BCRA desglosa dentro del total al sector privado. Su evolución refleja la actividad en los mercados inmobiliario y automotor. Todos los valores están expresados en Millones de Pesos (MEyML). Fuente: BCRA Estadísticas Monetarias (frecuencia mensual).{% endif %}</p></div>
 
@@ -240,10 +240,10 @@
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
 
-    <h2>{% if lang == 'en' %}Mortgage Loans{% else %}Préstamos Hipotecarios{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Mortgage Loans{% else %}Préstamos Hipotecarios{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -293,7 +293,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}Secured Loans{% else %}Préstamos Prendarios{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Secured Loans{% else %}Préstamos Prendarios{% endif %}</h3>
     <div class="section group">
         <div class="col span_1_of_4">
             <h4>{% if lang == 'en' %}Last{% else %}Último{% endif %}</h4>
@@ -346,7 +346,7 @@
 </div>
 {% endif %}
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">

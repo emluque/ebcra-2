@@ -9,16 +9,16 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}USD Deposits — Private Non-Financial Sector{% else %}Depósitos en Dólares — Sector Privado No Financiero{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}<strong>Total USD Deposits</strong> (ID 1563) covers all deposits and other liabilities of the private non-financial sector denominated in US dollars. <strong>Cash USD Deposits</strong> (ID 1564) is the cash-only subset of total USD deposits, excluding other liabilities. Both series are published daily by the BCRA. The <strong>interest rate</strong> chart shows the nominal annual rate on USD time deposits, broken down by all clients, individuals (personas humanas), and legal entities (personas jurídicas).{% else %}Los <strong>Depósitos Totales en Dólares</strong> (ID 1563) comprenden el total de depósitos y otros pasivos en dólares del sector privado no financiero. Los <strong>Depósitos de Efectivo en Dólares</strong> (ID 1564) son el subconjunto de depósitos en efectivo del total anterior, excluyendo otros pasivos. Ambas series son publicadas diariamente por el BCRA. El gráfico de <strong>tasas de interés</strong> muestra la tasa nominal anual de los depósitos a plazo fijo en dólares, desagregada por total, personas humanas y personas jurídicas.{% endif %}</p></div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}Values expressed in Millions of USD{% else %}Valores expresados en Millones de USD{% endif %}</div>
 </div>
 
 {% if variations %}
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations{% else %}Variaciones{% endif %}</h2></div>
 <div class="variations-container">
-    <h2>{% if lang == 'en' %}Total USD Deposits{% else %}Depósitos Totales en Dólares{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Total USD Deposits{% else %}Depósitos Totales en Dólares{% endif %}</h3>
 
     <div class="section group">
         <div class="col span_1_of_4">
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <h2>{% if lang == 'en' %}Cash USD Deposits{% else %}Depósitos de Efectivo en Dólares{% endif %}</h2>
+    <h3>{% if lang == 'en' %}Cash USD Deposits{% else %}Depósitos de Efectivo en Dólares{% endif %}</h3>
 
     <div class="section group">
         <div class="col span_1_of_4">
@@ -120,19 +120,19 @@
         </div>
     </div>
 </div>
-<div class="subtitle"><h3>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Variations Chart{% else %}Gráfico de Variaciones{% endif %}</h2></div>
 <div class="variations-chart-container">
     <div id="variations-chart" class="loading"></div>
 </div>
 {% endif %}
 
-<div class="subtitle"><h3>{% if lang == 'en' %}USD Time Deposit Interest Rates{% else %}Tasas de Interés — Plazo Fijo en Dólares{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}USD Time Deposit Interest Rates{% else %}Tasas de Interés — Plazo Fijo en Dólares{% endif %}</h2></div>
 <div class="chart-container">
     <div id="rates-chart" class="rwd-chart loading"></div>
     <div class="explainer">{% if lang == 'en' %}% nominal annual rate{% else %}% tasa nominal anual{% endif %}</div>
 </div>
 
-<div class="subtitle"><h3>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h3></div>
+<div class="subtitle"><h2>{% if lang == 'en' %}Related Reports{% else %}Reportes Relacionados{% endif %}</h2></div>
 <div class="other-links-container">
     <div class="section group">
         <div class="col span_2_of_4">
