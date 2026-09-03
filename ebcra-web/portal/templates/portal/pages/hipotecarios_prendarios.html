@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Mortgage and Secured Loans{% else %}Préstamos Hipotecarios y Prendarios{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Mortgage and pledge loans in Argentina, broken down by new/used home purchases, construction, and renovation, from monthly BCRA data.{% else %}Préstamos hipotecarios y prendarios en Argentina, desglosados por compra de vivienda nueva y usada, construcción y refacción, según datos mensuales del BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Mortgage and pledge loans in Argentina, broken down by new/used home purchases, construction, and renovation, from monthly BCRA data.{% else %}Préstamos hipotecarios y prendarios en Argentina, desglosados por compra de vivienda nueva y usada, construcción y refacción, según datos mensuales del BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Mortgage and pledge loans in Argentina, broken down by new/used home purchases, construction, and renovation, from monthly BCRA data.{% else %}Préstamos hipotecarios y prendarios en Argentina, desglosados por compra de vivienda nueva y usada, construcción y refacción, según datos mensuales del BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Mortgage and Secured Loans{% else %}Préstamos Hipotecarios y Prendarios{% endif %}</h1></div></div>

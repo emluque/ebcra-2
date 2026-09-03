@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Loans by Type{% else %}Préstamos por Tipo{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Argentine private-sector loans broken down by type — advances and discounts, personal loans and credit cards, mortgages, and more.{% else %}Préstamos al sector privado argentino desglosados por tipo — adelantos y documentos, préstamos personales y tarjetas de crédito, hipotecarios y más.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Argentine private-sector loans broken down by type — advances and discounts, personal loans and credit cards, mortgages, and more.{% else %}Préstamos al sector privado argentino desglosados por tipo — adelantos y documentos, préstamos personales y tarjetas de crédito, hipotecarios y más.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Argentine private-sector loans broken down by type — advances and discounts, personal loans and credit cards, mortgages, and more.{% else %}Préstamos al sector privado argentino desglosados por tipo — adelantos y documentos, préstamos personales y tarjetas de crédito, hipotecarios y más.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Private Sector Loans by Type{% else %}Préstamos al Sector Privado por Tipo{% endif %}</h1></div></div>

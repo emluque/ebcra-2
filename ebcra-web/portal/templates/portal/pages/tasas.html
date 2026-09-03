@@ -1,5 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}TAMAR, the BCRA's benchmark interest rate for peso term deposits introduced in October 2024 to replace BADLAR.{% else %}TAMAR, la tasa de referencia del BCRA para depósitos a plazo fijo en pesos, introducida en octubre de 2024 en reemplazo de la BADLAR.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}TAMAR, the BCRA's benchmark interest rate for peso term deposits introduced in October 2024 to replace BADLAR.{% else %}TAMAR, la tasa de referencia del BCRA para depósitos a plazo fijo en pesos, introducida en octubre de 2024 en reemplazo de la BADLAR.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}TAMAR, the BCRA's benchmark interest rate for peso term deposits introduced in October 2024 to replace BADLAR.{% else %}TAMAR, la tasa de referencia del BCRA para depósitos a plazo fijo en pesos, introducida en octubre de 2024 en reemplazo de la BADLAR.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</h1></div></div>

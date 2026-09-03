@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Deposits by Holder{% else %}Depósitos por Tipo de Titular{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Argentine bank deposits broken down by holder type — individuals, companies, mutual funds, and SMEs — from BCRA monthly statistics.{% else %}Depósitos bancarios argentinos desglosados por tipo de titular — personas humanas, jurídicas, fondos comunes de inversión y PyMEs — según estadísticas mensuales del BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Argentine bank deposits broken down by holder type — individuals, companies, mutual funds, and SMEs — from BCRA monthly statistics.{% else %}Depósitos bancarios argentinos desglosados por tipo de titular — personas humanas, jurídicas, fondos comunes de inversión y PyMEs — según estadísticas mensuales del BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Argentine bank deposits broken down by holder type — individuals, companies, mutual funds, and SMEs — from BCRA monthly statistics.{% else %}Depósitos bancarios argentinos desglosados por tipo de titular — personas humanas, jurídicas, fondos comunes de inversión y PyMEs — según estadísticas mensuales del BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Private Sector Deposits by Holder{% else %}Depósitos del Sector Privado por Tipo de Titular{% endif %}</h1></div></div>

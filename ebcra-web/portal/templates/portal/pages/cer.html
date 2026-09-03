@@ -1,5 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}CER — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Daily values of Argentina's CER (Coeficiente de Estabilización de Referencia), the BCRA's inflation-adjustment index based on the INDEC consumer price index.{% else %}Valores diarios del CER (Coeficiente de Estabilización de Referencia) de Argentina, el índice de ajuste por inflación del BCRA basado en el IPC del INDEC.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Daily values of Argentina's CER (Coeficiente de Estabilización de Referencia), the BCRA's inflation-adjustment index based on the INDEC consumer price index.{% else %}Valores diarios del CER (Coeficiente de Estabilización de Referencia) de Argentina, el índice de ajuste por inflación del BCRA basado en el IPC del INDEC.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Daily values of Argentina's CER (Coeficiente de Estabilización de Referencia), the BCRA's inflation-adjustment index based on the INDEC consumer price index.{% else %}Valores diarios del CER (Coeficiente de Estabilización de Referencia) de Argentina, el índice de ajuste por inflación del BCRA basado en el IPC del INDEC.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container title-size-four"><h1>{% if lang == 'en' %}Reference Stabilization Coefficient (CER){% else %}Coeficiente de Estabilización de Referencia (CER){% endif %}</h1></div></div>

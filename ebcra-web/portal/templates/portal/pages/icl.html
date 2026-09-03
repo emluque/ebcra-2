@@ -1,5 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}{% if lang == 'en' %}Rental Contract Index (ICL){% else %}Índice para Contratos de Locación (ICL){% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Daily values of Argentina's ICL (Índice para Contratos de Locación), the BCRA's blended CPI/wage index used to adjust rental contracts.{% else %}Valores diarios del ICL (Índice para Contratos de Locación) de Argentina, el índice compuesto del BCRA usado para actualizar contratos de alquiler.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Daily values of Argentina's ICL (Índice para Contratos de Locación), the BCRA's blended CPI/wage index used to adjust rental contracts.{% else %}Valores diarios del ICL (Índice para Contratos de Locación) de Argentina, el índice compuesto del BCRA usado para actualizar contratos de alquiler.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Daily values of Argentina's ICL (Índice para Contratos de Locación), the BCRA's blended CPI/wage index used to adjust rental contracts.{% else %}Valores diarios del ICL (Índice para Contratos de Locación) de Argentina, el índice compuesto del BCRA usado para actualizar contratos de alquiler.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container title-size-four"><h1>{% if lang == 'en' %}Rental Contract Index (ICL){% else %}Índice para Contratos de Locación (ICL){% endif %}</h1></div></div>

@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Liquidity indicators for Argentina's financial system — BCRA credit to banks, and peso and total liquidity ratios.{% else %}Indicadores de liquidez del sistema financiero argentino — créditos del BCRA a las entidades y ratios de liquidez en pesos y total.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Liquidity indicators for Argentina's financial system — BCRA credit to banks, and peso and total liquidity ratios.{% else %}Indicadores de liquidez del sistema financiero argentino — créditos del BCRA a las entidades y ratios de liquidez en pesos y total.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Liquidity indicators for Argentina's financial system — BCRA credit to banks, and peso and total liquidity ratios.{% else %}Indicadores de liquidez del sistema financiero argentino — créditos del BCRA a las entidades y ratios de liquidez en pesos y total.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Financial System Liquidity{% else %}Liquidez del Sistema Financiero{% endif %}</h1></div></div>

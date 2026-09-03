@@ -1,5 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}{% if lang == 'en' %}Unit of Purchasing Value (UVA){% else %}Unidad de Valor Adquisitivo (UVA){% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Daily values of Argentina's UVA (Unidad de Valor Adquisitivo), the BCRA's CPI-indexed unit used for inflation-adjusted mortgage loans.{% else %}Valores diarios de la UVA (Unidad de Valor Adquisitivo) de Argentina, la unidad indexada por IPC del BCRA usada en créditos hipotecarios ajustados por inflación.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Daily values of Argentina's UVA (Unidad de Valor Adquisitivo), the BCRA's CPI-indexed unit used for inflation-adjusted mortgage loans.{% else %}Valores diarios de la UVA (Unidad de Valor Adquisitivo) de Argentina, la unidad indexada por IPC del BCRA usada en créditos hipotecarios ajustados por inflación.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Daily values of Argentina's UVA (Unidad de Valor Adquisitivo), the BCRA's CPI-indexed unit used for inflation-adjusted mortgage loans.{% else %}Valores diarios de la UVA (Unidad de Valor Adquisitivo) de Argentina, la unidad indexada por IPC del BCRA usada en créditos hipotecarios ajustados por inflación.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container title-size-four"><h1>{% if lang == 'en' %}Unit of Purchasing Value (UVA){% else %}Unidad de Valor Adquisitivo (UVA){% endif %}</h1></div></div>

@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Fiscal-Monetary Interface{% else %}Interfaz Fiscal-Monetaria{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Financial flows between Argentina's National Treasury and the BCRA — temporary advances, Leliq/Notaliq, and government deposits.{% else %}Flujos financieros entre el Tesoro Nacional y el BCRA — adelantos transitorios, Leliq/Notaliq y depósitos del gobierno.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Financial flows between Argentina's National Treasury and the BCRA — temporary advances, Leliq/Notaliq, and government deposits.{% else %}Flujos financieros entre el Tesoro Nacional y el BCRA — adelantos transitorios, Leliq/Notaliq y depósitos del gobierno.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Financial flows between Argentina's National Treasury and the BCRA — temporary advances, Leliq/Notaliq, and government deposits.{% else %}Flujos financieros entre el Tesoro Nacional y el BCRA — adelantos transitorios, Leliq/Notaliq y depósitos del gobierno.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Fiscal-Monetary Interface{% else %}Interfaz Fiscal-Monetaria{% endif %}</h1></div></div>

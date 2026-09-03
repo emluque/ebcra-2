@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Bank deposits in Argentina's financial system, broken down by checking accounts, savings accounts, and time deposits, sourced from the BCRA.{% else %}Depósitos bancarios del sistema financiero argentino, desglosados en cuentas corrientes, cajas de ahorro y plazo fijo, con datos del BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Bank deposits in Argentina's financial system, broken down by checking accounts, savings accounts, and time deposits, sourced from the BCRA.{% else %}Depósitos bancarios del sistema financiero argentino, desglosados en cuentas corrientes, cajas de ahorro y plazo fijo, con datos del BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Bank deposits in Argentina's financial system, broken down by checking accounts, savings accounts, and time deposits, sourced from the BCRA.{% else %}Depósitos bancarios del sistema financiero argentino, desglosados en cuentas corrientes, cajas de ahorro y plazo fijo, con datos del BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</h1></div></div>

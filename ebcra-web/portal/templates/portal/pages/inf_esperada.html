@@ -1,5 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}{% if lang == 'en' %}Expected Inflation (Official){% else %}Inflación Esperada (Oficial){% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Official expected inflation figures from the BCRA's market expectations survey (REM), compiling short- and medium-term forecasts by analysts.{% else %}Datos oficiales de inflación esperada según la encuesta de expectativas de mercado del BCRA (REM), que recopila pronósticos de corto y mediano plazo de analistas.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Official expected inflation figures from the BCRA's market expectations survey (REM), compiling short- and medium-term forecasts by analysts.{% else %}Datos oficiales de inflación esperada según la encuesta de expectativas de mercado del BCRA (REM), que recopila pronósticos de corto y mediano plazo de analistas.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Official expected inflation figures from the BCRA's market expectations survey (REM), compiling short- and medium-term forecasts by analysts.{% else %}Datos oficiales de inflación esperada según la encuesta de expectativas de mercado del BCRA (REM), que recopila pronósticos de corto y mediano plazo de analistas.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Expected Inflation (Official){% else %}Inflación Esperada (Oficial){% endif %}</h1></div></div>

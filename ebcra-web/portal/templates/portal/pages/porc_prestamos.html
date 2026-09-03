@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Loans vs Deposits (%){% else %}Porcentaje Préstamos vs Depósitos{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Loans as a percentage of total deposits in Argentina's financial system — an own calculation measuring financial intermediation.{% else %}Préstamos como porcentaje de los depósitos totales del sistema financiero argentino — una elaboración propia para medir la intermediación financiera.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Loans as a percentage of total deposits in Argentina's financial system — an own calculation measuring financial intermediation.{% else %}Préstamos como porcentaje de los depósitos totales del sistema financiero argentino — una elaboración propia para medir la intermediación financiera.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Loans as a percentage of total deposits in Argentina's financial system — an own calculation measuring financial intermediation.{% else %}Préstamos como porcentaje de los depósitos totales del sistema financiero argentino — una elaboración propia para medir la intermediación financiera.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Loans as a Percentage of Deposits{% else %}Porcentaje de Préstamos en Relación a Depósitos{% endif %}</h1></div></div>

@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}M1 in USD{% else %}M1 en USD{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Argentina's M1 monetary aggregate converted to US dollars at free-market and official wholesale exchange rates.{% else %}Agregado monetario M1 de Argentina convertido a dólares al tipo de cambio libre y oficial mayorista.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Argentina's M1 monetary aggregate converted to US dollars at free-market and official wholesale exchange rates.{% else %}Agregado monetario M1 de Argentina convertido a dólares al tipo de cambio libre y oficial mayorista.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Argentina's M1 monetary aggregate converted to US dollars at free-market and official wholesale exchange rates.{% else %}Agregado monetario M1 de Argentina convertido a dólares al tipo de cambio libre y oficial mayorista.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}M1 in USD{% else %}M1 expresado en USD{% endif %}</h1></div></div>

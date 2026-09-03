@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Historical chart and daily data of Argentina's Monetary Base, the BCRA's key instrument for controlling the money supply and inflation.{% else %}Gráfico histórico y datos diarios de la Base Monetaria de Argentina, el principal instrumento del BCRA para controlar la oferta monetaria y la inflación.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Historical chart and daily data of Argentina's Monetary Base, the BCRA's key instrument for controlling the money supply and inflation.{% else %}Gráfico histórico y datos diarios de la Base Monetaria de Argentina, el principal instrumento del BCRA para controlar la oferta monetaria y la inflación.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Historical chart and daily data of Argentina's Monetary Base, the BCRA's key instrument for controlling the money supply and inflation.{% else %}Gráfico histórico y datos diarios de la Base Monetaria de Argentina, el principal instrumento del BCRA para controlar la oferta monetaria y la inflación.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</h1></div></div>

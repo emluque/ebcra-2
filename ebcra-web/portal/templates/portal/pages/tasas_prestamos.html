@@ -1,5 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}{% if lang == 'en' %}Lending Interest Rates{% else %}Tasas de Interés de Préstamos{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Argentine bank lending rates on consumer credit — credit cards, personal loans, overdrafts, and short-term business credit.{% else %}Tasas de interés de préstamos bancarios en Argentina — tarjetas de crédito, préstamos personales, adelantos en cuenta corriente y crédito empresarial de corto plazo.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Argentine bank lending rates on consumer credit — credit cards, personal loans, overdrafts, and short-term business credit.{% else %}Tasas de interés de préstamos bancarios en Argentina — tarjetas de crédito, préstamos personales, adelantos en cuenta corriente y crédito empresarial de corto plazo.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Argentine bank lending rates on consumer credit — credit cards, personal loans, overdrafts, and short-term business credit.{% else %}Tasas de interés de préstamos bancarios en Argentina — tarjetas de crédito, préstamos personales, adelantos en cuenta corriente y crédito empresarial de corto plazo.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Lending Interest Rates{% else %}Tasas de Interés de Préstamos{% endif %}</h1></div></div>

@@ -1,5 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}{% if lang == 'en' %}Unit of Dwelling (UVI){% else %}Unidad de Vivienda (UVI){% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Daily values of Argentina's UVI (Unidad de Vivienda), the BCRA's construction-cost-indexed unit used for social housing loans.{% else %}Valores diarios de la UVI (Unidad de Vivienda) de Argentina, la unidad indexada por costo de construcción del BCRA usada en créditos de vivienda social.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Daily values of Argentina's UVI (Unidad de Vivienda), the BCRA's construction-cost-indexed unit used for social housing loans.{% else %}Valores diarios de la UVI (Unidad de Vivienda) de Argentina, la unidad indexada por costo de construcción del BCRA usada en créditos de vivienda social.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Daily values of Argentina's UVI (Unidad de Vivienda), the BCRA's construction-cost-indexed unit used for social housing loans.{% else %}Valores diarios de la UVI (Unidad de Vivienda) de Argentina, la unidad indexada por costo de construcción del BCRA usada en créditos de vivienda social.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container title-size-four"><h1>{% if lang == 'en' %}Unit of Dwelling (UVI){% else %}Unidad de Vivienda (UVI){% endif %}</h1></div></div>

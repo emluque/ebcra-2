@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}M1 — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M1 monetary aggregate — currency in circulation plus peso current accounts, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M1 de Argentina — circulación monetaria más cuentas corrientes en pesos, según el BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M1 monetary aggregate — currency in circulation plus peso current accounts, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M1 de Argentina — circulación monetaria más cuentas corrientes en pesos, según el BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M1 monetary aggregate — currency in circulation plus peso current accounts, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M1 de Argentina — circulación monetaria más cuentas corrientes en pesos, según el BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>M1</h1></div></div>

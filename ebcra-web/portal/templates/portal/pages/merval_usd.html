@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Merval Index in USD{% else %}Índice Merval en Dólares{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}The Merval Index converted to US dollars using the daily exchange rate, showing the index's profitability in dollar terms.{% else %}Índice Merval convertido a dólares según la cotización diaria, para evaluar su rentabilidad en términos de dólares.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}The Merval Index converted to US dollars using the daily exchange rate, showing the index's profitability in dollar terms.{% else %}Índice Merval convertido a dólares según la cotización diaria, para evaluar su rentabilidad en términos de dólares.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}The Merval Index converted to US dollars using the daily exchange rate, showing the index's profitability in dollar terms.{% else %}Índice Merval convertido a dólares según la cotización diaria, para evaluar su rentabilidad en términos de dólares.{% endif %}{% endblock %}
 {% block content %}
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Merval Index Divided by Dollar Rate{% else %}Índice Merval Dividido Cotización del Dólar{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}This report is calculated by dividing the daily value of the <a href="/en/merval_index">Merval</a> by the dollar exchange rate on the same day. It serves to evaluate the Merval's profitability in dollars.{% else %}Este reporte se calcula dividiendo el valor diario del <a href="/indice_merval">Merval</a> por la cotización del dólar ese mismo día. Sirve para evaluar la rentabilidad en dólares del Merval.{% endif %}</p></div>

@@ -1,5 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}{% if lang == 'en' %}Annual Inflation (Official){% else %}Inflación Interanual (Oficial){% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Official year-on-year inflation in Argentina, based on the BCRA's Consumer Price Index data sourced from INDEC.{% else %}Inflación interanual oficial de Argentina, en base a los datos del Índice de Precios al Consumidor del BCRA obtenidos del INDEC.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Official year-on-year inflation in Argentina, based on the BCRA's Consumer Price Index data sourced from INDEC.{% else %}Inflación interanual oficial de Argentina, en base a los datos del Índice de Precios al Consumidor del BCRA obtenidos del INDEC.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Official year-on-year inflation in Argentina, based on the BCRA's Consumer Price Index data sourced from INDEC.{% else %}Inflación interanual oficial de Argentina, en base a los datos del Índice de Precios al Consumidor del BCRA obtenidos del INDEC.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Annual Inflation (Official){% else %}Inflación Interanual (Oficial){% endif %}</h1></div></div>

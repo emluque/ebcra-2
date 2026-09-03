@@ -1,6 +1,19 @@
 from django import template
+from django.template.loader_tags import BLOCK_CONTEXT_KEY
+from django.utils.safestring import mark_safe
 
 register = template.Library()
+
+
+@register.simple_tag(takes_context=True)
+def block_content(context, name):
+    """Render the most-derived content of the named {% block %} for reuse
+    outside it (e.g. mirroring page_title into og:title/twitter:title)."""
+    block_context = context.render_context.get(BLOCK_CONTEXT_KEY)
+    node = block_context.get_block(name) if block_context else None
+    if node is None:
+        return ""
+    return mark_safe(node.render(context))
 
 
 @register.filter

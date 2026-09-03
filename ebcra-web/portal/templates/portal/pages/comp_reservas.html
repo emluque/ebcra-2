@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Composition of the BCRA's International Reserves — gross assets, FX swap liabilities, IMF SDR allocations, and reserves net of SDR.{% else %}Composición de las Reservas Internacionales del BCRA — activos brutos, pase pasivo con el exterior, asignaciones DEG del FMI y reservas excluidas DEG.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Composition of the BCRA's International Reserves — gross assets, FX swap liabilities, IMF SDR allocations, and reserves net of SDR.{% else %}Composición de las Reservas Internacionales del BCRA — activos brutos, pase pasivo con el exterior, asignaciones DEG del FMI y reservas excluidas DEG.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Composition of the BCRA's International Reserves — gross assets, FX swap liabilities, IMF SDR allocations, and reserves net of SDR.{% else %}Composición de las Reservas Internacionales del BCRA — activos brutos, pase pasivo con el exterior, asignaciones DEG del FMI y reservas excluidas DEG.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}International Reserves Composition{% else %}Composición de las Reservas Internacionales{% endif %}</h1></div></div>

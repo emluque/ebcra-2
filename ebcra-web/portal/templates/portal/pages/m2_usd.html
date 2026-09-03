@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}M2 in USD{% else %}M2 en USD{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Argentina's M2 monetary aggregate and transactional M2 converted to US dollars at free-market and official wholesale exchange rates.{% else %}Agregado monetario M2 y M2 transaccional de Argentina convertidos a dólares al tipo de cambio libre y oficial mayorista.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Argentina's M2 monetary aggregate and transactional M2 converted to US dollars at free-market and official wholesale exchange rates.{% else %}Agregado monetario M2 y M2 transaccional de Argentina convertidos a dólares al tipo de cambio libre y oficial mayorista.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Argentina's M2 monetary aggregate and transactional M2 converted to US dollars at free-market and official wholesale exchange rates.{% else %}Agregado monetario M2 y M2 transaccional de Argentina convertidos a dólares al tipo de cambio libre y oficial mayorista.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}M2 in USD{% else %}M2 expresado en USD{% endif %}</h1></div></div>

@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Loans{% else %}Préstamos{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Historical chart and data of cash loans to Argentina's private sector, in national and foreign currency, per BCRA data.{% else %}Gráfico histórico y datos de préstamos en efectivo al sector privado argentino, en moneda nacional y extranjera, según el BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Historical chart and data of cash loans to Argentina's private sector, in national and foreign currency, per BCRA data.{% else %}Gráfico histórico y datos de préstamos en efectivo al sector privado argentino, en moneda nacional y extranjera, según el BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Historical chart and data of cash loans to Argentina's private sector, in national and foreign currency, per BCRA data.{% else %}Gráfico histórico y datos de préstamos en efectivo al sector privado argentino, en moneda nacional y extranjera, según el BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Loans to the Private Sector{% else %}Préstamos al Sector Privado{% endif %}</h1></div></div>

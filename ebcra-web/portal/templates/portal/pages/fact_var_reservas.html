@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}International Reserves Variation Factors{% else %}Factores de Variación de las Reservas Internacionales{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Daily breakdown of what drove changes in the BCRA's gross International Reserves — FX purchases, IMF flows, Treasury operations, and more.{% else %}Desglose diario de qué operaciones impulsaron los cambios en las Reservas Internacionales brutas del BCRA — compra de divisas, organismos internacionales, sector público y más.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Daily breakdown of what drove changes in the BCRA's gross International Reserves — FX purchases, IMF flows, Treasury operations, and more.{% else %}Desglose diario de qué operaciones impulsaron los cambios en las Reservas Internacionales brutas del BCRA — compra de divisas, organismos internacionales, sector público y más.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Daily breakdown of what drove changes in the BCRA's gross International Reserves — FX purchases, IMF flows, Treasury operations, and more.{% else %}Desglose diario de qué operaciones impulsaron los cambios en las Reservas Internacionales brutas del BCRA — compra de divisas, organismos internacionales, sector público y más.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}International Reserves Variation Factors{% else %}Factores de Variación de las Reservas Internacionales{% endif %}</h1></div></div>

@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Historical chart of the BCRA's gross International Reserves — the foreign-currency assets backing Argentina's monetary base.{% else %}Gráfico histórico de las Reservas Internacionales brutas del BCRA — los activos en moneda extranjera que respaldan la base monetaria argentina.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Historical chart of the BCRA's gross International Reserves — the foreign-currency assets backing Argentina's monetary base.{% else %}Gráfico histórico de las Reservas Internacionales brutas del BCRA — los activos en moneda extranjera que respaldan la base monetaria argentina.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Historical chart of the BCRA's gross International Reserves — the foreign-currency assets backing Argentina's monetary base.{% else %}Gráfico histórico de las Reservas Internacionales brutas del BCRA — los activos en moneda extranjera que respaldan la base monetaria argentina.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h1></div></div>

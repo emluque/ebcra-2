@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}M1 Divided by International Reserves and Dollar Exchange Rate{% else %}M1 Dividido Reservas Internacionales y Cotización del Dólar{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Argentina's M1 monetary aggregate divided by International Reserves — the 'M1 Shadow Dollar,' an implicit exchange rate estimate.{% else %}Agregado monetario M1 de Argentina dividido por las Reservas Internacionales — el 'Dólar Sombra M1', una estimación del tipo de cambio implícito.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Argentina's M1 monetary aggregate divided by International Reserves — the 'M1 Shadow Dollar,' an implicit exchange rate estimate.{% else %}Agregado monetario M1 de Argentina dividido por las Reservas Internacionales — el 'Dólar Sombra M1', una estimación del tipo de cambio implícito.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Argentina's M1 monetary aggregate divided by International Reserves — the 'M1 Shadow Dollar,' an implicit exchange rate estimate.{% else %}Agregado monetario M1 de Argentina dividido por las Reservas Internacionales — el 'Dólar Sombra M1', una estimación del tipo de cambio implícito.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}M1 Divided by International Reserves and Dollar Exchange Rate{% else %}M1 Dividido Reservas Internacionales y Cotización del Dólar{% endif %}</h1></div></div>

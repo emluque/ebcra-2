@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}M2 — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M2 monetary aggregate — M1 plus peso savings deposits, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M2 de Argentina — M1 más cajas de ahorro en pesos, según el BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M2 monetary aggregate — M1 plus peso savings deposits, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M2 de Argentina — M1 más cajas de ahorro en pesos, según el BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M2 monetary aggregate — M1 plus peso savings deposits, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M2 de Argentina — M1 más cajas de ahorro en pesos, según el BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>M2</h1></div></div>

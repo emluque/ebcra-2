@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria en USD{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Argentina's Monetary Base converted to US dollars at free-market and official exchange rates, tracking its dollar purchasing power over time.{% else %}Base Monetaria de Argentina convertida a dólares al tipo de cambio libre y oficial, para analizar su poder adquisitivo en dólares a lo largo del tiempo.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Argentina's Monetary Base converted to US dollars at free-market and official exchange rates, tracking its dollar purchasing power over time.{% else %}Base Monetaria de Argentina convertida a dólares al tipo de cambio libre y oficial, para analizar su poder adquisitivo en dólares a lo largo del tiempo.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Argentina's Monetary Base converted to US dollars at free-market and official exchange rates, tracking its dollar purchasing power over time.{% else %}Base Monetaria de Argentina convertida a dólares al tipo de cambio libre y oficial, para analizar su poder adquisitivo en dólares a lo largo del tiempo.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container {% if lang == 'en' %}title-size-two{% else %}title-size-three{% endif %}"><h1>{% if lang == 'en' %}Monetary Base in USD{% else %}Base Monetaria expresada en USD{% endif %}</h1></div></div>

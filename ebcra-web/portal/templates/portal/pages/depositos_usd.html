@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}USD Deposits{% else %}Depósitos en Dólares{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}US dollar-denominated bank deposits in Argentina, total and cash-only, plus interest rates on USD time deposits, from daily BCRA data.{% else %}Depósitos bancarios en dólares en Argentina, totales y en efectivo, más tasas de interés de plazos fijos en dólares, con datos diarios del BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}US dollar-denominated bank deposits in Argentina, total and cash-only, plus interest rates on USD time deposits, from daily BCRA data.{% else %}Depósitos bancarios en dólares en Argentina, totales y en efectivo, más tasas de interés de plazos fijos en dólares, con datos diarios del BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}US dollar-denominated bank deposits in Argentina, total and cash-only, plus interest rates on USD time deposits, from daily BCRA data.{% else %}Depósitos bancarios en dólares en Argentina, totales y en efectivo, más tasas de interés de plazos fijos en dólares, con datos diarios del BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}USD Deposits — Private Non-Financial Sector{% else %}Depósitos en Dólares — Sector Privado No Financiero{% endif %}</h1></div></div>

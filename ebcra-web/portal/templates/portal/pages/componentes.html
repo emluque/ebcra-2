@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Monetary Base Components{% else %}Componentes de la Base Monetaria{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Breakdown of Argentina's Monetary Base into currency in circulation, cash at financial institutions, and bank deposits at the BCRA.{% else %}Desglose de la Base Monetaria de Argentina en circulación monetaria, efectivo en entidades financieras y depósitos bancarios en el BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Breakdown of Argentina's Monetary Base into currency in circulation, cash at financial institutions, and bank deposits at the BCRA.{% else %}Desglose de la Base Monetaria de Argentina en circulación monetaria, efectivo en entidades financieras y depósitos bancarios en el BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Breakdown of Argentina's Monetary Base into currency in circulation, cash at financial institutions, and bank deposits at the BCRA.{% else %}Desglose de la Base Monetaria de Argentina en circulación monetaria, efectivo en entidades financieras y depósitos bancarios en el BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Monetary Base Components{% else %}Componentes de la Base Monetaria{% endif %}</h1></div></div>

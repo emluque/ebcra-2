@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}M3 — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M3 monetary aggregate — M2 plus time and other peso deposits, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M3 de Argentina — M2 más depósitos a plazo y otros depósitos en pesos, según el BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M3 monetary aggregate — M2 plus time and other peso deposits, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M3 de Argentina — M2 más depósitos a plazo y otros depósitos en pesos, según el BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Historical chart and data of Argentina's M3 monetary aggregate — M2 plus time and other peso deposits, per BCRA data.{% else %}Gráfico histórico y datos del agregado monetario M3 de Argentina — M2 más depósitos a plazo y otros depósitos en pesos, según el BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>M3</h1></div></div>

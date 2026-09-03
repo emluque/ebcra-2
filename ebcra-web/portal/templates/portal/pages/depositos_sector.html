@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Argentine bank deposits broken down by private and public sector, and by demand (vista) vs. time (plazo) deposits, per BCRA data.{% else %}Depósitos bancarios argentinos desglosados por sector privado y público, y por depósitos a la vista y a plazo, según datos del BCRA.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Argentine bank deposits broken down by private and public sector, and by demand (vista) vs. time (plazo) deposits, per BCRA data.{% else %}Depósitos bancarios argentinos desglosados por sector privado y público, y por depósitos a la vista y a plazo, según datos del BCRA.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Argentine bank deposits broken down by private and public sector, and by demand (vista) vs. time (plazo) deposits, per BCRA data.{% else %}Depósitos bancarios argentinos desglosados por sector privado y público, y por depósitos a la vista y a plazo, según datos del BCRA.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Deposits by Sector{% else %}Depósitos por Sector Privado y Público{% endif %}</h1></div></div>

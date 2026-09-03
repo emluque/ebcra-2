@@ -1,23 +1,29 @@
-{% load static %}
+{% load static portal_extras %}
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="theme-color" content="#333333">
+    <meta name="color-scheme" content="light">
 
     <title>{% block page_title %}Estadísticas BCRA{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Estadísticas BCRA compila los datos publicados por el Banco Central de la República Argentina.{% endblock %}">
+    <link rel="canonical" href="{{ SITE_URL }}{{ request.path }}">
+    <link rel="alternate" hreflang="es" href="{{ SITE_URL }}{% if lang == 'es' %}{{ request.path }}{% else %}{{ alternate_url }}{% endif %}">
+    <link rel="alternate" hreflang="en" href="{{ SITE_URL }}{% if lang == 'en' %}{{ request.path }}{% else %}{{ alternate_url }}{% endif %}">
+    <link rel="alternate" hreflang="x-default" href="{{ SITE_URL }}{% if lang == 'es' %}{{ request.path }}{% else %}{{ alternate_url }}{% endif %}">
 
-    <meta property="og:title" content="{% block og_title %}{% block _page_title_copy %}Estadísticas BCRA{% endblock %}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{% block_content 'page_title' %}{% endblock %}">
     <meta property="og:type" content="website">
-    <meta property="og:description" content="{% block og_description %}{% endblock %}">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:description" content="{% block og_description %}Estadísticas BCRA compila los datos publicados por el Banco Central de la República Argentina.{% endblock %}">
+    <meta property="og:url" content="{{ SITE_URL }}{{ request.path }}">
     <meta property="og:image" content="{{ SITE_URL }}{% static 'img/billete.jpg' %}">
 
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
-    <meta property="twitter:title" content="{% block twitter_title %}Estadísticas BCRA{% endblock %}">
-    <meta property="twitter:description" content="{% block twitter_description %}{% endblock %}">
+    <meta property="twitter:url" content="{{ SITE_URL }}{{ request.path }}">
+    <meta property="twitter:title" content="{% block twitter_title %}{% block_content 'page_title' %}{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Estadísticas BCRA compila los datos publicados por el Banco Central de la República Argentina.{% endblock %}">
     <meta property="twitter:image" content="{{ SITE_URL }}{% static 'img/billete.jpg' %}">
 
     <link rel="apple-touch-icon" sizes="152x152" href="{% static 'apple-icon-152x152.png' %}">

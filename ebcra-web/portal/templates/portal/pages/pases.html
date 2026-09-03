@@ -1,6 +1,9 @@
 {% extends "portal/base.html" %}
 {% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Outstanding balances of BCRA repo operations (pases activos y pasivos), used to inject or absorb pesos from circulation.{% else %}Saldos de operaciones de pase del BCRA (activos y pasivos), utilizadas para inyectar o absorber pesos de circulación.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Outstanding balances of BCRA repo operations (pases activos y pasivos), used to inject or absorb pesos from circulation.{% else %}Saldos de operaciones de pase del BCRA (activos y pasivos), utilizadas para inyectar o absorber pesos de circulación.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Outstanding balances of BCRA repo operations (pases activos y pasivos), used to inject or absorb pesos from circulation.{% else %}Saldos de operaciones de pase del BCRA (activos y pasivos), utilizadas para inyectar o absorber pesos de circulación.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}BCRA Repo Operations{% else %}Operaciones de Pase BCRA{% endif %}</h1></div></div>
