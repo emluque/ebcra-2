@@ -54,7 +54,12 @@
           "url": "{{ SITE_URL }}{{ request.path }}",
           "inLanguage": "{{ lang }}",
           "isAccessibleForFree": true,
-          "isPartOf": {"@id": "{{ SITE_URL }}/#website"}
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "{{ SITE_URL }}/#website",
+            "name": "Estadísticas BCRA",
+            "url": "{{ SITE_URL }}/"
+          }
         }{% endif %}{% if breadcrumb_category %},
         {
           "@type": "BreadcrumbList",
@@ -68,11 +73,6 @@
             {
               "@type": "ListItem",
               "position": 2,
-              "name": "{{ breadcrumb_category|escapejs }}"
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
               "name": "{{ jsonld_title|cut:" — Estadísticas BCRA"|escapejs }}",
               "item": "{{ SITE_URL }}{{ request.path }}"
             }
