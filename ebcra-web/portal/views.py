@@ -66,6 +66,42 @@ _SITEMAP_EXCLUDED_PAGES = {"error"}
 # error page, API docs) — excluded from the per-page Dataset JSON-LD.
 _NON_DATASET_PAGES = {"home", "sources", "credits", "nota_inflacion", "release_notes", "error", "api_info"}
 
+# Category groupings for breadcrumbs, mirroring the sidebar nav in base.html
+# (label_es, label_en, [page keys]). Pages not listed here (home, error,
+# nota_inflacion — an orphan page not linked from the nav) get no breadcrumb.
+_CATEGORIES = [
+    ("Reservas Internacionales", "International Reserves",
+     ["reservas", "comp_reservas", "fact_var_reservas", "base_div_res", "m1_div_res", "m2_div_res", "m3_div_res"]),
+    ("Base Monetaria", "Monetary Base",
+     ["base", "base_usd", "componentes"]),
+    ("Agregados Monetarios", "Monetary Aggregates",
+     ["m1_argentina", "m1_usd", "m2_argentina", "m2_usd", "m3_argentina", "m3_usd"]),
+    ("Operaciones de Pase BCRA", "BCRA Repo Operations",
+     ["pases", "interfaz_fiscal_monetaria"]),
+    ("Depósitos y Préstamos", "Deposits and Loans",
+     ["depositos", "depositos_sector", "depositos_usd", "depositos_titular",
+      "liquidez_sistema_financiero", "prestamos", "prestamos_por_tipo",
+      "hipotecarios_prendarios", "prestamos_titular", "porc_prestamos"]),
+    ("Tasas de Interés", "Interest Rates",
+     ["tasas", "tasas_prestamos", "tasas_depositos"]),
+    ("Inflación", "Inflation",
+     ["inf_mensual", "inf_interanual", "inf_esperada"]),
+    ("Índices", "Indexes",
+     ["cer", "uva", "uvi", "icl"]),
+    ("Otros", "Other",
+     ["merval", "merval_usd", "rentabilidades"]),
+    ("API (Deprecada)", "API (Deprecated)",
+     ["api_info"]),
+    ("Acerca De", "About",
+     ["sources", "credits", "release_notes"]),
+]
+
+_PAGE_CATEGORY = {
+    page: (label_es, label_en)
+    for label_es, label_en, pages in _CATEGORIES
+    for page in pages
+}
+
 # Pages that require a backend variations API call, mapped to the API path
 _VARIATIONS_PATHS = {
     "base":        "/var_base",
@@ -104,11 +140,14 @@ def _ctx(request, page):
     lang = _lang(request)
     es_url, en_url = _ALTERNATE_URLS.get(page, ("/", "/en"))
     alternate_url = en_url if lang == "es" else es_url
+    category = _PAGE_CATEGORY.get(page)
+    breadcrumb_category = (category[1] if lang == "en" else category[0]) if category else None
     return {
         "lang": lang,
         "page": page,
         "alternate_url": alternate_url,
         "is_dataset": page not in _NON_DATASET_PAGES,
+        "breadcrumb_category": breadcrumb_category,
     }
 
 
@@ -190,6 +229,13 @@ def sitemap_xml(request):
 def api_info(request):
     lang = "en" if request.path.endswith("/documentation") else "es"
     es_url, en_url = _ALTERNATE_URLS["api_info"]
-    ctx = {"lang": lang, "page": "api_info", "alternate_url": en_url if lang == "es" else es_url, "is_dataset": False}
+    label_es, label_en = _PAGE_CATEGORY["api_info"]
+    ctx = {
+        "lang": lang,
+        "page": "api_info",
+        "alternate_url": en_url if lang == "es" else es_url,
+        "is_dataset": False,
+        "breadcrumb_category": label_en if lang == "en" else label_es,
+    }
     response = render(request, "portal/pages/api_info.html", ctx)
     return _cache_headers(response)

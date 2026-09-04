@@ -1,3 +1,18 @@
 tmp/
 __pycache__/
 *.py[cod]
+
+# Sandbox/session scaffolding (shell rc files, editor/tool config dirs)
+# that gets created at the repo root by the local dev environment.
+.bash_profile
+.bashrc
+.zprofile
+.zshrc
+.profile
+.gitconfig
+.gitmodules
+.mcp.json
+.ripgreprc
+.claude/
+.idea
+.vscode
