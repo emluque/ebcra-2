@@ -278,15 +278,6 @@
 </nav>
 
 <main>
-    {% if breadcrumb_category %}
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <ol>
-            <li><a href="{% if lang == 'en' %}/en{% else %}/{% endif %}">{% if lang == 'en' %}Home{% else %}Inicio{% endif %}</a></li>
-            <li>{{ breadcrumb_category }}</li>
-            <li aria-current="page">{{ jsonld_title|cut:" — Estadísticas BCRA" }}</li>
-        </ol>
-    </nav>
-    {% endif %}
     {% block content %}{% endblock %}
 </main>
 

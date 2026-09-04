@@ -131,31 +131,6 @@ main {
   padding-bottom: 3.2em;
   flex: 1; }
 
-.breadcrumbs {
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
-  box-sizing: border-box;
-  padding-top: 0.8em;
-  font-size: 0.9em; }
-  .breadcrumbs ol {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0;
-    padding: 0; }
-  .breadcrumbs li {
-    color: var(--color-dark); }
-  .breadcrumbs li:not(:last-child)::after {
-    content: "›";
-    margin: 0 0.5em;
-    color: var(--color-dark); }
-  .breadcrumbs a {
-    text-decoration: none;
-    color: var(--color-olive); }
-  .breadcrumbs li[aria-current="page"] {
-    font-weight: 700; }
-
 .title {
   color: var(--color-light);
   background-color: var(--color-dark-teal);
