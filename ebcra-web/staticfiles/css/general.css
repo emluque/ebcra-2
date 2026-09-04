@@ -183,7 +183,7 @@ main {
   font-size: 1.24em;
   text-transform: capitalize;
   letter-spacing: 0.02em; }
-  .subtitle h3 {
+  .subtitle h2 {
     padding: 0;
     margin: 0;
     padding-left: 0.4em;
@@ -289,7 +289,7 @@ main {
   .variations-container div.section {
     margin-bottom: 0; } }
 
-.variations-container h2 {
+.variations-container > h3 {
   text-align: left;
   font-size: 1.6em;
   color: var(--color-olive);
@@ -298,13 +298,13 @@ main {
   padding-left: 0.6em; }
 
 @media (max-width: 480px) {
-  .variations-container h2 {
+  .variations-container > h3 {
     padding-left: 2%;
     padding-right: 2%;
     text-align: center;
     width: 97%; } }
 
-.variations-container h3 {
+.variations-container .col h3 {
   font-size: 1.76em;
   color: var(--color-dark-teal);
   margin: 0.8em; }
