@@ -60,6 +60,11 @@ def main() -> None:
         action="store_true",
         help="Ignore MAX(date) and fetch all historical data",
     )
+    parser.add_argument(
+        "--skip-ambito",
+        action="store_true",
+        help="Skip the Ambito dollar-blue scraper (temporary workaround while Ambito blocks our scraper)",
+    )
     args = parser.parse_args()
 
     base_url = get_required_env("BCRA_BASE_URL")
@@ -105,11 +110,14 @@ def main() -> None:
             else:
                 failed.append(variable_id)
 
-        ok = run_ambito(conn=conn)
-        if ok:
-            succeeded.append("ambito_dollar_blue")
+        if args.skip_ambito:
+            logger.warning("Skipping Ambito scraper (--skip-ambito set).")
         else:
-            failed.append("ambito_dollar_blue")
+            ok = run_ambito(conn=conn)
+            if ok:
+                succeeded.append("ambito_dollar_blue")
+            else:
+                failed.append("ambito_dollar_blue")
 
         ok = run_yahoo(conn=conn)
         if ok:
