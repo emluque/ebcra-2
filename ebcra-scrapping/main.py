@@ -7,12 +7,17 @@ import sys
 import requests
 from dotenv import load_dotenv
 
-from ambito.pipeline import run_ambito
 from calculated.pipeline import run_calculated
+from cronista.pipeline import run_cronista
 from yahoo.pipeline import run_yahoo
 from scraper.api_client import BCRAClient
 from scraper.db import get_connection
+from scraper.jitter import jittered_delay
 from scraper.pipeline import run_variable
+
+# Max random delay before an --only-dollar-blue run starts, so it doesn't
+# hit Cronista at the same clock minute every day.
+_DOLLAR_BLUE_JITTER_MAX_MINUTES = 30
 
 
 def setup_logging() -> None:
@@ -61,11 +66,31 @@ def main() -> None:
         help="Ignore MAX(date) and fetch all historical data",
     )
     parser.add_argument(
-        "--skip-ambito",
+        "--skip-dollar-blue",
         action="store_true",
-        help="Skip the Ambito dollar-blue scraper (temporary workaround while Ambito blocks our scraper)",
+        help=(
+            "Skip the Cronista dollar-blue scraper and the calculated tables "
+            "that depend on it. Dollar-blue is run separately via "
+            "--only-dollar-blue."
+        ),
+    )
+    parser.add_argument(
+        "--only-dollar-blue",
+        action="store_true",
+        help=(
+            "Run only the Cronista dollar-blue scraper and the calculated "
+            "tables that depend on it, skipping the BCRA variable loop and "
+            "the Yahoo scraper."
+        ),
     )
     args = parser.parse_args()
+
+    if args.skip_dollar_blue and args.only_dollar_blue:
+        logger.critical("--skip-dollar-blue and --only-dollar-blue are mutually exclusive.")
+        sys.exit(1)
+
+    if args.only_dollar_blue:
+        jittered_delay(_DOLLAR_BLUE_JITTER_MAX_MINUTES, label="dollar-blue run")
 
     base_url = get_required_env("BCRA_BASE_URL")
     db_config = {
@@ -91,41 +116,49 @@ def main() -> None:
 
     client = BCRAClient(base_url=base_url)
 
+    if args.only_dollar_blue:
+        calculated_scope = "dollar_blue"
+    elif args.skip_dollar_blue:
+        calculated_scope = "non_dollar_blue"
+    else:
+        calculated_scope = "all"
+
     succeeded = []
     failed = []
 
     try:
-        for entry in variables:
-            variable_id = entry["id"]
-            table_name = entry["tableName"]
-            ok = run_variable(
-                client=client,
-                conn=conn,
-                variable_id=variable_id,
-                table_name=table_name,
-                full_refresh=args.full_refresh,
-            )
+        if not args.only_dollar_blue:
+            for entry in variables:
+                variable_id = entry["id"]
+                table_name = entry["tableName"]
+                ok = run_variable(
+                    client=client,
+                    conn=conn,
+                    variable_id=variable_id,
+                    table_name=table_name,
+                    full_refresh=args.full_refresh,
+                )
+                if ok:
+                    succeeded.append(variable_id)
+                else:
+                    failed.append(variable_id)
+
+            ok = run_yahoo(conn=conn)
             if ok:
-                succeeded.append(variable_id)
+                succeeded.append("yahoo_merval")
             else:
-                failed.append(variable_id)
+                failed.append("yahoo_merval")
 
-        if args.skip_ambito:
-            logger.warning("Skipping Ambito scraper (--skip-ambito set).")
+        if args.skip_dollar_blue:
+            logger.warning("Skipping Cronista dollar-blue scraper (--skip-dollar-blue set).")
         else:
-            ok = run_ambito(conn=conn)
+            ok = run_cronista(conn=conn)
             if ok:
-                succeeded.append("ambito_dollar_blue")
+                succeeded.append("cronista_dollar_blue")
             else:
-                failed.append("ambito_dollar_blue")
+                failed.append("cronista_dollar_blue")
 
-        ok = run_yahoo(conn=conn)
-        if ok:
-            succeeded.append("yahoo_merval")
-        else:
-            failed.append("yahoo_merval")
-
-        ok = run_calculated(conn=conn, full_refresh=args.full_refresh)
+        ok = run_calculated(conn=conn, full_refresh=args.full_refresh, scope=calculated_scope)
         if ok:
             succeeded.append("calculated_metrics")
         else:

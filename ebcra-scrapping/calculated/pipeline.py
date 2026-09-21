@@ -1,5 +1,6 @@
 import logging
 
+from scraper.constants import CRONISTA_LEGACY_END_DATE
 from scraper.db import DELTA_LOOKBACK_DAYS, DBConnection, _cursor, _validate_table_name
 from calculated.yoy import compute_yoy
 
@@ -10,8 +11,21 @@ logger = logging.getLogger(__name__)
 # Source boundary dates for unified series
 # ---------------------------------------------------------------------------
 
-# Dollar_Blue_Unified: Cronista data covers up to this date; Ambito used thereafter
-_CRONISTA_END_DATE = "2019-01-01"
+# Dollar_Blue_Unified: legacy Cronista data covers up to this date; Ambito
+# used thereafter. Shared with cronista/client.py via scraper/constants.py
+# (see there for why) — don't redefine this locally.
+_CRONISTA_END_DATE = CRONISTA_LEGACY_END_DATE
+
+# Dollar_Blue_Unified: Ambito covers from _CRONISTA_END_DATE through this
+# date; the active Cronista scrape (cronista/pipeline.py, writing into the
+# SAME dollar_blue_cronista table as the legacy segment above) is used
+# thereafter.
+#
+# Set by hand (not computed by this code). Ambito's scraper stopped
+# producing data before this date; any gap is filled out of band in
+# dollar_blue_ambito. dollar_blue_cronista's active-scrape segment takes
+# over from 2026-09-21 onward.
+_AMBITO_BLUE_END_DATE = "2026-09-20"
 
 # Merval_Unified: Invertia data ends here
 _INVERTIA_END_DATE = "2018-11-26"
@@ -95,13 +109,26 @@ def _run_yoy(conn: DBConnection, source_table: str, dest_table: str, full_refres
 # Step 1: Unifications
 # ---------------------------------------------------------------------------
 
-def _run_unifications(conn: DBConnection, full_refresh: bool) -> list[str]:
-    """Populate Dollar_Blue_Unified and Merval_Unified. Returns list of failed tables."""
-    failed = []
+def _run_dollar_blue_unification(conn: DBConnection, full_refresh: bool) -> list[str]:
+    """Populate dollar_blue_unified. Returns [] on success, ["dollar_blue_unified"] on failure.
 
-    # dollar_blue_unified
+    Three segments (see _AMBITO_BLUE_END_DATE's comment — segments 1 and 3
+    read from the same dollar_blue_cronista table, disjoint date ranges):
+      … ≤ _CRONISTA_END_DATE    -> dollar_blue_cronista (legacy)
+      … ≤ _AMBITO_BLUE_END_DATE -> dollar_blue_ambito
+      >  _AMBITO_BLUE_END_DATE  -> dollar_blue_cronista (active scrape)
+    """
     dest = "dollar_blue_unified"
     try:
+        if _AMBITO_BLUE_END_DATE is None:
+            raise RuntimeError(
+                "_AMBITO_BLUE_END_DATE is not set — see its definition "
+                "above. It must be set by hand, once, after reviewing "
+                "continuity between dollar_blue_ambito's last good data and "
+                "dollar_blue_cronista's newly-scraped days; it is not "
+                "computed automatically. Refusing to run rather than guess."
+            )
+
         if full_refresh:
             _exec(
                 conn,
@@ -110,28 +137,39 @@ def _run_unifications(conn: DBConnection, full_refresh: bool) -> list[str]:
                 f'WHERE "date" <= \'{_CRONISTA_END_DATE}\' '
                 'ON CONFLICT ("date") DO UPDATE SET "value" = EXCLUDED."value"',
             )
-            count = _exec(
+            _exec(
                 conn,
                 f'INSERT INTO "{dest}" ("date", "value") '
                 'SELECT "date", "value" FROM "dollar_blue_ambito" '
-                f'WHERE "date" > \'{_CRONISTA_END_DATE}\' AND "value" != 0 '
+                f'WHERE "date" > \'{_CRONISTA_END_DATE}\' '
+                f'AND "date" <= \'{_AMBITO_BLUE_END_DATE}\' AND "value" != 0 '
+                'ON CONFLICT ("date") DO UPDATE SET "value" = EXCLUDED."value"',
+            )
+            count = _exec(
+                conn,
+                f'INSERT INTO "{dest}" ("date", "value") '
+                'SELECT "date", "value" FROM "dollar_blue_cronista" '
+                f'WHERE "date" > \'{_AMBITO_BLUE_END_DATE}\' '
                 'ON CONFLICT ("date") DO UPDATE SET "value" = EXCLUDED."value"',
             )
         else:
             count = _exec(
                 conn,
                 f'INSERT INTO "{dest}" ("date", "value") '
-                'SELECT "date", "value" FROM "dollar_blue_ambito" '
+                'SELECT "date", "value" FROM "dollar_blue_cronista" '
                 f'WHERE "date" > NOW() - INTERVAL \'{DELTA_LOOKBACK_DAYS} days\' '
-                'AND "value" != 0 '
+                f'AND "date" > \'{_AMBITO_BLUE_END_DATE}\' '
                 'ON CONFLICT ("date") DO UPDATE SET "value" = EXCLUDED."value"',
             )
         logger.info("%-60s %d row(s) upserted", dest + ":", count)
+        return []
     except Exception as exc:
         logger.error("Failed to calculate %s: %s", dest, exc)
-        failed.append(dest)
+        return [dest]
 
-    # merval_unified
+
+def _run_merval_unification(conn: DBConnection, full_refresh: bool) -> list[str]:
+    """Populate merval_unified. Returns [] on success, ["merval_unified"] on failure."""
     dest = "merval_unified"
     try:
         if full_refresh:
@@ -165,11 +203,10 @@ def _run_unifications(conn: DBConnection, full_refresh: bool) -> list[str]:
                 'ON CONFLICT ("date") DO UPDATE SET "value" = EXCLUDED."value"',
             )
         logger.info("%-60s %d row(s) upserted", dest + ":", count)
+        return []
     except Exception as exc:
         logger.error("Failed to calculate %s: %s", dest, exc)
-        failed.append(dest)
-
-    return failed
+        return [dest]
 
 
 # ---------------------------------------------------------------------------
@@ -323,13 +360,85 @@ _YOY_CALCS: list[tuple[str, str]] = [
 
 
 # ---------------------------------------------------------------------------
+# Dollar-blue scope: which of the steps 2-5 tables transitively depend on
+# dollar_blue_unified, so main.py's --skip-dollar-blue / --only-dollar-blue
+# can include/exclude exactly those without a hand-maintained list drifting
+# out of sync with _AGGREGATIONS/_CONVERSIONS/_RATIOS/_YOY_CALCS.
+# ---------------------------------------------------------------------------
+
+def _derive_dollar_blue_scope() -> frozenset[str]:
+    """Tables in steps 2-5 that transitively depend on dollar_blue_unified.
+
+    Walks the (dest, src_a, src_b, ...) tuples as a dependency graph, seeded
+    with dollar_blue_unified, to a fixed point — so a series added later
+    that chains off another dollar-blue-derived table (not just directly off
+    dollar_blue_unified) is still picked up correctly.
+    """
+    dependent = {"dollar_blue_unified"}
+    changed = True
+    while changed:
+        changed = False
+        for dest, src_a, src_b, _expr in _AGGREGATIONS + _CONVERSIONS + _RATIOS:
+            if dest not in dependent and (src_a in dependent or src_b in dependent):
+                dependent.add(dest)
+                changed = True
+        for source_table, dest_table in _YOY_CALCS:
+            if dest_table not in dependent and source_table in dependent:
+                dependent.add(dest_table)
+                changed = True
+    dependent.discard("dollar_blue_unified")  # that's the unification step itself, handled separately
+    return frozenset(dependent)
+
+
+# Pinned expectation for the set above — deliberately hand-written and
+# checked at import time (not just derived), so a series added to
+# _CONVERSIONS/_RATIOS/_YOY_CALCS without updating this constant fails loudly
+# the moment this module is imported, rather than silently changing what
+# --skip-dollar-blue/--only-dollar-blue cover.
+_EXPECTED_DOLLAR_BLUE_SCOPE = frozenset({
+    "calculated_base_en_dollar",
+    "calculated_m1_en_dollar",
+    "calculated_m2_en_dollar",
+    "calculated_m2_privado_en_dollar",
+    "calculated_m2_transaccional_privado_en_dollar",
+    "calculated_m3_en_dollar",
+    "merval_en_dollar",
+    "var_dollar_blue_vs_oficial",
+    "var_dollar_interanual",
+})
+
+_DOLLAR_BLUE_SCOPE = _derive_dollar_blue_scope()
+if _DOLLAR_BLUE_SCOPE != _EXPECTED_DOLLAR_BLUE_SCOPE:
+    raise RuntimeError(
+        "calculated/pipeline.py: derived dollar-blue-dependent table set "
+        f"{sorted(_DOLLAR_BLUE_SCOPE)} does not match the pinned "
+        f"_EXPECTED_DOLLAR_BLUE_SCOPE {sorted(_EXPECTED_DOLLAR_BLUE_SCOPE)}. "
+        "A series was added to/changed in _AGGREGATIONS/_CONVERSIONS/"
+        "_RATIOS/_YOY_CALCS without updating _EXPECTED_DOLLAR_BLUE_SCOPE — "
+        "update the constant (after confirming the newly derived set is "
+        "actually correct) rather than silencing this."
+    )
+
+
+# ---------------------------------------------------------------------------
 # Public entry point
 # ---------------------------------------------------------------------------
 
-def run_calculated(conn: DBConnection, full_refresh: bool = False) -> bool:
-    """Run all calculated metric pipelines in dependency order.
+_VALID_SCOPES = frozenset({"all", "dollar_blue", "non_dollar_blue"})
 
-    Execution order:
+
+def run_calculated(conn: DBConnection, full_refresh: bool = False, scope: str = "all") -> bool:
+    """Run calculated metric pipelines in dependency order.
+
+    scope selects which tables run:
+      "all"           — everything (default).
+      "dollar_blue"   — only dollar_blue_unified and whatever transitively
+                         depends on it (see _DOLLAR_BLUE_SCOPE). For
+                         dollar-blue-only runs.
+      "non_dollar_blue" — everything except those, for runs that don't touch
+                         the dollar-blue source.
+
+    Execution order within the selected scope:
       1. Unifications (Dollar_Blue_Unified, Merval_Unified)
       2. Aggregations (base+deposits, m2+deposits_a_plazo)
       3. Currency conversions
@@ -338,24 +447,38 @@ def run_calculated(conn: DBConnection, full_refresh: bool = False) -> bool:
 
     Returns True if all calculations succeeded, False if any failed.
     """
+    if scope not in _VALID_SCOPES:
+        raise ValueError(f"Invalid scope {scope!r}; must be one of {sorted(_VALID_SCOPES)}")
+
     logger.info(
-        "Starting calculated metrics pipeline (%s)",
-        "full refresh" if full_refresh else "delta",
+        "Starting calculated metrics pipeline (%s, scope=%s)",
+        "full refresh" if full_refresh else "delta", scope,
     )
 
     failed: list[str] = []
 
     # Step 1: Unifications
-    failed.extend(_run_unifications(conn, full_refresh))
+    if scope in ("all", "dollar_blue"):
+        failed.extend(_run_dollar_blue_unification(conn, full_refresh))
+    if scope in ("all", "non_dollar_blue"):
+        failed.extend(_run_merval_unification(conn, full_refresh))
 
     # Steps 2–4: Binary calculations (aggregations, conversions, ratios)
     for dest, src_a, src_b, value_expr in _AGGREGATIONS + _CONVERSIONS + _RATIOS:
+        if scope == "dollar_blue" and dest not in _DOLLAR_BLUE_SCOPE:
+            continue
+        if scope == "non_dollar_blue" and dest in _DOLLAR_BLUE_SCOPE:
+            continue
         ok = _run_binary_calc(conn, dest, src_a, src_b, value_expr, full_refresh)
         if not ok:
             failed.append(dest)
 
     # Step 5: Year-over-year variations
     for source_table, dest_table in _YOY_CALCS:
+        if scope == "dollar_blue" and dest_table not in _DOLLAR_BLUE_SCOPE:
+            continue
+        if scope == "non_dollar_blue" and dest_table in _DOLLAR_BLUE_SCOPE:
+            continue
         ok = _run_yoy(conn, source_table, dest_table, full_refresh)
         if not ok:
             failed.append(dest_table)

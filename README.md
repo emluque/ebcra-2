@@ -14,7 +14,7 @@ This is a monorepo bundling four previously-separate projects, each independentl
 ## How it fits together
 
 ```
-BCRA API / Ambito / Yahoo Finance  ──▶  ebcra-scrapping  ──▶  Postgres
+BCRA API / Cronista / Yahoo Finance  ──▶  ebcra-scrapping  ──▶  Postgres
                                                                   │
                                                         (read-only queries)
                                                                   ▼
@@ -23,7 +23,7 @@ BCRA API / Ambito / Yahoo Finance  ──▶  ebcra-scrapping  ──▶  Postgr
                              └─────────── chart data (JWT) ────────┘
 ```
 
-- **`ebcra-scrapping`** is a one-shot batch job (not a daemon — it's triggered externally, e.g. by cron). It fetches BCRA variables and market data (dollar blue, Merval index), writes them to Postgres, derives secondary tables (unified series, aggregations, conversions, ratios, year-over-year deltas), and finally tells `ebcra-service` to drop its cache.
+- **`ebcra-scrapping`** is a one-shot batch job (not a daemon — it's triggered externally). It fetches BCRA variables and market data (dollar blue, Merval index), writes them to Postgres, derives secondary tables (unified series, aggregations, conversions, ratios, year-over-year deltas), and finally tells `ebcra-service` to drop its cache.
 - **`ebcra-service`** is a Go API that reads from Postgres and serves it as JSON, in two flavors: JWT-authenticated "core" endpoints (raw series, one per BCRA variable) called directly by the browser, and IP-allowlisted "variations" endpoints (Postgres stored procedures) called by `ebcra-web`. It also issues short-lived JWTs to `ebcra-web` so the browser can call the core endpoints without hitting Django in the middle.
 - **`ebcra-web`** is a server-rendered Django site with no database access of its own. It renders one report page per BCRA variable/topic, optionally pre-fetching variation data from `ebcra-service`, and hands the browser a JWT (fetched server-side, session-cached) so client-side charts can pull raw series straight from `ebcra-service`.
 - **`ebcra-setup`** ties the three services plus Postgres and nginx together with Docker Compose, on two isolated Docker networks (`apps` and `data-network`) so `ebcra-web` can never reach Postgres directly.
@@ -72,7 +72,7 @@ See [`ebcra-service/env-variables.md`](ebcra-service/env-variables.md) for the f
 cd ebcra-scrapping
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-playwright install chromium --with-deps    # only needed for the ambito/yahoo scrapers
+playwright install chromium --with-deps    # only needed for the cronista/yahoo scrapers
 cp .env.example .env                       # fill in DB_* and BCRA_BASE_URL
 python main.py                             # delta run (only fetches since last stored date)
 python main.py --full-refresh              # ignore existing data, backfill everything
@@ -96,6 +96,6 @@ A Postgres database with the `estadisticasbcra` schema (see [`ebcra-setup/setup/
 
 ## Data flow in more detail
 
-1. **Ingestion** (`ebcra-scrapping/main.py`): reads `config/variables.json` (BCRA variable id → destination table), fetches each series from the BCRA API using a delta window, and runs Playwright-based scrapers for dollar blue (Ambito) and the Merval index (Yahoo Finance). It then derives secondary tables in a fixed order — unified multi-source series, aggregations, currency conversions, ratios, and year-over-year deltas — and finally clears `ebcra-service`'s cache so new data is served immediately.
+1. **Ingestion** (`ebcra-scrapping/main.py`): reads `config/variables.json` (BCRA variable id → destination table), fetches each series from the BCRA API using a delta window, and runs Playwright-based scrapers for dollar blue (Cronista) and the Merval index (Yahoo Finance). It then derives secondary tables in a fixed order — unified multi-source series, aggregations, currency conversions, ratios, and year-over-year deltas — and finally clears `ebcra-service`'s cache so new data is served immediately.
 2. **API** (`ebcra-service`): a single Go binary with three route groups — **core** (one JWT-gated endpoint per table, defined in `internal/core/core.json`), **variations** (IP-gated endpoints backed by Postgres stored procedures), and **JWT** (issues tokens, restricted to `ebcra-web`'s IP). Responses are cached in-process and flushed wholesale on `/clear_cache`.
 3. **Frontend** (`ebcra-web`): renders one report page per topic (Spanish at `/`, English at `/en/`, via separate URL confs sharing one view), optionally pre-fetching variation data server-side, and injects a JWT into the page so client-side JS can fetch raw series directly from `ebcra-service` for charts.

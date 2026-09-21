@@ -42,7 +42,7 @@ There are no `*_test.go` files in this service currently.
 cd ebcra-scrapping
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-playwright install chromium --with-deps    # only needed for ambito/yahoo scrapers
+playwright install chromium --with-deps    # only needed for cronista/yahoo scrapers
 cp .env.example .env                       # then fill in DB_* and BCRA_BASE_URL
 python main.py                             # delta run (only fetches since last MAX(date))
 python main.py --full-refresh              # ignore existing data, backfill everything
@@ -65,13 +65,12 @@ Settings are split as `ebcra/settings/base.py` (production defaults, `DEBUG=Fals
 
 ### Data flow
 ```
-BCRA API / Ambito / Yahoo Finance  ─(ebcra-scrapping)─▶  Postgres  ◀─(reads)─  ebcra-service  ◀─(HTTP)─  ebcra-web  ──▶ browser
+BCRA API / Cronista / Yahoo Finance  ─(ebcra-scrapping)─▶  Postgres  ◀─(reads)─  ebcra-service  ◀─(HTTP)─  ebcra-web  ──▶ browser
 ```
-1. **`ebcra-scrapping/main.py`** is a one-shot batch job (not a daemon — its Docker container just runs `tail -f /dev/null` and is exec'd into or triggered externally, e.g. by cron). Each run:
-   - Reads `config/variables.json` (BCRA variable id → destination table name).
-   - For each variable, fetches from the BCRA API (`scraper/api_client.py`, `scraper/pipeline.py`) using a delta window (`MAX(date)` in the destination table minus a 14-day lookback, `DELTA_LOOKBACK_DAYS` in `scraper/db.py`), unless `--full-refresh` is passed.
-   - Also runs the Playwright-based scrapers: `ambito/` (dollar blue historical rate) and `yahoo/` (Merval index), both funneled through the shared `scraper/web_pipeline.py::_run_web_scraper`.
-   - Then runs `calculated/pipeline.py::run_calculated`, which derives secondary tables in a fixed dependency order: (1) unify multi-source series that changed provider over time (e.g. `dollar_blue_unified` stitches Cronista pre-2019 with Ambito after), (2) aggregations, (3) currency conversions (divide ARS series by `dollar_blue_unified` / `bcra_usd_mayorista`), (4) ratios, (5) year-over-year deltas (`calculated/yoy.py`). The source-table lists for steps 3–5 are hardcoded lists of `(dest, src_a, src_b, expr)` tuples in `calculated/pipeline.py` — add new derived series there.
+1. **`ebcra-scrapping/main.py`** is a one-shot batch job (not a daemon — its Docker container just runs `tail -f /dev/null` and is exec'd into or triggered externally), with two mutually-exclusive run modes: `--skip-dollar-blue` (BCRA variables + Yahoo, no dollar-blue scrape) and `--only-dollar-blue` (only the Cronista dollar-blue scrape + the calculated tables that depend on it). Each run:
+   - Unless `--only-dollar-blue` is set: reads `config/variables.json` (BCRA variable id → destination table name) and, for each variable, fetches from the BCRA API (`scraper/api_client.py`, `scraper/pipeline.py`) using a delta window (`MAX(date)` in the destination table minus a 14-day lookback, `DELTA_LOOKBACK_DAYS` in `scraper/db.py`), unless `--full-refresh` is passed; also runs the Playwright-based `yahoo/` scraper (Merval index).
+   - Unless `--skip-dollar-blue` is set: runs the Playwright-based `cronista/` scraper (dollar-blue historical rate, from `https://www.cronista.com/MercadosOnline/moneda/ARSB/` — the data is embedded in the page's own `Fusion.contentCache` JSON, extracted via `scraper/playwright_base.py::fetch_rendered_html` rather than a row selector). `ambito/` (the previous dollar-blue source) is retired as an active scraper (Cloudflare bot mitigation blocks it) but its `dollar_blue_ambito` table is kept as a historical segment; nothing writes to it anymore. Both web scrapers funnel through the shared `scraper/web_pipeline.py::_run_web_scraper`.
+   - Then runs `calculated/pipeline.py::run_calculated(scope=...)`, which derives secondary tables in a fixed dependency order: (1) unify multi-source series that changed provider over time — `dollar_blue_unified` is a **three**-segment stitch, all from the *same* `dollar_blue_cronista` table for segments 1 and 3 (Cronista pre-2019, then Ambito through 2026-09-20, then the actively-scraped Cronista segment from 2026-09-21 on — see `_AMBITO_BLUE_END_DATE`), (2) aggregations, (3) currency conversions (divide ARS series by `dollar_blue_unified` / `bcra_usd_mayorista`), (4) ratios, (5) year-over-year deltas (`calculated/yoy.py`). The source-table lists for steps 3–5 are hardcoded lists of `(dest, src_a, src_b, expr)` tuples in `calculated/pipeline.py` — add new derived series there. `scope` (`"all"` / `"dollar_blue"` / `"non_dollar_blue"`) selects which of those tables run, matching `main.py`'s two run modes; the dollar-blue-dependent set is derived from those same tuples (not hand-maintained) and checked against a pinned expected set at import time.
    - On success, calls `GET {EBCRA_SERVICE_URL}/clear_cache` so `ebcra-service` picks up fresh data instead of serving its in-memory cache.
    - All table names are validated against `^[A-Za-z0-9_]+$` before being interpolated into SQL (`scraper/db.py::_validate_table_name`) since Postgres doesn't allow parameterized identifiers — this is the injection guard, don't bypass it.
 

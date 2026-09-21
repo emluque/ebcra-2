@@ -9,10 +9,16 @@ Docker and Docker Compose must be installed.
 ## 1. Create host directories
 
 ```bash
-mkdir -p /home/data/postgres /home/data/nginx-logs
+mkdir -p /home/data/postgres /home/data/nginx-logs /home/data/ebcra-scraping/playwright-state
 sudo chown -R 999:root /home/data/postgres
 sudo chown -R www-data:www-data /home/data/nginx-logs
 ```
+
+(`ebcra-scraping`'s container runs as root — no `chown` needed there, unlike
+postgres/nginx. This directory holds Playwright session state — cookies,
+local storage — persisted across scraper runs so each hit looks like a
+continuing session rather than a brand-new client; see
+`ebcra-scrapping/scraper/playwright_base.py`.)
 
 ## 2. Start PostgreSQL
 

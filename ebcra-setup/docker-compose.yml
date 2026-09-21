@@ -12,7 +12,13 @@ services:
       - DB_USER=ebcra-scraping
       - DB_PASSWORD=scraping-password
       - EBCRA_SERVICE_URL=http://ebcra-service:9001
-
+    volumes:
+      # Playwright session state (cookies/local storage) persisted across
+      # runs by scraper/playwright_base.py — needs to survive
+      # `docker compose up -d --build`, not just container restarts, or
+      # every redeploy resets session continuity with whatever CDN a given
+      # scraper is hitting (see scraper/playwright_base.py's STATE_DIR note).
+      - /home/data/ebcra-scraping/playwright-state:/ebcra-scraping/.playwright-state
     networks:
       apps:
         ipv4_address: 172.30.2.4
