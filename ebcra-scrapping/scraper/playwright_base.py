@@ -35,6 +35,18 @@ LAUNCH_ARGS = [
     "--use-gl=swiftshader",
 ]
 
+# Playwright's `headless` only accepts a boolean (a string like "new" is
+# rejected). With headless=True the default is chromium-headless-shell, the
+# stripped-down legacy-style build; channel="chromium" opts into the full
+# Chromium in its new headless mode, which renders and fingerprints much
+# closer to a real Chrome. Needs the full Chromium build installed
+# (`playwright install chromium` installs it alongside the shell).
+LAUNCH_OPTIONS = {
+    "headless": True,
+    "channel": "chromium",
+    "args": LAUNCH_ARGS,
+}
+
 # Context is deliberately NOT a fully-matched geographic persona (Argentine
 # locale + Argentine timezone). timezone_id is a JS/OS-level signal
 # (Intl.DateTimeFormat().resolvedOptions().timeZone) that CDN bot mitigation
@@ -52,7 +64,7 @@ CONTEXT_OPTIONS = {
 }
 
 # Deliberately no manual user_agent override and no hand-crafted Sec-CH-UA*
-# headers here. headless="new" (below) already makes Chromium report its
+# headers here. The new headless mode (LAUNCH_OPTIONS) already makes Chromium report its
 # true, non-"HeadlessChrome" UA matching its actual bundled build, and the
 # browser generates its own Sec-CH-UA Client Hints consistent with that same
 # real build automatically. Hand-setting an invented Chrome version would
@@ -63,7 +75,7 @@ CONTEXT_OPTIONS = {
 # Neutralizes the one automation tell that's cheap and durable to patch.
 # Deliberately not a full stealth plugin (e.g. playwright-extra-stealth) —
 # that's an ongoing arms race against evolving
-# bot-mitigation heuristics; this plus headless="new", GPU rendering, and
+# bot-mitigation heuristics; this plus new headless mode, GPU rendering, and
 # session continuity covers the durable wins without that upkeep burden.
 _INIT_SCRIPT = """
 Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
@@ -138,10 +150,7 @@ class BasePlaywrightScraper:
         state_path = self._state_path()
 
         with sync_playwright() as p:
-            browser = p.chromium.launch(
-                headless="new",
-                args=LAUNCH_ARGS,
-            )
+            browser = p.chromium.launch(**LAUNCH_OPTIONS)
             context_kwargs = dict(CONTEXT_OPTIONS)
             if state_path.exists():
                 context_kwargs["storage_state"] = str(state_path)
