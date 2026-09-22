@@ -15,7 +15,7 @@ def _run_web_scraper(
     dedup_strategy: str,
     label: str,
 ) -> bool:
-    """Shared logic for Playwright-based web scrapers (Ambito, Yahoo)."""
+    """Shared logic for Playwright-based web scrapers (Cronista, Yahoo)."""
     try:
         records = getattr(client, fetch_method)()
         logger.info("%s: fetched %d records", label, len(records))

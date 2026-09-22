@@ -165,9 +165,7 @@ class BasePlaywrightScraper:
                 # reading anything — matching how a real browser session
                 # pauses before interacting, and doubling as a
                 # challenge/interstitial detector: if the expected content
-                # never shows, that timeout is the signal (same as how the
-                # Ambito diagnostic used selector timeouts to detect the
-                # Cloudflare block).
+                # never shows, that timeout is the signal.
                 page.goto(url, timeout=self.timeout)
                 page.wait_for_selector(wait_selector, timeout=self.timeout)
 
