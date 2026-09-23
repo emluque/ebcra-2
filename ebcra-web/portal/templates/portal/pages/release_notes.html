@@ -6,6 +6,11 @@
 {% block content %}
 <div class="title"><div class="title-container"><h1>Release Notes</h1></div></div>
 <div class="explanation documentation">
+    <h2>Release Notes V2.1</h2>
+    <p>
+        Se automatizó la detección de problemas en los datos. El sitio ahora registra, para cada variable del BCRA y para las series de Dólar Blue y Merval, si la última actualización falló o si el dato más reciente tiene más de 31 días de antigüedad. Cuando esto ocurre, se muestra una advertencia justo arriba del reporte afectado, indicando qué variable está afectada y, en el caso de errores de la API del BCRA, un enlace a la API para verificarlo. Esto también se propaga a los reportes calculados (por ejemplo, valores en dólares o divididos por reservas) cuando alguna de sus variables de origen está afectada.
+    </p>
+
     <h2>Release Notes V2.0</h2>
     <p>
         El sitio no fue actualizado durante aproximadamente dos años. El motivo fue que el BCRA cambió la forma en que publicaba su informe estadístico, lo que dejó de funcionar el proceso de scraping que utilizábamos para obtener los datos. El sitio ahora utiliza la API oficial del BCRA. Este es un proyecto independiente y sin fines de lucro, y fue actualizado cuando finalmente hubo tiempo para hacerlo.
