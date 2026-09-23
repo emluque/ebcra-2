@@ -1,4 +1,5 @@
 {% extends "portal/base.html" %}
+{% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Deposit Interest Rates{% else %}Tasas de Interés de Depósitos{% endif %} — Estadísticas BCRA{% endblock %}
 {% block meta_description %}{% if lang == 'en' %}Argentine savings account interest rates — the average nominal annual rate banks pay on peso savings deposits, per BCRA data.{% else %}Tasas de interés de cajas de ahorro en Argentina — la tasa nominal anual promedio que pagan los bancos por depósitos en pesos, según el BCRA.{% endif %}{% endblock %}
 {% block og_description %}{% if lang == 'en' %}Argentine savings account interest rates — the average nominal annual rate banks pay on peso savings deposits, per BCRA data.{% else %}Tasas de interés de cajas de ahorro en Argentina — la tasa nominal anual promedio que pagan los bancos por depósitos en pesos, según el BCRA.{% endif %}{% endblock %}
@@ -7,6 +8,7 @@
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Deposit Interest Rates{% else %}Tasas de Interés de Depósitos{% endif %}</h1></div></div>
 
+{% data_warning "bcra_tasa_dep_caja_ahorro_a" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}Savings Accounts{% else %}Caja de Ahorro{% endif %}</h2>
 </div>
@@ -16,6 +18,7 @@
     <div id="chart0" class="rwd-chart loading"></div>
 </div>
 
+{% data_warning "bcra_tasa_dep_pf_60mas_a" "bcra_tasa_dep_pf_7_59d_a" "bcra_tasa_depositos_30_dias" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}Time Deposits by Tenor{% else %}Plazo Fijo por Plazo{% endif %}</h2>
 </div>

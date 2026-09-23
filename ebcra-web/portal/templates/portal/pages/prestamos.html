@@ -7,6 +7,7 @@
 {% block content %}
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Loans to the Private Sector{% else %}Préstamos al Sector Privado{% endif %}</h1></div></div>
+{% data_warning "bcra_prestamos_entidades_financieras_sector_privado" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}Loans to the Private Sector{% else %}Préstamos al Sector Privado{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
@@ -75,11 +76,13 @@
 </div>
 {% endif %}
 
+{% data_warning "bcra_tasa_prestamos_personales" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}Personal Loan Interest Rate{% else %}Tasa de interés de préstamos personales{% endif %}</h2></div>
 <div class="chart-container sub-chart">
     <div id="chart2" class="rwd-chart loading"></div>
 </div>
 
+{% data_warning "bcra_tasa_adelantos_cuenta_corriente" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}Overdraft Interest Rate{% else %}Tasa de interés de préstamos por adelantos en cuenta corriente{% endif %}</h2></div>
 <div class="chart-container sub-chart">
     <div id="chart3" class="rwd-chart loading"></div>

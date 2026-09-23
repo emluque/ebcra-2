@@ -1,7 +1,7 @@
 import datetime
 import logging
 
-from scraper.db import DBConnection, deduplicate, upsert_records
+from scraper.db import DBConnection, deduplicate, record_scrape_status, upsert_records
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +14,7 @@ def _run_web_scraper(
     fetch_method: str,
     dedup_strategy: str,
     label: str,
+    source_kind: str,
 ) -> bool:
     """Shared logic for Playwright-based web scrapers (Cronista, Yahoo)."""
     try:
@@ -29,12 +30,15 @@ def _run_web_scraper(
 
         inserted = upsert_records(conn, table_name, records)
         logger.info("%s (%s): %d record(s) upserted", label, table_name, inserted)
+        record_scrape_status(conn, table_name, source_kind, ok=True)
         return True
 
     except api_error_type as exc:
         logger.error("%s: API error — %s", label, exc)
+        record_scrape_status(conn, table_name, source_kind, ok=False, error_message=str(exc))
         return False
 
     except Exception as exc:
         logger.error("%s: unexpected error — %s", label, exc)
+        record_scrape_status(conn, table_name, source_kind, ok=False, error_message=str(exc))
         return False

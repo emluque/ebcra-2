@@ -8,6 +8,7 @@
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Mortgage and Secured Loans{% else %}Préstamos Hipotecarios y Prendarios{% endif %}</h1></div></div>
 
+{% data_warning "bcra_hip_construccion" "bcra_hip_nueva" "bcra_hip_otros" "bcra_hip_refaccion" "bcra_hip_usada" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}Mortgage Loans{% else %}Préstamos Hipotecarios{% endif %}</h2>
 </div>
@@ -275,6 +276,7 @@
 </div>
 {% endif %}
 
+{% data_warning "bcra_prend_autos" "bcra_prend_maquinarias" "bcra_prend_otros" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}Secured Loans (Pledge){% else %}Préstamos Prendarios{% endif %}</h2>
 </div>

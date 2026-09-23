@@ -8,6 +8,7 @@
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Private Sector Loans by Borrower{% else %}Préstamos al Sector Privado por Tipo de Titular{% endif %}</h1></div></div>
 
+{% data_warning "bcra_prest_titular_humanas" "bcra_prest_titular_juridicas" "bcra_prest_titular_pymes" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}By Borrower Type{% else %}Por Tipo de Titular{% endif %}</h2>
 </div>
@@ -229,6 +230,7 @@
 </div>
 {% endif %}
 
+{% data_warning "bcra_prest_titular_hipotecarios" "bcra_prest_titular_prendarios" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}By Loan Type{% else %}Por Tipo de Préstamo{% endif %}</h2>
 </div>

@@ -15,4 +15,5 @@ def run_yahoo(conn: DBConnection) -> bool:
         fetch_method="fetch_merval",
         dedup_strategy="first",
         label="Yahoo Merval",
+        source_kind="yahoo",
     )

@@ -9,6 +9,7 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}<a href="https://en.wikipedia.org/wiki/Foreign-exchange_reserves">International reserves</a> are the foreign-currency assets held by the BCRA — including gold, SDRs, and deposits at foreign central banks — that back the monetary base and serve as a buffer against external shocks. The chart below tracks the BCRA's declared gross reserves over time.{% else %}Las <a href="https://es.wikipedia.org/wiki/Reserva_internacional">Reservas Internacionales</a> son los activos en moneda extranjera que posee el BCRA — incluyendo oro, DEG y depósitos en bancos centrales del exterior — que respaldan la base monetaria y actúan como amortiguador ante shocks externos. El siguiente gráfico muestra la evolución de las reservas brutas declaradas por el BCRA.{% endif %}</p></div>
 
+{% data_warning "bcra_reservas_internacionales" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}International Reserves{% else %}Reservas Internacionales{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>

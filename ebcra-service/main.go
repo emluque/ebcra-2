@@ -8,6 +8,7 @@ import (
 	"github.com/emluque/ebcra-service-2.0/internal/config"
 	"github.com/emluque/ebcra-service-2.0/internal/core"
 	jwtpkg "github.com/emluque/ebcra-service-2.0/internal/jwt"
+	"github.com/emluque/ebcra-service-2.0/internal/status"
 	"github.com/emluque/ebcra-service-2.0/internal/variations"
 )
 
@@ -26,6 +27,9 @@ func main() {
 		log.Fatal(err)
 	}
 	if err := jwtpkg.Init(cfg); err != nil {
+		log.Fatal(err)
+	}
+	if err := status.Init(cfg); err != nil {
 		log.Fatal(err)
 	}
 
@@ -83,6 +87,10 @@ func main() {
 
 	/* End Variations */
 
+	/* Scrape status */
+	http.HandleFunc("/scrape_status", status.ResponseHandlerCreator())
+	/* End Scrape status */
+
 	/* Clear both caches */
 	http.HandleFunc("/clear_cache", cleanCachesHandlerFactory(cfg.CleanCacheIP))
 
@@ -112,6 +120,7 @@ func cleanCachesHandlerFactory(cleanCacheIP string) func(w http.ResponseWriter, 
 
 		core.CleanCache()
 		variations.CleanCache()
+		status.CleanCache()
 
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "Cache Cleared")

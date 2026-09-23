@@ -9,6 +9,7 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}Bank deposits in the Argentine financial system, broken down by type: total deposits, checking accounts, savings accounts, and time deposits.{% else %}Depósitos bancarios en el sistema financiero argentino, desglosados por tipo: depósitos totales, cuentas corrientes, cajas de ahorro y plazo fijo.{% endif %}</p></div>
 
+{% data_warning "bcra_depositos_a_plazo" "bcra_depositos_cajas_ahorro" "bcra_depositos_cuentas_corrientes" "bcra_depositos_efectivo_entidades_financieras_total" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}Deposits{% else %}Depósitos{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
@@ -205,6 +206,7 @@
 </div>
 {% endif %}
 
+{% data_warning "bcra_tasa_depositos_30_dias" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}30-day Deposit Interest Rate (% n.a.){% else %}Tasas de Interés por Depósitos a 30 Días en Entidades Financieras (en % n.a.){% endif %}</h2></div>
 <div class="chart-container sub-chart">
     <div id="chart2" class="rwd-chart loading"></div>

@@ -1,4 +1,5 @@
 {% extends "portal/base.html" %}
+{% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %} — Estadísticas BCRA{% endblock %}
 {% block meta_description %}{% if lang == 'en' %}TAMAR, the BCRA's benchmark interest rate for peso term deposits introduced in October 2024 to replace BADLAR.{% else %}TAMAR, la tasa de referencia del BCRA para depósitos a plazo fijo en pesos, introducida en octubre de 2024 en reemplazo de la BADLAR.{% endif %}{% endblock %}
 {% block og_description %}{% if lang == 'en' %}TAMAR, the BCRA's benchmark interest rate for peso term deposits introduced in October 2024 to replace BADLAR.{% else %}TAMAR, la tasa de referencia del BCRA para depósitos a plazo fijo en pesos, introducida en octubre de 2024 en reemplazo de la BADLAR.{% endif %}{% endblock %}
@@ -7,6 +8,7 @@
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Interest Rates{% else %}Tasas de Interés{% endif %}</h1></div></div>
 
+{% data_warning "bcra_tasa_tamar_privados" "bcra_tasa_tamar_publicos_y_privados" %}
 <div class="subtitle">
     <h2>TAMAR</h2>
 </div>
@@ -16,6 +18,7 @@
     <div id="chart0" class="rwd-chart loading"></div>
 </div>
 
+{% data_warning "bcra_tasa_badlar" "bcra_tasa_badlar_publicos_y_privados" "bcra_tasa_baibar" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}Badlar, Baibar{% else %}Badlar, Baibar{% endif %}</h2>
 </div>
@@ -25,6 +28,7 @@
     <div id="chart1" class="rwd-chart loading"></div>
 </div>
 
+{% data_warning "bcra_tasa_tm20" %}
 <div class="subtitle">
     <h2>TM20</h2>
 </div>
@@ -34,6 +38,7 @@
     <div id="chart1b" class="rwd-chart loading"></div>
 </div>
 
+{% data_warning "bcra_tasa_pase_activas_1_dia" "bcra_tasa_pase_pasivas_1_dia" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}Repo Operations{% else %}Operaciones de Pase{% endif %}</h2>
 </div>

@@ -9,6 +9,7 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}The <a href="https://en.wikipedia.org/wiki/Monetary_base">Monetary Base</a> is the sum of currency in circulation and financial entities' current accounts in pesos at the BCRA. It is the narrowest monetary aggregate and the primary instrument the central bank uses to influence the money supply and inflation.{% else %}La <a href="https://es.wikipedia.org/wiki/Base_monetaria">Base Monetaria</a> es la suma del dinero en circulación y las cuentas corrientes en pesos de las entidades financieras en el BCRA. Es el agregado monetario más restringido y el principal instrumento del Banco Central para influir sobre la oferta monetaria y la inflación.{% endif %}</p></div>
 
+{% data_warning "bcra_base_monetaria" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}Monetary Base{% else %}Base Monetaria{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>

@@ -8,6 +8,7 @@
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Private Sector Deposits by Holder{% else %}Depósitos del Sector Privado por Tipo de Titular{% endif %}</h1></div></div>
 
+{% data_warning "bcra_dep_titular_fci" "bcra_dep_titular_humanas" "bcra_dep_titular_juridicas" "bcra_dep_titular_pymes" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}By Depositor Type{% else %}Por Tipo de Depositante{% endif %}</h2>
 </div>
@@ -229,6 +230,7 @@
 </div>
 {% endif %}
 
+{% data_warning "bcra_dep_titular_ca_privado" "bcra_dep_titular_cc_privado" "bcra_dep_titular_pf_privado" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}By Account Type{% else %}Por Tipo de Cuenta{% endif %}</h2>
 </div>

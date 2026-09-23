@@ -2,7 +2,7 @@ import datetime
 import logging
 
 from scraper.api_client import BCRAAPIError, BCRAClient
-from scraper.db import DELTA_LOOKBACK_DAYS, DBConnection, get_max_date, upsert_records
+from scraper.db import DELTA_LOOKBACK_DAYS, DBConnection, get_max_date, record_scrape_status, upsert_records
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +14,7 @@ def run_variable(
     table_name: str,
     full_refresh: bool = False,
 ) -> bool:
+    source_url = f"{client.base_url}/estadisticas/v4.0/Monetarias/{variable_id}"
     try:
         desde = None
         if not full_refresh:
@@ -47,6 +48,10 @@ def run_variable(
             "Variable %d (%s): %d record(s) upserted",
             variable_id, table_name, affected,
         )
+        record_scrape_status(
+            conn, table_name, "bcra_variable",
+            ok=True, variable_id=variable_id, source_url=source_url,
+        )
         return True
 
     except BCRAAPIError as exc:
@@ -60,11 +65,22 @@ def run_variable(
                 "Variable %d (%s): API error — %s",
                 variable_id, table_name, exc,
             )
+        record_scrape_status(
+            conn, table_name, "bcra_variable",
+            ok=False, variable_id=variable_id, source_url=source_url,
+            error_code=str(exc.status_code) if exc.status_code else None,
+            error_message=str(exc),
+        )
         return False
 
     except Exception as exc:
         logger.error(
             "Variable %d (%s): unexpected error — %s",
             variable_id, table_name, exc,
+        )
+        record_scrape_status(
+            conn, table_name, "bcra_variable",
+            ok=False, variable_id=variable_id, source_url=source_url,
+            error_message=str(exc),
         )
         return False

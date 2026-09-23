@@ -17,4 +17,5 @@ def run_cronista(conn: DBConnection) -> bool:
         fetch_method="fetch_dollar_blue",
         dedup_strategy="max",
         label="Cronista Dollar Blue",
+        source_kind="cronista",
     )

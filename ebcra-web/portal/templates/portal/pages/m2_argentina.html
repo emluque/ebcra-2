@@ -9,6 +9,7 @@
 <div class="title"><div class="title-container"><h1>M2</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}M2 monetary aggregate: currency in circulation in pesos plus cash in bank vaults, plus current accounts in pesos held by the private and public sectors, plus savings deposits in pesos held by the private and public sectors.{% else %}Agregado monetario M2: circulación monetaria en pesos más billetes y monedas en entidades financieras, más cuentas corrientes en pesos de los sectores privado y público, más cajas de ahorro en pesos de los sectores privado y público.{% endif %}</p></div>
 
+{% data_warning "bcra_m2" %}
 <div class="subtitle"><h2>M2</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
@@ -70,6 +71,7 @@
 </div>
 {% endif %}
 
+{% data_warning "bcra_m2_transaccional_privado" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}M2 Transactional Private{% else %}M2 Transaccional Privado{% endif %}</h2></div>
 <div class="explanation"><p>{% if lang == 'en' %}Total monetary circulation minus cash in bank vaults in pesos, minus demand deposits for legal entities, plus current accounts in pesos, plus savings accounts in pesos. Captures transactional money held by the private sector.{% else %}Circulación monetaria total menos efectivo en bancos en pesos, menos depósitos a la vista de personas jurídicas, más cuentas corrientes en pesos, más cajas de ahorro en pesos. Captura el dinero transaccional en manos del sector privado.{% endif %}</p></div>
 <div class="chart-container sub-chart">
@@ -132,6 +134,7 @@
 </div>
 {% endif %}
 
+{% data_warning "bcra_m2_privado" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}Private M2{% else %}M2 Privado{% endif %}</h2></div>
 <div class="explanation"><p>{% if lang == 'en' %}M2 excluding deposits from the public sector (national, provincial, and municipal governments and state-owned enterprises). Captures the monetary aggregate held exclusively by the private sector.{% else %}M2 excluidos los depósitos del sector público (gobierno nacional, provincial, municipal y empresas estatales). Captura el agregado monetario en manos exclusivamente del sector privado.{% endif %}</p></div>
 <div class="chart-container sub-chart">

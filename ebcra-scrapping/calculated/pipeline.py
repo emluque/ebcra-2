@@ -1,10 +1,46 @@
 import logging
 
 from scraper.constants import CRONISTA_LEGACY_END_DATE
-from scraper.db import DELTA_LOOKBACK_DAYS, DBConnection, _cursor, _validate_table_name
+from scraper.db import (
+    DELTA_LOOKBACK_DAYS,
+    DBConnection,
+    _cursor,
+    _validate_table_name,
+    get_scrape_statuses,
+    record_scrape_status,
+)
 from calculated.yoy import compute_yoy
 
 logger = logging.getLogger(__name__)
+
+
+_STATUS_SEVERITY = {"ok": 0, "stale": 1, "error": 2}
+
+
+def _record_calculated_status(conn: DBConnection, dest: str, sources: list[str], run_ok: bool) -> None:
+    """Record scrape_status for a calculated table, attributing degradation to
+    whichever of its source tables aren't currently "ok".
+
+    The calculated table's status is floored at the worst status among its
+    sources — its own last-value age can still look fresh (e.g. a delta join
+    that only touches recent dates) even while a source it depends on is
+    currently stale/erroring.
+    """
+    if not run_ok:
+        record_scrape_status(conn, dest, "calculated", ok=False, error_message="calculation failed")
+        return
+    upstream = get_scrape_statuses(conn, sources)
+    degraded = [t for t in sources if upstream.get(t, {}).get("status") != "ok"]
+    worst = "ok"
+    for t in degraded:
+        st = upstream.get(t, {}).get("status", "ok")
+        if _STATUS_SEVERITY.get(st, 0) > _STATUS_SEVERITY.get(worst, 0):
+            worst = st
+    record_scrape_status(
+        conn, dest, "calculated", ok=True,
+        caused_by=degraded or None,
+        min_status=worst if degraded else None,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -162,9 +198,11 @@ def _run_dollar_blue_unification(conn: DBConnection, full_refresh: bool) -> list
                 'ON CONFLICT ("date") DO UPDATE SET "value" = EXCLUDED."value"',
             )
         logger.info("%-60s %d row(s) upserted", dest + ":", count)
+        _record_calculated_status(conn, dest, ["dollar_blue_cronista"], run_ok=True)
         return []
     except Exception as exc:
         logger.error("Failed to calculate %s: %s", dest, exc)
+        _record_calculated_status(conn, dest, ["dollar_blue_cronista"], run_ok=False)
         return [dest]
 
 
@@ -203,9 +241,11 @@ def _run_merval_unification(conn: DBConnection, full_refresh: bool) -> list[str]
                 'ON CONFLICT ("date") DO UPDATE SET "value" = EXCLUDED."value"',
             )
         logger.info("%-60s %d row(s) upserted", dest + ":", count)
+        _record_calculated_status(conn, dest, ["merval_yahoo"], run_ok=True)
         return []
     except Exception as exc:
         logger.error("Failed to calculate %s: %s", dest, exc)
+        _record_calculated_status(conn, dest, ["merval_yahoo"], run_ok=False)
         return [dest]
 
 
@@ -470,6 +510,7 @@ def run_calculated(conn: DBConnection, full_refresh: bool = False, scope: str = 
         if scope == "non_dollar_blue" and dest in _DOLLAR_BLUE_SCOPE:
             continue
         ok = _run_binary_calc(conn, dest, src_a, src_b, value_expr, full_refresh)
+        _record_calculated_status(conn, dest, [src_a, src_b], run_ok=ok)
         if not ok:
             failed.append(dest)
 
@@ -480,6 +521,7 @@ def run_calculated(conn: DBConnection, full_refresh: bool = False, scope: str = 
         if scope == "non_dollar_blue" and dest_table in _DOLLAR_BLUE_SCOPE:
             continue
         ok = _run_yoy(conn, source_table, dest_table, full_refresh)
+        _record_calculated_status(conn, dest_table, [source_table], run_ok=ok)
         if not ok:
             failed.append(dest_table)
 

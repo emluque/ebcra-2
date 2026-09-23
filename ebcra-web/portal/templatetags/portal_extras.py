@@ -1,8 +1,26 @@
 from django import template
 from django.template.loader_tags import BLOCK_CONTEXT_KEY
+from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
 
 register = template.Library()
+
+
+@register.simple_tag(takes_context=True)
+def data_warning(context, *table_names):
+    """Render a data-freshness warning box for the given table_name(s), right
+    above the report section that depends on them. See
+    portal.views._data_warnings — this tag just scopes it to one report."""
+    from portal.views import _data_warnings
+
+    lang = context.get("lang", "es")
+    statuses = context.get("scrape_statuses", {})
+    messages = _data_warnings(lang, list(table_names), statuses)
+    if not messages:
+        return ""
+    heading = "Warning about the following report" if lang == "en" else "Advertencia sobre el siguiente reporte"
+    inner = format_html_join("", "<p>{}</p>", ((m,) for m in messages))
+    return format_html('<div class="explanation warning"><h2>{}</h2>{}</div>', heading, inner)
 
 
 @register.simple_tag(takes_context=True)

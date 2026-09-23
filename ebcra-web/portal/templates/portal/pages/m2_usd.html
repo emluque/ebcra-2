@@ -9,6 +9,7 @@
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}M2 in USD{% else %}M2 expresado en USD{% endif %}</h1></div></div>
 <div class="explanation"><p>{% if lang == 'en' %}<a href="/en/argentina_m2">M2</a> monetary aggregate and transactional private-sector M2 expressed in USD at the free and official wholesale exchange rates.{% else %}Agregado monetario <a href="/m2">M2</a> y M2 transaccional del sector privado expresados en dólares al tipo de cambio libre y oficial mayorista.{% endif %}</p></div>
 
+{% data_warning "calculated_m2_en_dollar" "calculated_m2_en_dollar_oficial" %}
 <div class="subtitle"><h2>M2 {% if lang == 'en' %}in USD{% else %}expresado en USD{% endif %}</h2></div>
 <div class="chart-container">
     <div id="chart" class="rwd-chart loading"></div>
@@ -115,6 +116,7 @@
 </div>
 {% endif %}
 
+{% data_warning "calculated_m2_transaccional_privado_en_dollar" "calculated_m2_transaccional_privado_en_dollar_oficial" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}M2 Transactional Private in USD{% else %}M2 Transaccional Privado expresado en USD{% endif %}</h2></div>
 <div class="chart-container sub-chart">
     <div id="chart2" class="rwd-chart loading"></div>
@@ -221,6 +223,7 @@
 </div>
 {% endif %}
 
+{% data_warning "calculated_m2_privado_en_dollar" "calculated_m2_privado_en_dollar_oficial" %}
 <div class="subtitle"><h2>{% if lang == 'en' %}Private M2 in USD{% else %}M2 Privado expresado en USD{% endif %}</h2></div>
 <div class="chart-container sub-chart">
     <div id="chart3" class="rwd-chart loading"></div>

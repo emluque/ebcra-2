@@ -1,4 +1,5 @@
 {% extends "portal/base.html" %}
+{% load portal_extras %}
 {% block page_title %}{% if lang == 'en' %}Lending Interest Rates{% else %}Tasas de Interés de Préstamos{% endif %} — Estadísticas BCRA{% endblock %}
 {% block meta_description %}{% if lang == 'en' %}Argentine bank lending rates on consumer credit — credit cards, personal loans, overdrafts, and short-term business credit.{% else %}Tasas de interés de préstamos bancarios en Argentina — tarjetas de crédito, préstamos personales, adelantos en cuenta corriente y crédito empresarial de corto plazo.{% endif %}{% endblock %}
 {% block og_description %}{% if lang == 'en' %}Argentine bank lending rates on consumer credit — credit cards, personal loans, overdrafts, and short-term business credit.{% else %}Tasas de interés de préstamos bancarios en Argentina — tarjetas de crédito, préstamos personales, adelantos en cuenta corriente y crédito empresarial de corto plazo.{% endif %}{% endblock %}
@@ -7,6 +8,7 @@
 
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Lending Interest Rates{% else %}Tasas de Interés de Préstamos{% endif %}</h1></div></div>
 
+{% data_warning "bcra_tasa_adelantos_cuenta_corriente" "bcra_tasa_documentos_sola_firma" "bcra_tasa_prestamos_personales" "bcra_tasa_tarjetas_credito" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}Consumer Credit{% else %}Crédito al Consumo{% endif %}</h2>
 </div>
@@ -16,6 +18,7 @@
     <div id="chart0" class="rwd-chart loading"></div>
 </div>
 
+{% data_warning "bcra_tasa_hipotecarios_fija" "bcra_tasa_hipotecarios_uva" "bcra_tasa_prendarios_fija" %}
 <div class="subtitle">
     <h2>{% if lang == 'en' %}Secured and Mortgage Loans{% else %}Préstamos con Garantía Real{% endif %}</h2>
 </div>
