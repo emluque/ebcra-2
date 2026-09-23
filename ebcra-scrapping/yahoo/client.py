@@ -10,7 +10,9 @@ TABLE_ROW_SELECTOR = "tbody tr"
 MONTHS = {
     "ene": "01", "feb": "02", "mar": "03", "abr": "04",
     "may": "05", "jun": "06", "jul": "07", "ago": "08",
-    "sep": "09", "oct": "10", "nov": "11", "dic": "12",
+    # Yahoo renders September as 4 letters ("sept"), unlike every other
+    # month's 3-letter abbreviation — keep "sep" too in case that ever changes.
+    "sep": "09", "sept": "09", "oct": "10", "nov": "11", "dic": "12",
 }
 
 

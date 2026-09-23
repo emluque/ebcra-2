@@ -16,6 +16,11 @@ logger = logging.getLogger(__name__)
 # metronomic, scripted pattern.
 _RETRY_BACKOFF_SECONDS = (60, 180)
 
+# How long fetch_raw_rows polls for the post-hydration table to settle
+# before giving up and returning whatever it last read (see _extract there).
+_STABILIZE_CHECKS = 3
+_STABILIZE_INTERVAL_MS = 1500
+
 # Where per-scraper session state (cookies, local storage) is persisted
 # between runs, keyed by label — so a scraper looks like a continuing
 # session rather than a brand-new anonymous client on every run. Resolves
@@ -102,7 +107,7 @@ class BasePlaywrightScraper:
         Raises ScraperError on timeout or any other browser/navigation failure,
         after one bounded retry with backoff (see _RETRY_BACKOFF_SECONDS).
         """
-        def _extract(page):
+        def _read(page):
             rows = page.query_selector_all(row_selector)
             result = []
             for row in rows:
@@ -111,6 +116,24 @@ class BasePlaywrightScraper:
                     continue
                 result.append([cell.inner_text().strip() for cell in cells])
             return result
+
+        def _extract(page):
+            # Some sites (Yahoo Finance's history table) serve a stale
+            # server-rendered table that client-side JS overwrites with live
+            # data once the page hydrates. wait_for_selector above resolves
+            # against that stale SSR content the instant it appears, so
+            # reading immediately can capture rows that are weeks old even
+            # though a real browser shows current data seconds later. Poll
+            # until a read matches the previous one (hydration settled) or
+            # we run out of checks, instead of trusting the first read.
+            rows = _read(page)
+            for _ in range(_STABILIZE_CHECKS):
+                page.wait_for_timeout(_STABILIZE_INTERVAL_MS)
+                next_rows = _read(page)
+                if next_rows == rows:
+                    break
+                rows = next_rows
+            return rows
 
         return self._fetch_with_retry(url, row_selector, _extract)
 
