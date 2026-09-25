@@ -4,6 +4,7 @@ import re
 from contextlib import contextmanager
 
 import psycopg2
+from dateutil.relativedelta import relativedelta
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +58,7 @@ def record_scrape_status(
     error_message: str | None = None,
     caused_by: list[str] | None = None,
     min_status: str | None = None,
+    expected_lag: relativedelta | None = None,
 ) -> str:
     """Upsert scrape_status for table_name and return the derived status.
 
@@ -68,6 +70,11 @@ def record_scrape_status(
     when a source they depend on is currently stale/erroring (e.g. a delta
     join that only touches recent dates), so the caller passes the worst
     status among their sources as a floor.
+
+    expected_lag is for tables whose latest date structurally trails their
+    source's (e.g. YoY tables are keyed by the past date, so their MAX(date)
+    is always ~1 year behind): it is added to the latest date before
+    measuring its age, so that built-in lag isn't reported as "stale".
 
     This is a best-effort telemetry write: a failure here (e.g. a transient
     DB error) is logged and swallowed rather than raised, so it can never
@@ -81,7 +88,10 @@ def record_scrape_status(
         if not ok or last_date is None:
             status = "error"
         else:
-            age_days = (datetime.date.today() - datetime.date.fromisoformat(last_date)).days
+            effective_date = datetime.date.fromisoformat(last_date)
+            if expected_lag:
+                effective_date += expected_lag
+            age_days = (datetime.date.today() - effective_date).days
             status = "stale" if age_days > STALE_THRESHOLD_DAYS else "ok"
 
         if min_status and _STATUS_SEVERITY.get(min_status, 0) > _STATUS_SEVERITY.get(status, 0):

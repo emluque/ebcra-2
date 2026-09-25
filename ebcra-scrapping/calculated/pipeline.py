@@ -1,5 +1,7 @@
 import logging
 
+from dateutil.relativedelta import relativedelta
+
 from scraper.constants import CRONISTA_LEGACY_END_DATE
 from scraper.db import (
     DELTA_LOOKBACK_DAYS,
@@ -17,7 +19,13 @@ logger = logging.getLogger(__name__)
 _STATUS_SEVERITY = {"ok": 0, "stale": 1, "error": 2}
 
 
-def _record_calculated_status(conn: DBConnection, dest: str, sources: list[str], run_ok: bool) -> None:
+def _record_calculated_status(
+    conn: DBConnection,
+    dest: str,
+    sources: list[str],
+    run_ok: bool,
+    expected_lag: relativedelta | None = None,
+) -> None:
     """Record scrape_status for a calculated table, attributing degradation to
     whichever of its source tables aren't currently "ok".
 
@@ -25,6 +33,9 @@ def _record_calculated_status(conn: DBConnection, dest: str, sources: list[str],
     sources — its own last-value age can still look fresh (e.g. a delta join
     that only touches recent dates) even while a source it depends on is
     currently stale/erroring.
+
+    expected_lag is passed through to record_scrape_status for tables whose
+    MAX(date) structurally trails their sources (the YoY tables).
     """
     if not run_ok:
         record_scrape_status(conn, dest, "calculated", ok=False, error_message="calculation failed")
@@ -40,6 +51,7 @@ def _record_calculated_status(conn: DBConnection, dest: str, sources: list[str],
         conn, dest, "calculated", ok=True,
         caused_by=degraded or None,
         min_status=worst if degraded else None,
+        expected_lag=expected_lag,
     )
 
 
@@ -521,7 +533,12 @@ def run_calculated(conn: DBConnection, full_refresh: bool = False, scope: str = 
         if scope == "non_dollar_blue" and dest_table in _DOLLAR_BLUE_SCOPE:
             continue
         ok = _run_yoy(conn, source_table, dest_table, full_refresh)
-        _record_calculated_status(conn, dest_table, [source_table], run_ok=ok)
+        # YoY rows are keyed by the past date and need a value one year later,
+        # so the table's MAX(date) always trails its source by ~1 year.
+        _record_calculated_status(
+            conn, dest_table, [source_table], run_ok=ok,
+            expected_lag=relativedelta(years=1),
+        )
         if not ok:
             failed.append(dest_table)
 
