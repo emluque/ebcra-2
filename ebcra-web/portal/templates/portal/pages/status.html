@@ -1,8 +1,8 @@
 {% extends "portal/base.html" %}
 {% block page_title %}{% if lang == 'en' %}Data Status{% else %}Estado de los Datos{% endif %} — Estadísticas BCRA{% endblock %}
-{% block meta_description %}{% if lang == 'en' %}Data sources that are currently failing or not publishing new data.{% else %}Fuentes de datos que actualmente fallan o no publican datos nuevos.{% endif %}{% endblock %}
-{% block og_description %}{% if lang == 'en' %}Data sources that are currently failing or not publishing new data.{% else %}Fuentes de datos que actualmente fallan o no publican datos nuevos.{% endif %}{% endblock %}
-{% block twitter_description %}{% if lang == 'en' %}Data sources that are currently failing or not publishing new data.{% else %}Fuentes de datos que actualmente fallan o no publican datos nuevos.{% endif %}{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Current fetch status of every data source used on the site.{% else %}Estado actual de obtención de cada fuente de datos usada en el sitio.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Current fetch status of every data source used on the site.{% else %}Estado actual de obtención de cada fuente de datos usada en el sitio.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Current fetch status of every data source used on the site.{% else %}Estado actual de obtención de cada fuente de datos usada en el sitio.{% endif %}{% endblock %}
 {% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
 {% block content %}
 <div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Data Status{% else %}Estado de los Datos{% endif %}</h1></div></div>
@@ -19,7 +19,7 @@
         </thead>
         <tbody>
         {% for row in status_rows %}
-            <tr>
+            <tr{% if row.failing %} class="failing"{% endif %}>
                 <td>{{ row.name }}</td>
                 <td>{{ row.status }}</td>
                 <td>{{ row.last_fetched|default:"—" }}</td>
@@ -29,7 +29,7 @@
         </tbody>
     </table>
 {% else %}
-    <p>{% if lang == 'en' %}All data sources are up to date.{% else %}Todas las fuentes de datos están al día.{% endif %}</p>
+    <p>{% if lang == 'en' %}Status information is not available right now.{% else %}La información de estado no está disponible en este momento.{% endif %}</p>
 {% endif %}
 </div>
 {% endblock %}

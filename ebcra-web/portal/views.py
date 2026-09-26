@@ -507,21 +507,24 @@ def report(request, page):
 
 
 _STATUS_PAGE_LABELS = {
-    "es": {"error": "Error", "stale": "Datos desactualizados", "fetch_error": "Error de obtención"},
-    "en": {"error": "Error", "stale": "Stale data", "fetch_error": "Fetching error"},
+    "es": {"ok": "OK", "error": "Error", "stale": "Datos desactualizados", "fetch_error": "Error de obtención"},
+    "en": {"ok": "OK", "error": "Error", "stale": "Stale data", "fetch_error": "Fetching error"},
 }
+
+# Scraped (non-BCRA) sources go after the BCRA variables, in this order.
+_STATUS_PAGE_SCRAPED_ORDER = ["dollar_blue_cronista", "merval_yahoo"]
 
 
 def _status_rows(lang, statuses):
-    """Rows for the status page: every fetched (non-calculated) table whose
-    last scrape isn't "ok". Calculated tables are left out — their status only
-    mirrors the upstream source that's already listed."""
+    """Rows for the status page: every fetched (non-calculated) table, BCRA
+    variables by id first, then the scraped sources. Calculated tables are left
+    out — their status only mirrors the upstream source that's already listed."""
     labels = _STATUS_PAGE_LABELS[lang]
     rows = []
     for row in statuses:
         kind = row.get("source_kind")
         status = row.get("status")
-        if kind == "calculated" or status == "ok":
+        if kind == "calculated":
             continue
         table_name = row["table_name"]
 
@@ -529,21 +532,23 @@ def _status_rows(lang, statuses):
             variable_id = row.get("variable_id")
             name = _TABLE_LABELS.get(table_name, {}).get(lang, table_name)
             name = f"{name} (#{variable_id})"
-            if status == "stale":
-                status_label = labels["stale"]
+            if status in ("ok", "stale"):
+                status_label = labels[status]
             else:
                 code = row.get("error_code")
                 status_label = f'{labels["error"]} {code}' if code else labels["error"]
             sort_key = (0, variable_id or 0)
         else:
             name = f"{_SOURCE_LABELS.get(table_name, table_name)} ({kind.title()})"
-            status_label = labels["stale"] if status == "stale" else labels["fetch_error"]
-            sort_key = (1, name)
+            status_label = labels[status] if status in ("ok", "stale") else labels["fetch_error"]
+            order = _STATUS_PAGE_SCRAPED_ORDER
+            sort_key = (1, order.index(table_name) if table_name in order else len(order), name)
 
         rows.append({
             "sort_key": sort_key,
             "name": name,
             "status": status_label,
+            "failing": status != "ok",
             "last_fetched": row.get("checked_date"),
             "last_ingested": row.get("last_ingested_date"),
         })
