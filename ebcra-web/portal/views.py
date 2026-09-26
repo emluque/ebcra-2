@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 # Maps page key → (es_url, en_url)
 _ALTERNATE_URLS = {
-    "home":           ("/",                                                                  "/en"),
+    "home":           ("/",                                                                  "/en/"),
     "base":           ("/base_monetaria_argentina",                                          "/en/argentina_monetary_base"),
     "base_usd":       ("/base_monetaria_argentina_en_usd",                                   "/en/argentina_monetary_base_in_usd"),
     "base_div_res":   ("/base_monetaria_dividida_reservas_internacionales_argentina",        "/en/argentina_monetary_base_divided_by_international_reserves"),
@@ -56,7 +56,7 @@ _ALTERNATE_URLS = {
     "nota_inflacion": ("/nota_sobre_los_datos_oficiales_de_inflacion",                       "/en/note_on_inflation_data"),
     "liquidez_sistema_financiero": ("/liquidez_sistema_financiero_argentina",                 "/en/argentina_financial_system_liquidity"),
     "interfaz_fiscal_monetaria": ("/interfaz_fiscal_monetaria",                               "/en/fiscal_monetary_interface"),
-    "release_notes":  ("/release_notes",                                                     "/release_notes"),
+    "release_notes":  ("/release_notes",                                                     "/en/release_notes"),
     "error":          ("/error",                                                             "/en/error"),
     "api_info":       ("/api/documentacion",                                                 "/api/documentation"),
 }
@@ -278,7 +278,7 @@ def _lang(request):
 
 def _ctx(request, page):
     lang = _lang(request)
-    es_url, en_url = _ALTERNATE_URLS.get(page, ("/", "/en"))
+    es_url, en_url = _ALTERNATE_URLS.get(page, ("/", "/en/"))
     alternate_url = en_url if lang == "es" else es_url
     category = _PAGE_CATEGORY.get(page)
     breadcrumb_category = (category[1] if lang == "en" else category[0]) if category else None
