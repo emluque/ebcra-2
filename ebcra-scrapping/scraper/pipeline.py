@@ -20,9 +20,14 @@ def run_variable(
         if not full_refresh:
             desde = get_max_date(conn, table_name)
             if desde:
-                desde = str(
-                    datetime.date.fromisoformat(desde) - datetime.timedelta(days=DELTA_LOOKBACK_DAYS)
-                )
+                # Some series (CER, UVA, UVI, ICL) are published ahead of
+                # time, so MAX(date) can be in the future. The API rejects a
+                # future Desde with a 400; cap at yesterday to stay clear of
+                # UTC-vs-Argentina date skew on the host.
+                desde = str(min(
+                    datetime.date.fromisoformat(desde) - datetime.timedelta(days=DELTA_LOOKBACK_DAYS),
+                    datetime.date.today() - datetime.timedelta(days=1),
+                ))
             if desde:
                 logger.info(
                     "Variable %d (%s): delta fetch from %s",
