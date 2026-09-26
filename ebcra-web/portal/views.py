@@ -511,6 +511,13 @@ _STATUS_PAGE_LABELS = {
     "en": {"ok": "OK", "error": "Error", "stale": "Stale data", "fetch_error": "Fetching error"},
 }
 
+# Display names for the scraped sources on the status page — deliberately
+# without the provider (Cronista/Yahoo) in them.
+_STATUS_PAGE_SOURCE_NAMES = {
+    "dollar_blue_cronista": {"es": "Dólar Blue", "en": "Dollar Blue"},
+    "merval_yahoo": {"es": "Merval", "en": "Merval"},
+}
+
 # Scraped (non-BCRA) sources go after the BCRA variables, in this order.
 _STATUS_PAGE_SCRAPED_ORDER = ["dollar_blue_cronista", "merval_yahoo"]
 
@@ -539,7 +546,7 @@ def _status_rows(lang, statuses):
                 status_label = f'{labels["error"]} {code}' if code else labels["error"]
             sort_key = (0, variable_id or 0)
         else:
-            name = f"{_SOURCE_LABELS.get(table_name, table_name)} ({kind.title()})"
+            name = _STATUS_PAGE_SOURCE_NAMES.get(table_name, {}).get(lang) or _SOURCE_LABELS.get(table_name, table_name)
             status_label = labels[status] if status in ("ok", "stale") else labels["fetch_error"]
             order = _STATUS_PAGE_SCRAPED_ORDER
             sort_key = (1, order.index(table_name) if table_name in order else len(order), name)
