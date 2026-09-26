@@ -9,6 +9,7 @@
 
     <title>{% block page_title %}Estadísticas BCRA{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Estadísticas BCRA compila los datos publicados por el Banco Central de la República Argentina.{% endblock %}">
+    {% block extra_head %}{% endblock %}
     <link rel="canonical" href="{{ SITE_URL }}{{ request.path }}">
     <link rel="alternate" hreflang="es" href="{{ SITE_URL }}{% if lang == 'es' %}{{ request.path }}{% else %}{{ alternate_url }}{% endif %}">
     <link rel="alternate" hreflang="en" href="{{ SITE_URL }}{% if lang == 'en' %}{{ request.path }}{% else %}{{ alternate_url }}{% endif %}">
@@ -85,7 +86,7 @@
     <script src="{% static 'js/d3/d3.min.js' %}"></script>
     <script src="{% static 'js/library.js' %}?version=2.0.6"></script>
     <link rel="stylesheet" href="{% static 'css/fonts/stylesheet.css' %}" type="text/css" charset="utf-8">
-    <link rel="stylesheet" href="{% static 'css/general.css' %}?version=2.1.0" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/general.css' %}?version=2.1.1" type="text/css" charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/iconfont/flaticon.css' %}">
 </head>
 <body>
@@ -190,6 +191,7 @@
         <ul>
             <li><a href="/fuentes">Fuentes</a></li>
             <li><a href="/creditos">Creditos</a></li>
+            <li><a href="/estado">Estado de los Datos</a></li>
             <li><a href="/release_notes">Release Notes</a></li>
         </ul>
         {% else %}
@@ -271,6 +273,7 @@
         <ul>
             <li><a href="/en/sources">Sources</a></li>
             <li><a href="/en/credits">Credits</a></li>
+            <li><a href="/en/status">Data Status</a></li>
             <li><a href="/en/release_notes">Release Notes</a></li>
         </ul>
         {% endif %}

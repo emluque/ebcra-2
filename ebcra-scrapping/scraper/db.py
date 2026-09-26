@@ -103,12 +103,22 @@ def record_scrape_status(
                 source_kind, table_name, status, last_date, error_message,
             )
 
+        # last_ingested_at only moves when MAX(date) advances: the delta
+        # lookback re-upserts the last DELTA_LOOKBACK_DAYS on every run, so
+        # "rows were written" doesn't mean "new data arrived".
         sql = (
             'INSERT INTO scrape_status '
             '("table_name", "source_kind", "variable_id", "status", "last_success_date", '
-            '"checked_at", "source_url", "error_code", "error_message", "caused_by") '
-            'VALUES (%s, %s, %s, %s, %s, now(), %s, %s, %s, %s) '
+            '"checked_at", "source_url", "error_code", "error_message", "caused_by", '
+            '"last_ingested_at") '
+            'VALUES (%s, %s, %s, %s, %s, now(), %s, %s, %s, %s, '
+            'CASE WHEN %s::date IS NOT NULL THEN now() END) '
             'ON CONFLICT ("table_name") DO UPDATE SET '
+            '"last_ingested_at" = CASE '
+            'WHEN scrape_status."last_success_date" IS NULL '
+            'AND EXCLUDED."last_success_date" IS NOT NULL THEN now() '
+            'WHEN EXCLUDED."last_success_date" > scrape_status."last_success_date" THEN now() '
+            'ELSE scrape_status."last_ingested_at" END, '
             '"source_kind" = EXCLUDED."source_kind", '
             '"variable_id" = EXCLUDED."variable_id", '
             '"status" = EXCLUDED."status", '
@@ -122,7 +132,7 @@ def record_scrape_status(
         with _cursor(conn) as cursor:
             cursor.execute(sql, (
                 table_name, source_kind, variable_id, status, last_date,
-                source_url, error_code, error_message, caused_by,
+                source_url, error_code, error_message, caused_by, last_date,
             ))
         conn.commit()
         return status

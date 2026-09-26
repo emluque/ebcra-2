@@ -372,6 +372,20 @@ main {
   color: black;
   font-weight: bold; }
 
+.status-table {
+  width: 100%;
+  border-collapse: collapse; }
+
+.status-table th,
+.status-table td {
+  text-align: left;
+  padding: 0.5em 0.8em 0.5em 0;
+  border-bottom: 1px solid var(--color-dark); }
+
+.status-table td:nth-child(3),
+.status-table td:nth-child(4) {
+  white-space: nowrap; }
+
 .form {
   padding: 1em;
   font-size: 1.4em; }

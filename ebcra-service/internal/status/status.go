@@ -15,6 +15,10 @@ import (
 
 const cacheKey = "scrape_status"
 
+// Dates are cut in Argentina's time zone so a late-evening run doesn't show
+// up as the next day.
+const localTZ = "America/Argentina/Buenos_Aires"
+
 var acceptedClientIP string
 var environment string
 
@@ -28,6 +32,8 @@ type Row struct {
 	VariableID      *int64   `json:"variable_id,omitempty"`
 	Status          string   `json:"status"`
 	LastSuccessDate *string  `json:"last_success_date,omitempty"`
+	CheckedDate     string   `json:"checked_date"`
+	LastIngestDate  *string  `json:"last_ingested_date,omitempty"`
 	SourceURL       *string  `json:"source_url,omitempty"`
 	ErrorCode       *string  `json:"error_code,omitempty"`
 	ErrorMessage    *string  `json:"error_message,omitempty"`
@@ -55,9 +61,12 @@ func Init(cfg *config.Config) error {
 func fetchStatuses() (string, error) {
 	rows, err := Con.Query(
 		`select table_name, source_kind, variable_id, status, last_success_date::text,
+		        (checked_at at time zone $1)::date::text,
+		        (last_ingested_at at time zone $1)::date::text,
 		        source_url, error_code, error_message, caused_by
 		 from scrape_status
 		 order by table_name`,
+		localTZ,
 	)
 	if err != nil {
 		return "", err
@@ -67,24 +76,29 @@ func fetchStatuses() (string, error) {
 	results := make([]*Row, 0)
 	for rows.Next() {
 		var (
-			tableName, sourceKind, status                    string
-			variableID                                        sql.NullInt64
+			tableName, sourceKind, status, checkedDate          string
+			variableID                                          sql.NullInt64
 			lastSuccessDate, sourceURL, errorCode, errorMessage sql.NullString
-			causedBy                                          pq.StringArray
+			lastIngestDate                                      sql.NullString
+			causedBy                                            pq.StringArray
 		)
 		if err := rows.Scan(
 			&tableName, &sourceKind, &variableID, &status, &lastSuccessDate,
+			&checkedDate, &lastIngestDate,
 			&sourceURL, &errorCode, &errorMessage, &causedBy,
 		); err != nil {
 			return "", err
 		}
 
-		r := &Row{TableName: tableName, SourceKind: sourceKind, Status: status}
+		r := &Row{TableName: tableName, SourceKind: sourceKind, Status: status, CheckedDate: checkedDate}
 		if variableID.Valid {
 			r.VariableID = &variableID.Int64
 		}
 		if lastSuccessDate.Valid {
 			r.LastSuccessDate = &lastSuccessDate.String
+		}
+		if lastIngestDate.Valid {
+			r.LastIngestDate = &lastIngestDate.String
 		}
 		if sourceURL.Valid {
 			r.SourceURL = &sourceURL.String

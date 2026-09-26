@@ -61,6 +61,7 @@ urlpatterns = [
     # Plain text pages
     path("sources",                                                                   views.report, {"page": "sources"},        name="sources_en"),
     path("credits",                                                                   views.report, {"page": "credits"},        name="credits_en"),
+    path("status",                                                                    views.status,                             name="status_en"),
     path("note_on_inflation_data",                                                    views.report, {"page": "nota_inflacion"}, name="nota_inflacion_en"),
     path("release_notes",                                                             views.report, {"page": "release_notes"},  name="release_notes_en"),
     path("error",                                                                     views.error_page,                         name="error_en"),

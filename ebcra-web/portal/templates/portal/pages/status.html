@@ -1,0 +1,35 @@
+{% extends "portal/base.html" %}
+{% block page_title %}{% if lang == 'en' %}Data Status{% else %}Estado de los Datos{% endif %} — Estadísticas BCRA{% endblock %}
+{% block meta_description %}{% if lang == 'en' %}Data sources that are currently failing or not publishing new data.{% else %}Fuentes de datos que actualmente fallan o no publican datos nuevos.{% endif %}{% endblock %}
+{% block og_description %}{% if lang == 'en' %}Data sources that are currently failing or not publishing new data.{% else %}Fuentes de datos que actualmente fallan o no publican datos nuevos.{% endif %}{% endblock %}
+{% block twitter_description %}{% if lang == 'en' %}Data sources that are currently failing or not publishing new data.{% else %}Fuentes de datos que actualmente fallan o no publican datos nuevos.{% endif %}{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<div class="title"><div class="title-container"><h1>{% if lang == 'en' %}Data Status{% else %}Estado de los Datos{% endif %}</h1></div></div>
+<div class="explanation documentation">
+{% if status_rows %}
+    <table class="status-table">
+        <thead>
+            <tr>
+                <th>Variable</th>
+                <th>{% if lang == 'en' %}Status{% else %}Estado{% endif %}</th>
+                <th>{% if lang == 'en' %}Last fetched{% else %}Última consulta{% endif %}</th>
+                <th>{% if lang == 'en' %}Last ingestion{% else %}Última ingesta{% endif %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in status_rows %}
+            <tr>
+                <td>{{ row.name }}</td>
+                <td>{{ row.status }}</td>
+                <td>{{ row.last_fetched|default:"—" }}</td>
+                <td>{{ row.last_ingested|default:"—" }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{% if lang == 'en' %}All data sources are up to date.{% else %}Todas las fuentes de datos están al día.{% endif %}</p>
+{% endif %}
+</div>
+{% endblock %}

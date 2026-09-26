@@ -52,6 +52,7 @@ _ALTERNATE_URLS = {
     "rentabilidades": ("/rentabilidades",                                                    "/en/argentina_annual_profitability"),
     "sources":        ("/fuentes",                                                           "/en/sources"),
     "credits":        ("/creditos",                                                          "/en/credits"),
+    "status":         ("/estado",                                                            "/en/status"),
     "nota_inflacion": ("/nota_sobre_los_datos_oficiales_de_inflacion",                       "/en/note_on_inflation_data"),
     "liquidez_sistema_financiero": ("/liquidez_sistema_financiero_argentina",                 "/en/argentina_financial_system_liquidity"),
     "interfaz_fiscal_monetaria": ("/interfaz_fiscal_monetaria",                               "/en/fiscal_monetary_interface"),
@@ -61,11 +62,11 @@ _ALTERNATE_URLS = {
 }
 
 # Pages excluded from the sitemap (not real content pages).
-_SITEMAP_EXCLUDED_PAGES = {"error"}
+_SITEMAP_EXCLUDED_PAGES = {"error", "status"}
 
 # Pages that aren't a single BCRA time-series report (landing page, static text,
 # error page, API docs) — excluded from the per-page Dataset JSON-LD.
-_NON_DATASET_PAGES = {"home", "sources", "credits", "nota_inflacion", "release_notes", "error", "api_info"}
+_NON_DATASET_PAGES = {"home", "sources", "credits", "status", "nota_inflacion", "release_notes", "error", "api_info"}
 
 # Category groupings for breadcrumbs, mirroring the sidebar nav in base.html
 # (label_es, label_en, [page keys]). Pages not listed here (home, error,
@@ -94,7 +95,7 @@ _CATEGORIES = [
     ("API (Deprecada)", "API (Deprecated)",
      ["api_info"]),
     ("Acerca De", "About",
-     ["sources", "credits", "release_notes"]),
+     ["sources", "credits", "status", "release_notes"]),
 ]
 
 _PAGE_CATEGORY = {
@@ -503,6 +504,60 @@ def report(request, page):
         ctx["scrape_statuses"] = {row["table_name"]: row for row in _fetch_scrape_status()}
     response = render(request, f"portal/pages/{page}.html", ctx)
     return _cache_headers(response)
+
+
+_STATUS_PAGE_LABELS = {
+    "es": {"error": "Error", "stale": "Datos desactualizados", "fetch_error": "Error de obtención"},
+    "en": {"error": "Error", "stale": "Stale data", "fetch_error": "Fetching error"},
+}
+
+
+def _status_rows(lang, statuses):
+    """Rows for the status page: every fetched (non-calculated) table whose
+    last scrape isn't "ok". Calculated tables are left out — their status only
+    mirrors the upstream source that's already listed."""
+    labels = _STATUS_PAGE_LABELS[lang]
+    rows = []
+    for row in statuses:
+        kind = row.get("source_kind")
+        status = row.get("status")
+        if kind == "calculated" or status == "ok":
+            continue
+        table_name = row["table_name"]
+
+        if kind == "bcra_variable":
+            variable_id = row.get("variable_id")
+            name = _TABLE_LABELS.get(table_name, {}).get(lang, table_name)
+            name = f"{name} (#{variable_id})"
+            if status == "stale":
+                status_label = labels["stale"]
+            else:
+                code = row.get("error_code")
+                status_label = f'{labels["error"]} {code}' if code else labels["error"]
+            sort_key = (0, variable_id or 0)
+        else:
+            name = f"{_SOURCE_LABELS.get(table_name, table_name)} ({kind.title()})"
+            status_label = labels["stale"] if status == "stale" else labels["fetch_error"]
+            sort_key = (1, name)
+
+        rows.append({
+            "sort_key": sort_key,
+            "name": name,
+            "status": status_label,
+            "last_fetched": row.get("checked_date"),
+            "last_ingested": row.get("last_ingested_date"),
+        })
+    rows.sort(key=lambda r: r["sort_key"])
+    return rows
+
+
+def status(request):
+    ctx = _ctx(request, "status")
+    ctx["status_rows"] = _status_rows(ctx["lang"], _fetch_scrape_status())
+    response = render(request, "portal/pages/status.html", ctx)
+    if not settings.DEBUG:
+        response["Cache-Control"] = "max-age=300, public"
+    return response
 
 
 def error_page(request):
