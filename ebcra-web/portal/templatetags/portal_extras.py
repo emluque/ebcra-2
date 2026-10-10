@@ -1,9 +1,34 @@
+import hashlib
+from functools import lru_cache
+
 from django import template
+from django.conf import settings
+from django.templatetags.static import static
 from django.template.loader_tags import BLOCK_CONTEXT_KEY
 from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
 
 register = template.Library()
+
+
+@lru_cache(maxsize=None)
+def _asset_hash(path, mtime_ns):
+    with open(path, "rb") as f:
+        return hashlib.sha1(f.read()).hexdigest()[:10]
+
+
+@register.simple_tag
+def static_v(path):
+    """Like {% static %}, plus a ?v=<content hash> query string, so a changed
+    asset gets a new URL (nginx serves /static/ as immutable for 30 days).
+    The hash is cached per file mtime, so an edited asset is picked up live."""
+    url = static(path)
+    full_path = settings.STATIC_ROOT / path
+    try:
+        version = _asset_hash(full_path, full_path.stat().st_mtime_ns)
+    except OSError:
+        return url
+    return f"{url}?v={version}"
 
 
 @register.simple_tag(takes_context=True)

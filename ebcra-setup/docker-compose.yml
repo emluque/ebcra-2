@@ -76,7 +76,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - /home/data/nginx-logs:/etc/nginx/logs
-      - /home/Projects/ebcra/ebcra-web-2.0/staticfiles:/staticfiles:ro
+      - /home/Projects/ebcra-2/ebcra-web/staticfiles:/staticfiles:ro
     networks:
       apps:
         ipv4_address: 172.30.2.1

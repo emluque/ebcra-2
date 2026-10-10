@@ -61,6 +61,12 @@ python manage.py runserver
 ```
 Settings are split as `ebcra/settings/base.py` (production defaults, `DEBUG=False`) and `ebcra/settings/local.py` (imports base, flips `DEBUG=True` and relaxes cookie security). No test suite present.
 
+**Rule — minify after every JS/CSS change:** whenever you add or edit a `.js` or `.css` file under `ebcra-web/staticfiles/`, run
+```bash
+ebcra-web/minify_assets.sh     # needs esbuild in PATH
+```
+and commit the regenerated `*.min.js` / `*.min.css` together with the source. The site only ever loads the `.min.*` files, so an edit without a re-run has no effect — and the Docker image has no esbuild, it ships whatever is committed. Never hand-edit a `.min.*` file (vendored `js/d3/d3.min.js` aside, which the script skips). Templates must reference these assets with `{% static_v 'path/to/file.min.css' %}` (`portal/templatetags/portal_extras.py`), not `{% static %}`: it appends `?v=<content hash>`, which is what busts nginx's 30-day `immutable` cache on `/static/` — there are no manual version numbers to bump.
+
 ## Architecture
 
 ### Data flow
