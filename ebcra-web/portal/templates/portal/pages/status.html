@@ -1,4 +1,5 @@
 {% extends "portal/base.html" %}
+{% block preload_spinner %}{% endblock %}
 {% block page_title %}{% if lang == 'en' %}Data Status{% else %}Estado de los Datos{% endif %} — Estadísticas BCRA{% endblock %}
 {% block meta_description %}{% if lang == 'en' %}Current fetch status of every data source used on the site.{% else %}Estado actual de obtención de cada fuente de datos usada en el sitio.{% endif %}{% endblock %}
 {% block og_description %}{% if lang == 'en' %}Current fetch status of every data source used on the site.{% else %}Estado actual de obtención de cada fuente de datos usada en el sitio.{% endif %}{% endblock %}

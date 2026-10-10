@@ -62,6 +62,6 @@ const displayCharts = () => {
     removeLoading();
     window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g.resize(); }, 150); });
 };
-window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+document.addEventListener('DOMContentLoaded', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
 </script>
 {% endblock %}

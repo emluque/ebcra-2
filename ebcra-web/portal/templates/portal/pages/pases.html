@@ -276,6 +276,6 @@ const displayCharts = () => {
     });
 };
 
-window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+document.addEventListener('DOMContentLoaded', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
 </script>
 {% endblock %}

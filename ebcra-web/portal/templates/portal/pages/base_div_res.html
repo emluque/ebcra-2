@@ -220,6 +220,6 @@ const displayCharts = () => {
     window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { g1.resize(); v1.resize(); g2.resize(); }, 150); });
 };
 
-window.addEventListener('load', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
+document.addEventListener('DOMContentLoaded', () => { ResponsiveChartLibraryDataLoader.loadAndRun(sources, milestones, displayCharts, jsToken); });
 </script>
 {% endblock %}
