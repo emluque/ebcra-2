@@ -40,7 +40,6 @@
   {"id": 153, "tableName": "bcra_pases_pasivos_bcra_fci_saldo"},
   {"id": 154, "tableName": "bcra_pases_activos_bcra_saldo"},
   {"id": 1225, "tableName": "bcra_adelantos_transitorios_imd"},
-  {"id": 1268, "tableName": "bcra_adelantos_transitorios_apb"},
   {"id": 1260, "tableName": "bcra_leliq_notaliq"},
   {"id": 1265, "tableName": "bcra_depositos_gobierno_pesos"},
   {"id": 1266, "tableName": "bcra_depositos_gobierno_usd"},
