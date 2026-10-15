@@ -556,6 +556,7 @@ def _status_rows(lang, statuses):
             "name": name,
             "status": status_label,
             "failing": status != "ok",
+            "last_date": row.get("last_success_date"),
             "last_fetched": row.get("checked_date"),
             "last_ingested": row.get("last_ingested_date"),
         })

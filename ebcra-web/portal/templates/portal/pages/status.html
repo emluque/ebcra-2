@@ -14,6 +14,7 @@
             <tr>
                 <th>Variable</th>
                 <th>{% if lang == 'en' %}Status{% else %}Estado{% endif %}</th>
+                <th>{% if lang == 'en' %}Latest data{% else %}Último dato{% endif %}</th>
                 <th>{% if lang == 'en' %}Last fetched{% else %}Última consulta{% endif %}</th>
                 <th>{% if lang == 'en' %}Last ingestion{% else %}Última ingesta{% endif %}</th>
             </tr>
@@ -23,6 +24,7 @@
             <tr{% if row.failing %} class="failing"{% endif %}>
                 <td>{{ row.name }}</td>
                 <td>{{ row.status }}</td>
+                <td>{{ row.last_date|default:"—" }}</td>
                 <td>{{ row.last_fetched|default:"—" }}</td>
                 <td>{{ row.last_ingested|default:"—" }}</td>
             </tr>
