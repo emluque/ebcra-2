@@ -518,6 +518,116 @@ _STATUS_PAGE_SOURCE_NAMES = {
     "merval_yahoo": {"es": "Merval", "en": "Merval"},
 }
 
+# Full names for the BCRA variables on the status page. _TABLE_LABELS holds
+# short chart-legend names ("Total", "Otros", ...) that only make sense next to
+# their chart; here every variable is listed on its own, so this uses the
+# BCRA API's own `descripcion` (lightly cleaned up: typos, trailing periods,
+# long parentheticals). Missing entries fall back to _TABLE_LABELS.
+_STATUS_PAGE_VARIABLE_NAMES = {
+    "bcra_reservas_internacionales": {"es": "Reservas internacionales", "en": "International reserves"},
+    "bcra_usd_mayorista": {"es": "Tipo de cambio mayorista de referencia", "en": "Reference wholesale exchange rate"},
+    "bcra_tasa_badlar": {"es": "Tasa de interés BADLAR de bancos privados", "en": "BADLAR interest rate, private banks"},
+    "bcra_tasa_tm20": {"es": "Tasa de interés TM20 de bancos privados", "en": "TM20 interest rate, private banks"},
+    "bcra_tasa_baibar": {"es": "Tasa de interés de préstamos entre entidades financieras privadas (BAIBAR)", "en": "Interest rate on loans between private financial institutions (BAIBAR)"},
+    "bcra_tasa_depositos_30_dias": {"es": "Tasa de interés de depósitos a 30 días de plazo en entidades financieras", "en": "Interest rate on 30-day term deposits at financial institutions"},
+    "bcra_tasa_adelantos_cuenta_corriente": {"es": "Tasa de interés por adelantos en cuenta corriente", "en": "Interest rate on current account overdrafts"},
+    "bcra_tasa_prestamos_personales": {"es": "Tasa de interés de préstamos personales", "en": "Interest rate on personal loans"},
+    "bcra_base_monetaria": {"es": "Base monetaria", "en": "Monetary base"},
+    "bcra_circulacion_monetaria": {"es": "Circulación monetaria", "en": "Currency in circulation"},
+    "bcra_billetes_y_monedas_publico": {"es": "Billetes y monedas en poder del público", "en": "Notes and coins held by the public"},
+    "bcra_efectivo_en_entidades_financieras": {"es": "Efectivo en entidades financieras", "en": "Cash in financial institutions"},
+    "bcra_depositos_bancos_en_cuenta_corriente_del_bcra": {"es": "Depósitos de las entidades financieras en cuenta corriente en el BCRA", "en": "Financial institutions' current account deposits at the BCRA"},
+    "bcra_depositos_efectivo_entidades_financieras_total": {"es": "Depósitos en efectivo en las entidades financieras", "en": "Cash deposits in financial institutions"},
+    "bcra_depositos_cuentas_corrientes": {"es": "Depósitos en efectivo en las entidades financieras en cuentas corrientes (neto de utilización FUCO)", "en": "Cash deposits in financial institutions in current accounts (net of FUCO use)"},
+    "bcra_depositos_cajas_ahorro": {"es": "Depósitos en efectivo en las entidades financieras en cajas de ahorro", "en": "Cash deposits in financial institutions in savings accounts"},
+    "bcra_depositos_a_plazo": {"es": "Depósitos a plazo en efectivo en las entidades financieras (incluye inversiones y excluye CEDROs)", "en": "Cash term deposits in financial institutions (includes investments, excludes CEDROs)"},
+    "bcra_prestamos_entidades_financieras_sector_privado": {"es": "Préstamos de las entidades financieras al sector privado", "en": "Financial institutions' loans to the private sector"},
+    "bcra_inflacion_mensual": {"es": "Inflación mensual", "en": "Monthly inflation"},
+    "bcra_inflacion_interanual": {"es": "Inflación interanual", "en": "Year-over-year inflation"},
+    "bcra_inflacion_esperada": {"es": "Mediana de la variación interanual próximos 12 meses del índice de precios al consumidor del relevamiento de expectativas de mercado", "en": "Median expected year-over-year consumer price change for the next 12 months, from the market expectations survey"},
+    "bcra_cer": {"es": "Coeficiente de estabilización de referencia (CER, base 2.2.02=1)", "en": "Reference stabilization coefficient (CER, base 2.2.02=1)"},
+    "bcra_icl": {"es": "Índice para Contratos de Locación (ICL, base 30.6.20=1)", "en": "Rental Contracts Index (ICL, base 30.6.20=1)"},
+    "bcra_uva": {"es": "Unidad de valor adquisitivo (UVA, base 31.3.16=14.05)", "en": "Purchasing value unit (UVA, base 31.3.16=14.05)"},
+    "bcra_uvi": {"es": "Unidad de vivienda (UVI, base 31.3.16=14.05)", "en": "Housing unit (UVI, base 31.3.16=14.05)"},
+    "bcra_m2": {"es": "M2", "en": "M2"},
+    "bcra_m1": {"es": "M1", "en": "M1"},
+    "bcra_m3": {"es": "M3", "en": "M3"},
+    "bcra_tasa_badlar_publicos_y_privados": {"es": "Tasa de interés BADLAR de bancos públicos y privados", "en": "BADLAR interest rate, public and private banks"},
+    "bcra_tasa_pases_terceros_1_dia": {"es": "Tasa de interés por operaciones de pases entre terceros a 1 día", "en": "Interest rate on 1-day third-party repo operations"},
+    "bcra_tasa_pase_pasivas_1_dia": {"es": "Tasa de interés por pases pasivos para el BCRA a 1 día", "en": "Interest rate on BCRA 1-day passive repos"},
+    "bcra_tasa_pase_activas_1_dia": {"es": "Tasa de interés por pases activos para el BCRA a 1 día", "en": "Interest rate on BCRA 1-day active repos"},
+    "bcra_m2_transaccional_privado": {"es": "M2 transaccional del sector privado", "en": "Private-sector transactional M2"},
+    "bcra_m2_privado": {"es": "M2 privado", "en": "Private M2"},
+    "bcra_tasa_tamar_privados": {"es": "Tasa de interés TAMAR de bancos privados", "en": "TAMAR interest rate, private banks"},
+    "bcra_tasa_tamar_publicos_y_privados": {"es": "Tasa de interés TAMAR de bancos públicos y privados", "en": "TAMAR interest rate, public and private banks"},
+    "bcra_pases_terceros_1_dia_monto": {"es": "Operaciones de pases entre terceros a 1 día", "en": "1-day third-party repo operations"},
+    "bcra_pases_pasivos_bcra_saldo": {"es": "Pases pasivos para el BCRA (incluye pases pasivos con FCI)", "en": "BCRA passive repos (includes passive repos with mutual funds)"},
+    "bcra_pases_pasivos_bcra_fci_saldo": {"es": "Pases pasivos para el BCRA con fondos comunes de inversión", "en": "BCRA passive repos with mutual funds"},
+    "bcra_pases_activos_bcra_saldo": {"es": "Pases activos para el BCRA", "en": "BCRA active repos"},
+    "bcra_adelantos_transitorios_imd": {"es": "Adelantos transitorios del BCRA al Gobierno Nacional", "en": "BCRA temporary advances to the National Government"},
+    "bcra_leliq_notaliq": {"es": "Leliq y Notaliq", "en": "Leliq and Notaliq"},
+    "bcra_depositos_gobierno_pesos": {"es": "Depósitos del gobierno en el BCRA en pesos", "en": "Government deposits at the BCRA in pesos"},
+    "bcra_depositos_gobierno_usd": {"es": "Depósitos del gobierno en el BCRA en moneda extranjera", "en": "Government deposits at the BCRA in foreign currency"},
+    "bcra_prestamos_adelantos_documentos": {"es": "Préstamos otorgados al sector privado mediante adelantos y documentos", "en": "Loans to the private sector through overdrafts and promissory notes"},
+    "bcra_prestamos_personales_tarjetas": {"es": "Préstamos personales y mediante tarjetas de crédito", "en": "Personal and credit card loans"},
+    "bcra_prestamos_hipotecarios_prendarios": {"es": "Préstamos hipotecarios y prendarios otorgados al sector privado", "en": "Mortgage and secured loans to the private sector"},
+    "bcra_prestamos_otros": {"es": "Otros préstamos otorgados al sector privado", "en": "Other loans to the private sector"},
+    "bcra_depositos_vista_privado": {"es": "Depósitos a la vista del sector privado (cuentas corrientes y cajas de ahorro)", "en": "Private-sector demand deposits (current and savings accounts)"},
+    "bcra_depositos_plazo_privado": {"es": "Depósitos a plazo del sector privado (a plazo fijo e inversiones)", "en": "Private-sector term deposits (fixed-term and investments)"},
+    "bcra_depositos_publico": {"es": "Depósitos del sector público", "en": "Public-sector deposits"},
+    "bcra_depositos_vista_publico": {"es": "Depósitos a la vista del sector público (cuentas corrientes y cajas de ahorro)", "en": "Public-sector demand deposits (current and savings accounts)"},
+    "bcra_depositos_plazo_publico": {"es": "Depósitos a plazo del sector público (a plazo fijo e inversiones)", "en": "Public-sector term deposits (fixed-term and investments)"},
+    "bcra_depositos_usd_total": {"es": "Depósitos totales y otros pasivos de las entidades financieras del sector privado no financiero (en dólares)", "en": "Total deposits and other liabilities of the non-financial private sector at financial institutions (in USD)"},
+    "bcra_depositos_usd_efectivo": {"es": "Depósitos totales de efectivo del sector privado no financiero (en dólares)", "en": "Total cash deposits of the non-financial private sector (in USD)"},
+    "bcra_tasa_depositos_plazo_fijo_usd": {"es": "Tasa de interés de depósitos a plazo fijo en dólares", "en": "Interest rate on USD fixed-term deposits"},
+    "bcra_tasa_depositos_plazo_fijo_usd_humanas": {"es": "Tasa de interés de depósitos a plazo fijo en dólares de personas humanas", "en": "Interest rate on USD fixed-term deposits of individuals"},
+    "bcra_tasa_depositos_plazo_fijo_usd_juridicas": {"es": "Tasa de interés de depósitos a plazo fijo en dólares de personas jurídicas", "en": "Interest rate on USD fixed-term deposits of legal entities"},
+    "bcra_creditos_sistema_financiero": {"es": "Créditos del BCRA al sistema financiero", "en": "BCRA credit to the financial system"},
+    "bcra_liquidez_pesos": {"es": "Liquidez en pesos de las entidades financieras", "en": "Peso liquidity of financial institutions"},
+    "bcra_liquidez_total": {"es": "Liquidez de las entidades financieras en pesos y en moneda extranjera", "en": "Liquidity of financial institutions in pesos and foreign currency"},
+    "bcra_oro_divisas_colocaciones_plazo": {"es": "Oro, divisas, colocaciones a plazo y otros activos de reserva", "en": "Gold, foreign currency, term placements and other reserve assets"},
+    "bcra_divisas_pase_pasivo_exterior": {"es": "Divisas - pase pasivo en dólares con el exterior", "en": "Foreign currency - USD passive repo with foreign counterparties"},
+    "bcra_reservas_excluidas_deg_2009": {"es": "Reservas internacionales (excluidas asignaciones DEG 2009)", "en": "International reserves (excluding 2009 SDR allocations)"},
+    "bcra_asignaciones_deg_2009": {"es": "Asignaciones de DEG del año 2009", "en": "2009 SDR allocations"},
+    "bcra_reservas_compra_divisas": {"es": "Variación de reservas internacionales por compra de divisas", "en": "Change in international reserves from foreign currency purchases"},
+    "bcra_reservas_organismos_internacionales": {"es": "Variación de reservas internacionales por operaciones con organismos internacionales", "en": "Change in international reserves from operations with international organizations"},
+    "bcra_reservas_sector_publico": {"es": "Variación de reservas internacionales por otras operaciones del sector público", "en": "Change in international reserves from other public-sector operations"},
+    "bcra_reservas_efectivo_minimo": {"es": "Variación de reservas internacionales por efectivo mínimo", "en": "Change in international reserves from reserve requirements"},
+    "bcra_reservas_otras_operaciones": {"es": "Variación de reservas internacionales por otras operaciones no incluidas en otros rubros", "en": "Change in international reserves from other operations not included elsewhere"},
+    "bcra_tasa_tarjetas_credito": {"es": "Tasa de interés de financiaciones con tarjetas de crédito", "en": "Interest rate on credit card financing"},
+    "bcra_tasa_documentos_sola_firma": {"es": "Tasa de interés de documentos a sola firma a tasa fija", "en": "Interest rate on fixed-rate single-signature promissory notes"},
+    "bcra_tasa_hipotecarios_fija": {"es": "Tasa de interés de préstamos hipotecarios a tasa fija", "en": "Interest rate on fixed-rate mortgage loans"},
+    "bcra_tasa_prendarios_fija": {"es": "Tasa de interés de préstamos prendarios a tasa fija", "en": "Interest rate on fixed-rate secured loans"},
+    "bcra_tasa_hipotecarios_uva": {"es": "Tasa de interés de préstamos hipotecarios UVA", "en": "Interest rate on UVA mortgage loans"},
+    "bcra_tasa_dep_caja_ahorro_a": {"es": "Tasa de interés de depósitos en cajas de ahorro", "en": "Interest rate on savings account deposits"},
+    "bcra_tasa_dep_pf_total_a": {"es": "Tasa de interés del total de depósitos a plazo fijo", "en": "Interest rate on all fixed-term deposits"},
+    "bcra_tasa_dep_pf_7_59d_a": {"es": "Tasa de interés de depósitos a plazo fijo de 7 a 59 días", "en": "Interest rate on 7 to 59-day fixed-term deposits"},
+    "bcra_tasa_dep_pf_30d_a": {"es": "Tasa de interés de depósitos a plazo fijo de 30 días", "en": "Interest rate on 30-day fixed-term deposits"},
+    "bcra_tasa_dep_pf_60mas_a": {"es": "Tasa de interés de depósitos a plazo fijo de 60 días o más", "en": "Interest rate on fixed-term deposits of 60 days or more"},
+    "bcra_dep_titular_privado_total": {"es": "Total de depósitos del sector privado no financiero", "en": "Total deposits of the non-financial private sector"},
+    "bcra_dep_titular_humanas": {"es": "Total de depósitos de personas humanas", "en": "Total deposits of individuals"},
+    "bcra_dep_titular_juridicas": {"es": "Total de depósitos de personas jurídicas", "en": "Total deposits of legal entities"},
+    "bcra_dep_titular_fci": {"es": "Total de depósitos de los fondos comunes de inversión", "en": "Total deposits of mutual funds"},
+    "bcra_dep_titular_pymes": {"es": "Total de depósitos de pequeños y medianos emprendimientos", "en": "Total deposits of small and medium enterprises"},
+    "bcra_dep_titular_cc_privado": {"es": "Total de depósitos en cuentas corrientes del sector privado", "en": "Total private-sector current account deposits"},
+    "bcra_dep_titular_ca_privado": {"es": "Total de depósitos en cajas de ahorro del sector privado", "en": "Total private-sector savings account deposits"},
+    "bcra_dep_titular_pf_privado": {"es": "Total de depósitos a plazo fijo del sector privado", "en": "Total private-sector fixed-term deposits"},
+    "bcra_hip_construccion": {"es": "Préstamos hipotecarios para construcción de viviendas", "en": "Mortgage loans for home construction"},
+    "bcra_hip_refaccion": {"es": "Préstamos hipotecarios para refacción de vivienda", "en": "Mortgage loans for home renovation"},
+    "bcra_hip_nueva": {"es": "Préstamos hipotecarios para compra de viviendas nuevas", "en": "Mortgage loans for buying new homes"},
+    "bcra_hip_usada": {"es": "Préstamos hipotecarios para compra de viviendas usadas", "en": "Mortgage loans for buying existing homes"},
+    "bcra_hip_otros": {"es": "Préstamos hipotecarios para operaciones distintas a construcción, refacción y compra de vivienda", "en": "Mortgage loans for purposes other than building, renovating or buying a home"},
+    "bcra_prend_autos": {"es": "Préstamos prendarios para compra de automotores", "en": "Secured loans for buying vehicles"},
+    "bcra_prend_maquinarias": {"es": "Préstamos prendarios para compra de maquinarias", "en": "Secured loans for buying machinery"},
+    "bcra_prend_otros": {"es": "Préstamos prendarios no destinados a la compra de automotores o maquinarias", "en": "Secured loans not used to buy vehicles or machinery"},
+    "bcra_prest_titular_privado_total": {"es": "Total de préstamos al sector privado no financiero", "en": "Total loans to the non-financial private sector"},
+    "bcra_prest_titular_humanas": {"es": "Total de préstamos a personas humanas", "en": "Total loans to individuals"},
+    "bcra_prest_titular_juridicas": {"es": "Total de préstamos a personas jurídicas", "en": "Total loans to legal entities"},
+    "bcra_prest_titular_pymes": {"es": "Total de préstamos a pequeños y medianos emprendimientos", "en": "Total loans to small and medium enterprises"},
+    "bcra_prest_titular_hipotecarios": {"es": "Total de préstamos hipotecarios al sector privado", "en": "Total mortgage loans to the private sector"},
+    "bcra_prest_titular_prendarios": {"es": "Total de préstamos prendarios al sector privado", "en": "Total secured loans to the private sector"},
+}
+
 # Scraped (non-BCRA) sources go after the BCRA variables, in this order.
 _STATUS_PAGE_SCRAPED_ORDER = ["dollar_blue_cronista", "merval_yahoo"]
 
@@ -537,7 +647,8 @@ def _status_rows(lang, statuses):
 
         if kind == "bcra_variable":
             variable_id = row.get("variable_id")
-            name = _TABLE_LABELS.get(table_name, {}).get(lang, table_name)
+            names = _STATUS_PAGE_VARIABLE_NAMES.get(table_name) or _TABLE_LABELS.get(table_name, {})
+            name = names.get(lang, table_name)
             name = f"{name} (#{variable_id})"
             if status in ("ok", "stale"):
                 status_label = labels[status]
@@ -567,6 +678,7 @@ def _status_rows(lang, statuses):
 def status(request):
     ctx = _ctx(request, "status")
     ctx["status_rows"] = _status_rows(ctx["lang"], _fetch_scrape_status())
+    ctx["stale_threshold_days"] = _STALE_THRESHOLD_DAYS
     response = render(request, "portal/pages/status.html", ctx)
     if not settings.DEBUG:
         response["Cache-Control"] = "max-age=300, public"

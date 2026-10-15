@@ -34,5 +34,20 @@
 {% else %}
     <p>{% if lang == 'en' %}Status information is not available right now.{% else %}La información de estado no está disponible en este momento.{% endif %}</p>
 {% endif %}
+{% if lang == 'en' %}
+    <ul>
+        <li><strong>Latest data:</strong> the date of the most recent value we have stored for the variable. If the source stops publishing new values, this date stays where it is, even if we keep checking it. When it is more than {{ stale_threshold_days }} days old, the variable is marked as "Stale data".</li>
+        <li><strong>Last fetched:</strong> the last day we tried to get data from the source, whether or not the attempt succeeded or brought anything new.</li>
+        <li><strong>Last ingestion:</strong> the last day new data was actually added, that is, the last time the "Latest data" date moved forward.</li>
+    </ul>
+    <p>For a full explanation of the sources used on the site, see <a href="/en/sources">Sources</a>.</p>
+{% else %}
+    <ul>
+        <li><strong>Último dato:</strong> la fecha del valor más reciente que tenemos guardado para la variable. Si la fuente deja de publicar valores nuevos, esta fecha no avanza, aunque la sigamos consultando. Cuando tiene más de {{ stale_threshold_days }} días de antigüedad, la variable se marca como "Datos desactualizados".</li>
+        <li><strong>Última consulta:</strong> el último día en que intentamos obtener datos de la fuente, haya funcionado o no el intento y haya traído o no datos nuevos.</li>
+        <li><strong>Última ingesta:</strong> el último día en que efectivamente se agregaron datos nuevos, es decir, la última vez que avanzó la fecha de "Último dato".</li>
+    </ul>
+    <p>Para una explicación completa de las fuentes utilizadas en el sitio, vea <a href="/fuentes">Fuentes</a>.</p>
+{% endif %}
 </div>
 {% endblock %}
