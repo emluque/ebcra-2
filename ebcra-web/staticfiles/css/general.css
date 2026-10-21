@@ -408,6 +408,41 @@ main {
 .status-table td:nth-child(5) {
   white-space: nowrap; }
 
+/* Safety net: never let the table widen the page, scroll it instead. */
+.status-table-wrap {
+  overflow-x: auto; }
+
+/* Phones and tablets in portrait: one card per variable instead of five
+   columns, with the column header repeated as a label on each value. */
+@media (max-width: 900px) {
+  .status-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0); }
+  .status-table,
+  .status-table tbody,
+  .status-table tr,
+  .status-table td {
+    display: block; }
+  .status-table tr {
+    padding: 0.6em 0;
+    border-bottom: 1px solid var(--color-dark); }
+  .status-table td {
+    border-bottom: none;
+    padding: 0.15em 0; }
+  .status-table td:first-child {
+    font-weight: bold;
+    padding-bottom: 0.3em; }
+  .status-table td[data-label] {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em; }
+  .status-table td[data-label]::before {
+    content: attr(data-label);
+    opacity: 0.75; } }
+
 .form {
   padding: 1em;
   font-size: 1.4em; }
