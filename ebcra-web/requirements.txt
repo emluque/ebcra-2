@@ -1,4 +1,21 @@
-django>=4.2,<5.0
-httpx>=0.27
-python-dotenv>=1.0
-gunicorn>=22.0
+# Every package (direct and transitive) is pinned to an exact version so a
+# rebuild installs exactly what was last vetted. Bump deliberately: check the
+# new versions on https://osv.dev, then rebuild with
+# `docker compose build --pull ebcra-web`.
+# Django 5.2 is the LTS line (security support until April 2028).
+
+# Direct dependencies
+django==5.2.18
+httpx==0.28.1
+python-dotenv==1.2.4
+gunicorn==26.2.0
+
+# Transitive dependencies
+asgiref==3.13.0
+sqlparse==0.6.0
+anyio==4.15.1
+certifi==2026.10.23
+httpcore==1.0.9
+h11==0.16.0
+idna==3.20
+typing_extensions==4.16.0
