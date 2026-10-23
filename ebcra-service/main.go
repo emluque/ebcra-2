@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/emluque/ebcra-service-2.0/internal/config"
 	"github.com/emluque/ebcra-service-2.0/internal/core"
@@ -100,18 +101,26 @@ func main() {
 	http.HandleFunc("/get-js-jwt", jwtpkg.FixedResponseHandlerCreator("javascript"))
 	/* End JWT */
 
-	log.Fatal(http.ListenAndServe(":"+cfg.Port, nil))
+	// Explicit timeouts so slow or stalled clients can't hold connections
+	// open indefinitely (the zero-value defaults of http.ListenAndServe).
+	srv := &http.Server{
+		Addr:              ":" + cfg.Port,
+		ReadHeaderTimeout: 5 * time.Second,
+		ReadTimeout:       10 * time.Second,
+		WriteTimeout:      30 * time.Second,
+		IdleTimeout:       120 * time.Second,
+	}
+	log.Fatal(srv.ListenAndServe())
 
 }
 
 func cleanCachesHandlerFactory(cleanCacheIP string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		remoteIP := config.RemoteIP(r)
-
-		xForwardedFor := r.Header.Get("X-Forwarded-For")
-
-		if remoteIP != cleanCacheIP && xForwardedFor != cleanCacheIP {
+		// Only the TCP peer address is trusted: X-Forwarded-For is
+		// client-controlled, and the scraper calls this endpoint directly on
+		// the Docker network rather than through nginx.
+		if config.RemoteIP(r) != cleanCacheIP {
 			http.Error(w, "Unauthorized Request", http.StatusForbidden)
 			return
 		}

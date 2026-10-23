@@ -33,8 +33,9 @@ services:
       - ebcra-service
 
   ebcra-service:
-    ports:
-      - "9001:9001"
+    # No published ports: nginx and the other apps reach it over the Docker
+    # networks, and publishing 9001 on the host would bypass nginx (Docker's
+    # published ports also bypass ufw).
     build:
       context: /home/Projects/ebcra-2/ebcra-service
       dockerfile: /home/Projects/ebcra-2/ebcra-setup/ebcra/ebcra-service/docker/Dockerfile
